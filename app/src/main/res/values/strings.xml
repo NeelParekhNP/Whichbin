@@ -7,7 +7,7 @@
     <string name="incorrectMessage">The Answer Is Incorrect :(</string>
 
     <!--List of questions-->
-    <string name="question_zero">Thermocol</string>
+    <string name="question_zero">Polystyrene</string>
     <string name="question_one">Plastic Bottle</string>
     <string name="question_two">Paper Bag</string>
     <string name="question_three">Aluminium Can</string>

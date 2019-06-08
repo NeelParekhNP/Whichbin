@@ -1,9 +1,11 @@
 package com.example.whichbin;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private Button trashButton;
     private Button recycleButton;
     private Button nextButton;
+    private ImageView questionImageView;
 
     private int currentIndex = 0;
     private Questions [] mQuestions = new Questions[]{
@@ -29,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
             new Questions(R.string.question_ten, false)
     };
 
+    private int[] textureArrayWin = {
+        R.drawable.image_0,
+        R.drawable.image_1,
+        R.drawable.image_2,
+        R.drawable.image_3,
+        R.drawable.image_4,
+        R.drawable.image_5,
+        R.drawable.image_6,
+        R.drawable.image_7,
+        R.drawable.image_8,
+        R.drawable.image_9,
+        R.drawable.image_10,
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         final int Question = mQuestions[currentIndex].getQuestion();
         questionTextView.setText(Question);
+
+        questionImageView = (ImageView) findViewById(R.id.questionImageView);
+        Drawable d = getResources().getDrawable(textureArrayWin[currentIndex]);
+        questionImageView.setImageDrawable(d);
 
         trashButton = (Button) findViewById(R.id.trashButton);
         trashButton.setOnClickListener(new View.OnClickListener() {
@@ -60,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 currentIndex = (currentIndex + 1) % mQuestions.length;
                 int question =  mQuestions[currentIndex].getQuestion();
+                Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
                 questionTextView.setText(question);
+                questionImageView.setImageDrawable(imageQuestion);
             }
         });
 
