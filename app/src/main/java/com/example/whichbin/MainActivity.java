@@ -1,9 +1,11 @@
 package com.example.whichbin;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,10 +16,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView questionTextView;
     private Button trashButton;
     private Button recycleButton;
-    private Button nextButton;
     private ImageView questionImageView;
-
     private int currentIndex = 0;
+    private int totalCorrect =0;
+
     private Questions [] mQuestions = new Questions[]{
             new Questions(R.string.question_zero, false),
             new Questions(R.string.question_one, true),
@@ -63,7 +65,23 @@ public class MainActivity extends AppCompatActivity {
         trashButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(false);
+                if(currentIndex==(mQuestions.length-1)){
+                    ((ViewGroup) questionImageView.getParent()).removeView(questionImageView);
+                    ((ViewGroup) trashButton.getParent()).removeView(trashButton);
+                    ((ViewGroup) recycleButton.getParent()).removeView(recycleButton);
+                    questionTextView.setText("Your total score was: " + totalCorrect);
+
+                    //Intent myIntent = new Intent(getBaseContext(),   Results.class);
+                    //startActivity(myIntent);
+                }
+                else {
+                    checkAnswer(false);
+                    currentIndex = (currentIndex + 1);
+                    int question = mQuestions[currentIndex].getQuestion();
+                    Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
+                    questionTextView.setText(question);
+                    questionImageView.setImageDrawable(imageQuestion);
+                }
             }
         });
 
@@ -71,22 +89,24 @@ public class MainActivity extends AppCompatActivity {
         recycleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                checkAnswer(true);
+                if(currentIndex==(mQuestions.length-1)){
+                    ((ViewGroup) questionImageView.getParent()).removeView(questionImageView);
+                    ((ViewGroup) trashButton.getParent()).removeView(trashButton);
+                    ((ViewGroup) recycleButton.getParent()).removeView(recycleButton);
+                    questionTextView.setText("Your total score was: " + totalCorrect);
+                    //Intent myIntent = new Intent(getBaseContext(),   Results.class);
+                    //startActivity(myIntent);
+                }
+                else {
+                    checkAnswer(true);
+                    currentIndex = (currentIndex + 1);
+                    int question = mQuestions[currentIndex].getQuestion();
+                    Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
+                    questionTextView.setText(question);
+                    questionImageView.setImageDrawable(imageQuestion);
+                }
             }
         });
-
-        nextButton = (Button) findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentIndex = (currentIndex + 1) % mQuestions.length;
-                int question =  mQuestions[currentIndex].getQuestion();
-                Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
-                questionTextView.setText(question);
-                questionImageView.setImageDrawable(imageQuestion);
-            }
-        });
-
     }
 
     private void checkAnswer(boolean userPressed){
@@ -94,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         boolean answer = mQuestions[currentIndex].isAnswer();
         if (userPressed == answer){
             Toast.makeText(MainActivity.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
+            totalCorrect = totalCorrect + 1;
         }
         else{
             Toast.makeText(MainActivity.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
