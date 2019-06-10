@@ -1,6 +1,5 @@
 package com.example.whichbin;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class BinGame extends AppCompatActivity {
 
     private TextView questionTextView;
     private Button trashButton;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bin_game);
 
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         final int Question = mQuestions[currentIndex].getQuestion();
@@ -113,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
         boolean answer = mQuestions[currentIndex].isAnswer();
         if (userPressed == answer){
-            Toast.makeText(MainActivity.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(BinGame.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
             totalCorrect = totalCorrect + 1;
         }
         else{
-            Toast.makeText(MainActivity.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
+            Toast.makeText(BinGame.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
         }
     }
 }
