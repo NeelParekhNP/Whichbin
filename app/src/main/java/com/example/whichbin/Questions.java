@@ -3,9 +3,9 @@ package com.example.whichbin;
 public class Questions {
 
     private int question;
-    private boolean answer;
+    private int answer;
 
-    public Questions(int question, boolean answer) {
+    public Questions(int question, int answer) {
         this.question = question;
         this.answer = answer;
     }
@@ -18,11 +18,11 @@ public class Questions {
         this.question = question;
     }
 
-    public boolean isAnswer() {
+    public int isAnswer() {
         return answer;
     }
 
-    public void setAnswer(boolean answer) {
+    public void setAnswer(int answer) {
         this.answer = answer;
     }
 }

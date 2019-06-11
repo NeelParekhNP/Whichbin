@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Which bin?</string>
-    <string name="trashButton">Trash</string>
+    <string name="generalWasteButton">General Waste</string>
     <string name="recycleButton">Recycle</string>
+    <string name="organicWasteButton">Organic Waste</string>
     <string name="nextButton">Next</string>
     <string name="correctMessage">The Answer Is Correct!</string>
     <string name="incorrectMessage">The Answer Is Incorrect :(</string>

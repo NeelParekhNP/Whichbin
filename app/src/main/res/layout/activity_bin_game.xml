@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/buttonsLayout"
         android:layout_width="395dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -31,22 +31,31 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/questionTextView">
+        app:layout_constraintTop_toBottomOf="@+id/questionTextView"
+        app:layout_constraintVertical_bias="0.357">
 
         <Button
             android:id="@+id/trashButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="113dp"
             android:layout_weight="1"
-            android:text="@string/trashButton" />
+            android:background="@drawable/general_waste" />
 
         <Button
             android:id="@+id/recycleButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="113dp"
             android:layout_weight="1"
-            android:text="@string/recycleButton" />
+            android:background="@drawable/recycle_bin" />
+
+        <Button
+            android:id="@+id/organicWasteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="113dp"
+            android:layout_weight="1"
+            android:background="@drawable/food_waste" />
 
     </LinearLayout>
 
@@ -62,5 +71,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/buttonTagsLayout"
+        android:layout_width="395dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonsLayout">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/generalWasteButton"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/recycleButton"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/organicWasteButton"
+            android:textAlignment="center" />
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
