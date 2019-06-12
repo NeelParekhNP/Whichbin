@@ -4,7 +4,7 @@
     <string name="recycleButton">Recycle</string>
     <string name="organicWasteButton">Organic Waste</string>
     <string name="nextButton">Next</string>
-    <string name="correctMessage">The Answer Is Correct!</string>
+
     <string name="incorrectMessage">The Answer Is Incorrect :(</string>
 
     <!--List of questions-->
