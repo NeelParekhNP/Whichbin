@@ -13,19 +13,21 @@
     <string name="nextButton">Next</string>
     <string name="correctMessage">The Answer Is Correct!</string>
     <string name="incorrectMessage">The Answer Is Incorrect :(</string>
+    <string name="questionHeader1">Which bin does this</string>
+    <string name="questionHeader2">belong in?</string>
 
     <!--List of questions-->
-    <string name="question_zero">Polystyrene</string>
-    <string name="question_one">Plastic Bottle</string>
-    <string name="question_two">Paper Bag</string>
-    <string name="question_three">Aluminium Can</string>
-    <string name="question_four">Tree Bark</string>
-    <string name="question_five">Food Waste</string>
-    <string name="question_six">Clothes</string>
-    <string name="question_seven">Fridge</string>
-    <string name="question_eight">Bricks</string>
-    <string name="question_nine">Dishwasher</string>
-    <string name="question_ten">Desk</string>
+    <string name="question_zero">polystyrene cup</string>
+    <string name="question_one">plastic bottle</string>
+    <string name="question_two">paper bag</string>
+    <string name="question_three">aluminium can</string>
+    <string name="question_four">tree bark</string>
+    <string name="question_five">food waste</string>
+    <string name="question_six">t-shirt</string>
+    <string name="question_seven">fridge</string>
+    <string name="question_eight">brick</string>
+    <string name="question_nine">dishwasher</string>
+    <string name="question_ten">desk</string>
 
     <!--Trivia Game strings-->
     <string name="trivia_title">Trivia time</string>

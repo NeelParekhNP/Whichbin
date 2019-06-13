@@ -1,6 +1,7 @@
 package com.example.whichbin;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,9 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class BinGame extends AppCompatActivity {
 
@@ -49,7 +47,9 @@ public class BinGame extends AppCompatActivity {
 
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         final int Question = mQuestions[currentIndex].getQuestion();
-        questionTextView.setText(Question);
+        String header = getString(R.string.questionHeader1) + " " + getString(Question) + " " + getString(R.string.questionHeader2);
+        questionTextView.setText(header);
+
 
         question = (ImageView) findViewById(R.id.qImageView);
         question.setImageDrawable(getDrawable(mQuestions[currentIndex].getImage()));
@@ -62,7 +62,16 @@ public class BinGame extends AppCompatActivity {
         option3.setOnDragListener(dragListener);
 
         question.setOnTouchListener(touchListener);
+
     }
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+            startActivity(myIntent);
+        }
+    };
 
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
@@ -85,13 +94,11 @@ public class BinGame extends AppCompatActivity {
             switch (dragEvent){
 
                 case DragEvent.ACTION_DROP:
-                    final View view = (View) event.getLocalState();
+                    //final View view = (View) event.getLocalState();
                     //view.setVisibility(View.INVISIBLE);
 
                     ImageView dropTarget = (ImageView) v;
-                    ImageView dropped = (ImageView) view;
 
-                    Drawable d = ((ImageView) dropped).getDrawable();
                     int answer = mQuestions[currentIndex].isAnswer();
                     int tagDropTarget = Integer.parseInt((String)dropTarget.getTag());
 
@@ -107,15 +114,22 @@ public class BinGame extends AppCompatActivity {
                         allOptions.removeAllViews();
                         nameTags.removeAllViews();
                         questionTextView.setText("Your total score was: " + totalCorrect);
-                        //Intent myIntent = new Intent(getBaseContext(),   Results.class);
-                        //startActivity(myIntent);
+
+                        Button menuButton = new Button(BinGame.this);
+                        menuButton.setText("Return to Main Menu");
+                        LinearLayout ll = (LinearLayout)findViewById(R.id.optionsLayout);
+                        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        ll.addView(menuButton, lp);
+
+                        menuButton.setOnClickListener(clickListener);
                     }
                     else {
                         currentIndex = (currentIndex + 1);
                         Drawable imageQuestion = getDrawable(mQuestions[currentIndex].getImage());
                         question.setImageDrawable(imageQuestion);
                         int question = mQuestions[currentIndex].getQuestion();
-                        questionTextView.setText(question);
+                        String header = getString(R.string.questionHeader1) + " " + getString(question) + " " + getString(R.string.questionHeader2);
+                        questionTextView.setText(header);
                     }
                     break;
             }
