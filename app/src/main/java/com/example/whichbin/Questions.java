@@ -1,13 +1,17 @@
 package com.example.whichbin;
 
+
 public class Questions {
 
     private int question;
     private int answer;
+    private int image;
 
-    public Questions(int question, int answer) {
+
+    public Questions(int question, int answer, int image) {
         this.question = question;
         this.answer = answer;
+        this.image = image;
     }
 
     public int getQuestion() {
@@ -24,5 +28,13 @@ public class Questions {
 
     public void setAnswer(int answer) {
         this.answer = answer;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 }

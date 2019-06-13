@@ -1,8 +1,10 @@
 package com.example.whichbin;
 
+import android.content.ClipData;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -11,44 +13,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class BinGame extends AppCompatActivity {
 
+    private ImageView question, option1, option2, option3;
     private TextView questionTextView;
-    private Button trashButton;
-    private Button recycleButton;
-    private Button organicWasteButton;
-    private ImageView questionImageView;
-    private LinearLayout nameTags;
-    private LinearLayout allButtons;
+    private LinearLayout allOptions, nameTags;
     private int currentIndex = 0;
-    private int totalCorrect =0;
+    private int totalCorrect = 0;
 
     private Questions [] mQuestions = new Questions[]{
-            new Questions(R.string.question_zero, 1),
-            new Questions(R.string.question_one, 2),
-            new Questions(R.string.question_two, 3),
-            new Questions(R.string.question_three, 2),
-            new Questions(R.string.question_four, 3),
-            new Questions(R.string.question_five, 3),
-            new Questions(R.string.question_six, 1),
-            new Questions(R.string.question_seven, 1),
-            new Questions(R.string.question_eight, 1),
-            new Questions(R.string.question_nine, 1),
-            new Questions(R.string.question_ten, 1)
-    };
-
-    private int[] textureArrayWin = {
-        R.drawable.image_0,
-        R.drawable.image_1,
-        R.drawable.image_2,
-        R.drawable.image_3,
-        R.drawable.image_4,
-        R.drawable.image_5,
-        R.drawable.image_6,
-        R.drawable.image_7,
-        R.drawable.image_8,
-        R.drawable.image_9,
-        R.drawable.image_10,
+            new Questions(R.string.question_zero, 1, R.drawable.image_0),
+            new Questions(R.string.question_one, 2, R.drawable.image_1),
+            new Questions(R.string.question_two, 3, R.drawable.image_2),
+            new Questions(R.string.question_three, 2, R.drawable.image_3),
+            new Questions(R.string.question_four, 3, R.drawable.image_4),
+            new Questions(R.string.question_five, 3, R.drawable.image_5),
+            new Questions(R.string.question_six, 1, R.drawable.image_6),
+            new Questions(R.string.question_seven, 1, R.drawable.image_7),
+            new Questions(R.string.question_eight, 1, R.drawable.image_8),
+            new Questions(R.string.question_nine, 1, R.drawable.image_9),
+            new Questions(R.string.question_ten, 1, R.drawable.image_10)
     };
 
     @Override
@@ -56,97 +43,79 @@ public class BinGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin_game);
 
+        nameTags = (LinearLayout) findViewById(R.id.optionTagsLayout);
+        allOptions = (LinearLayout) findViewById((R.id.optionsLayout));
+
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         final int Question = mQuestions[currentIndex].getQuestion();
         questionTextView.setText(Question);
 
-        questionImageView = (ImageView) findViewById(R.id.questionImageView);
-        Drawable d = getResources().getDrawable(textureArrayWin[currentIndex]);
-        questionImageView.setImageDrawable(d);
+        question = (ImageView) findViewById(R.id.qImageView);
+        question.setImageDrawable(getDrawable(mQuestions[currentIndex].getImage()));
+        option1 = (ImageView) findViewById(R.id.gWBinImageView);
+        option2 = (ImageView) findViewById(R.id.rBImageView);
+        option3 = (ImageView) findViewById(R.id.oWImageView);
 
-        nameTags = (LinearLayout) findViewById(R.id.buttonTagsLayout);
-        allButtons = (LinearLayout) findViewById((R.id.buttonsLayout));
+        option1.setOnDragListener(dragListener);
+        option2.setOnDragListener(dragListener);
+        option3.setOnDragListener(dragListener);
 
-        trashButton = (Button) findViewById(R.id.trashButton);
-        trashButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentIndex==(mQuestions.length-1)){
-                    ((ViewGroup) questionImageView.getParent()).removeView(questionImageView);
-                    allButtons.removeAllViews();
-                    nameTags.removeAllViews();
-                    questionTextView.setText("Your total score was: " + totalCorrect);
-
-                    //Intent myIntent = new Intent(getBaseContext(),   Results.class);
-                    //startActivity(myIntent);
-                }
-                else {
-                    checkAnswer(1);
-                    currentIndex = (currentIndex + 1);
-                    int question = mQuestions[currentIndex].getQuestion();
-                    Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
-                    questionTextView.setText(question);
-                    questionImageView.setImageDrawable(imageQuestion);
-                }
-            }
-        });
-
-        recycleButton = (Button) findViewById(R.id.recycleButton);
-        recycleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentIndex==(mQuestions.length-1)){
-                    ((ViewGroup) questionImageView.getParent()).removeView(questionImageView);
-                    allButtons.removeAllViews();
-                    nameTags.removeAllViews();
-                    questionTextView.setText("Your total score was: " + totalCorrect);
-                    //Intent myIntent = new Intent(getBaseContext(),   Results.class);
-                    //startActivity(myIntent);
-                }
-                else {
-                    checkAnswer(2);
-                    currentIndex = (currentIndex + 1);
-                    int question = mQuestions[currentIndex].getQuestion();
-                    Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
-                    questionTextView.setText(question);
-                    questionImageView.setImageDrawable(imageQuestion);
-                }
-            }
-        });
-
-        organicWasteButton = (Button) findViewById(R.id.organicWasteButton);
-        organicWasteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(currentIndex==(mQuestions.length-1)){
-                    ((ViewGroup) questionImageView.getParent()).removeView(questionImageView);
-                    allButtons.removeAllViews();
-                    nameTags.removeAllViews();
-                    questionTextView.setText("Your total score was: " + totalCorrect);
-                    //Intent myIntent = new Intent(getBaseContext(),   Results.class);
-                    //startActivity(myIntent);
-                }
-                else {
-                    checkAnswer(3);
-                    currentIndex = (currentIndex + 1);
-                    int question = mQuestions[currentIndex].getQuestion();
-                    Drawable imageQuestion = getResources().getDrawable(textureArrayWin[currentIndex]);
-                    questionTextView.setText(question);
-                    questionImageView.setImageDrawable(imageQuestion);
-                }
-            }
-        });
+        question.setOnLongClickListener(longClickListener);
     }
 
-    private void checkAnswer(int userPressed){
+    View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
+        @Override
+        public boolean onLongClick(View v) {
+            ClipData data = ClipData.newPlainText("", "");
+            View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder(v);
+            v.startDrag(data, myShadowBuilder, v, 0);
+            return true;
+        }
+    };
 
-        int answer = mQuestions[currentIndex].isAnswer();
-        if (userPressed == answer){
-            Toast.makeText(BinGame.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
-            totalCorrect = totalCorrect + 1;
+    View.OnDragListener dragListener = new View.OnDragListener() {
+        @Override
+        public boolean onDrag(View v, DragEvent event) {
+            int dragEvent = event.getAction();
+
+            switch (dragEvent){
+
+                case DragEvent.ACTION_DROP:
+                    final View view = (View) event.getLocalState();
+                    //view.setVisibility(View.INVISIBLE);
+
+                    ImageView dropTarget = (ImageView) v;
+                    ImageView dropped = (ImageView) view;
+
+                    Drawable d = ((ImageView) dropped).getDrawable();
+                    int answer = mQuestions[currentIndex].isAnswer();
+                    int tagDropTarget = Integer.parseInt((String)dropTarget.getTag());
+
+                    if (answer == tagDropTarget ){
+                        Toast.makeText(BinGame.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
+                        totalCorrect = (totalCorrect +1);
+                    }
+                    else {
+                        Toast.makeText(BinGame.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
+                    }
+                    if(currentIndex==(mQuestions.length-1)){
+                        ((ViewGroup) question.getParent()).removeView(question);
+                        allOptions.removeAllViews();
+                        nameTags.removeAllViews();
+                        questionTextView.setText("Your total score was: " + totalCorrect);
+                        //Intent myIntent = new Intent(getBaseContext(),   Results.class);
+                        //startActivity(myIntent);
+                    }
+                    else {
+                        currentIndex = (currentIndex + 1);
+                        Drawable imageQuestion = getDrawable(mQuestions[currentIndex].getImage());
+                        question.setImageDrawable(imageQuestion);
+                        int question = mQuestions[currentIndex].getQuestion();
+                        questionTextView.setText(question);
+                    }
+                    break;
+            }
+            return true;
         }
-        else{
-            Toast.makeText(BinGame.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
-        }
-    }
+    };
 }
