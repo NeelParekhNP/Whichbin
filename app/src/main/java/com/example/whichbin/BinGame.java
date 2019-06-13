@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -60,16 +61,19 @@ public class BinGame extends AppCompatActivity {
         option2.setOnDragListener(dragListener);
         option3.setOnDragListener(dragListener);
 
-        question.setOnLongClickListener(longClickListener);
+        question.setOnTouchListener(touchListener);
     }
 
-    View.OnLongClickListener longClickListener = new View.OnLongClickListener(){
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
-        public boolean onLongClick(View v) {
-            ClipData data = ClipData.newPlainText("", "");
-            View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder(v);
-            v.startDrag(data, myShadowBuilder, v, 0);
-            return true;
+        public boolean onTouch(View v, MotionEvent event) {
+            if(event.getAction() == MotionEvent.ACTION_DOWN){
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder myShadowBuilder = new View.DragShadowBuilder(v);
+                v.startDrag(data, myShadowBuilder, v, 0);
+                return true;
+            }
+            return false;
         }
     };
 
