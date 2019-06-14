@@ -29,6 +29,4 @@
     <string name="question_nine">dishwasher</string>
     <string name="question_ten">desk</string>
 
-    <!--Trivia Game strings-->
-    <string name="trivia_title">Trivia time</string>
 </resources>
