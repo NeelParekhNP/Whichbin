@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Trivia Game strings-->
+    <string name="trivia_title">Trivia time</string>
+    <string name="trivia_true_button">That\'s true!</string>
+    <string name="trivia_false_button">You lie!</string>
+</resources>
