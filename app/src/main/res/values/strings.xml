@@ -3,6 +3,7 @@
     <string name="mainMenu">Pick a game!</string>
     <string name="whichBin">Click here to play the which bin game!</string>
     <string name="trivia_game">Click here to play the climate change trivia game!</string>
+    <string name="multiplayer_game">Click here to play the multiplayer game!</string>
 
 
     <!--Which bin game strings-->
@@ -16,7 +17,7 @@
     <string name="questionHeader1">Which bin does this</string>
     <string name="questionHeader2">belong in?</string>
 
-    <!--List of questions-->
+    <!--List of BinGame questions-->
     <string name="question_zero">polystyrene cup</string>
     <string name="question_one">plastic bottle</string>
     <string name="question_two">paper bag</string>
@@ -28,5 +29,9 @@
     <string name="question_eight">brick</string>
     <string name="question_nine">dishwasher</string>
     <string name="question_ten">desk</string>
+
+    <!--List of MultiplayerGame questions-->
+    <string name="m_question_one">Which of these causes the greenhouse effect?</string>
+    <string name="m_question_two">Which of these is NOT an expected effect of climate change?</string>
 
 </resources>

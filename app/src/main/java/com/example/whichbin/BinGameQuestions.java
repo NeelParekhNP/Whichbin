@@ -1,14 +1,14 @@
 package com.example.whichbin;
 
 
-public class Questions {
+public class BinGameQuestions {
 
     private int question;
     private int answer;
     private int image;
 
 
-    public Questions(int question, int answer, int image) {
+    public BinGameQuestions(int question, int answer, int image) {
         this.question = question;
         this.answer = answer;
         this.image = image;

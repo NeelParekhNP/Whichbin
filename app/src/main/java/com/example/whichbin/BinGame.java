@@ -23,18 +23,18 @@ public class BinGame extends AppCompatActivity {
     private int currentIndex = 0;
     private int totalCorrect = 0;
 
-    private Questions [] mQuestions = new Questions[]{
-            new Questions(R.string.question_zero, 1, R.drawable.image_0),
-            new Questions(R.string.question_one, 2, R.drawable.image_1),
-            new Questions(R.string.question_two, 3, R.drawable.image_2),
-            new Questions(R.string.question_three, 2, R.drawable.image_3),
-            new Questions(R.string.question_four, 3, R.drawable.image_4),
-            new Questions(R.string.question_five, 3, R.drawable.image_5),
-            new Questions(R.string.question_six, 1, R.drawable.image_6),
-            new Questions(R.string.question_seven, 1, R.drawable.image_7),
-            new Questions(R.string.question_eight, 1, R.drawable.image_8),
-            new Questions(R.string.question_nine, 1, R.drawable.image_9),
-            new Questions(R.string.question_ten, 1, R.drawable.image_10)
+    private BinGameQuestions[] mQuestions = new BinGameQuestions[]{
+            new BinGameQuestions(R.string.question_zero, 1, R.drawable.image_0),
+            new BinGameQuestions(R.string.question_one, 2, R.drawable.image_1),
+            new BinGameQuestions(R.string.question_two, 3, R.drawable.image_2),
+            new BinGameQuestions(R.string.question_three, 2, R.drawable.image_3),
+            new BinGameQuestions(R.string.question_four, 3, R.drawable.image_4),
+            new BinGameQuestions(R.string.question_five, 3, R.drawable.image_5),
+            new BinGameQuestions(R.string.question_six, 1, R.drawable.image_6),
+            new BinGameQuestions(R.string.question_seven, 1, R.drawable.image_7),
+            new BinGameQuestions(R.string.question_eight, 1, R.drawable.image_8),
+            new BinGameQuestions(R.string.question_nine, 1, R.drawable.image_9),
+            new BinGameQuestions(R.string.question_ten, 1, R.drawable.image_10)
     };
 
     @Override
