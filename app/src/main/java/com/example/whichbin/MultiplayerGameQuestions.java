@@ -2,10 +2,10 @@ package com.example.whichbin;
 
 public class MultiplayerGameQuestions {
     private int question;
-    private String answer;
+    private int answer;
     private String option1, option2, option3, option4;
 
-    public MultiplayerGameQuestions(int question, String answer, String option1, String option2, String option3, String option4){
+    public MultiplayerGameQuestions(int question, int answer, String option1, String option2, String option3, String option4){
         this.question = question;
         this.answer = answer;
         this.option1=option1;
@@ -22,11 +22,11 @@ public class MultiplayerGameQuestions {
         this.question = question;
     }
 
-    public String getAnswer() {
+    public int getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String answer) {
+    public void setAnswer(int answer) {
         this.answer = answer;
     }
 
