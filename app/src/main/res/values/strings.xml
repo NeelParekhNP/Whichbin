@@ -3,7 +3,7 @@
     <string name="mainMenu">Pick a game!</string>
     <string name="whichBin">Click here to play the which bin game!</string>
     <string name="trivia_game">Click here to play the climate change trivia game!</string>
-
+    <string name="multiplayer_game">Click here to play the multiplayer game!</string>
 
     <!--Which bin game strings-->
     <string name="app_name">Which bin?</string>
@@ -16,7 +16,7 @@
     <string name="questionHeader1">Which bin does this</string>
     <string name="questionHeader2">belong in?</string>
 
-    <!--List of questions-->
+    <!--List of BinGame questions-->
     <string name="question_zero">polystyrene cup</string>
     <string name="question_one">plastic bottle</string>
     <string name="question_two">paper bag</string>
@@ -28,5 +28,17 @@
     <string name="question_eight">brick</string>
     <string name="question_nine">dishwasher</string>
     <string name="question_ten">desk</string>
+
+    <!--List of MultiplayerGame questions-->
+    <string name="m_question_one">Which of these causes the greenhouse effect?</string>
+    <string name="m_question_two">Which of these is NOT an expected effect of climate change?</string>
+    <string name="m_question_three">What is the Greenhouse Effect?</string>
+    <string name="m_question_four">What can you do to help fight climate change?</string>
+    <string name="m_question_five">Which of these countries emits the most carbon dioxide?</string>
+    <string name="m_question_six">What percentage of the global greenhouse gas emissions does the transportation sector emit?</string>
+    <string name="m_question_seven">Globally, which of the following economic sectors emits the largest percentage of greenhouse gas emissions?</string>
+    <string name="m_question_eight">How much has the average global temperature risen by since 1880 (in Celsius)?</string>
+    <string name="m_question_nine">Which planet\'s poisonous atmosphere has been described as the product of a "runaway greenhouse effect"?</string>
+    <string name="m_question_ten">How many human deaths per year does the World Health Organization attribute to climate change?</string>
 
 </resources>

@@ -13,6 +13,7 @@ public class MainMenu extends AppCompatActivity {
     String msg = "Android : ";
     private Button whichBinButton;
     private Button triviaButton;
+    private Button multiplayerGame;
 
     /** Called when the activity is first created. */
     @Override
@@ -36,6 +37,14 @@ public class MainMenu extends AppCompatActivity {
                 openTriviaGame();
             }
         });
+
+        multiplayerGame = (Button) findViewById(R.id.multiplayerGameX);
+        multiplayerGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMultiplayerGame();
+            }
+        });
     }
     /** Called if the Which Bin game button's clicked. */
     public void openBinGame(){
@@ -45,6 +54,11 @@ public class MainMenu extends AppCompatActivity {
 
     public void openTriviaGame(){
         Intent intent = new Intent(this, TriviaGame.class);
+        startActivity(intent);
+    }
+
+    public void openMultiplayerGame(){
+        Intent intent = new Intent(this, MultiPlayerGame.class);
         startActivity(intent);
     }
 
