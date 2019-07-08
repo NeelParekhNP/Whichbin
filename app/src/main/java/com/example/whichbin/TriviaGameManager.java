@@ -36,14 +36,14 @@ public class TriviaGameManager {
         triviaArray.add(q10);
     }
 
-    public String getTriviaQuestionByNo(int qNo){
+    public String getTriviaQuestionByNo(Integer qNo){
         TriviaQuestion nowQuestion = triviaArray.get(qNo);
         return nowQuestion.triviaGetQuestion();
     }
 
 
     /** Getter method, input the question number and this method should return if the correct answer is true or false*/
-    public boolean checkTriviaQuestionAnswer(int qNo){
+    public boolean checkTriviaQuestionAnswer(Integer qNo){
         TriviaQuestion nowQuestion = triviaArray.get(qNo);
         return nowQuestion.triviaCheckTrueFalse();
     }
