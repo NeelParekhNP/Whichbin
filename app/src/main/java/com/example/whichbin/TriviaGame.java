@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class TriviaGame extends AppCompatActivity {
 
     private TriviaGameManager triviaGameManager = new TriviaGameManager();
@@ -17,7 +19,7 @@ public class TriviaGame extends AppCompatActivity {
     private TextView timeDisplay;
 
     private boolean inputAnswer;
-    private int nextQuestionNumber = 0;
+    private Integer nextQuestionNumber = 0;
     private Button trueButton;
     private Button falseButton;
     private String displayQuestion;
@@ -26,6 +28,10 @@ public class TriviaGame extends AppCompatActivity {
     private int score = 0;
     private CountDownTimer clock;
     private long timeRemaining = 120000;
+
+    //public TriviaAnswerParcel answerInfo;
+    public ArrayList<String> answeredQuestionsList;
+    public ArrayList<Integer> inputAnswersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,11 @@ public class TriviaGame extends AppCompatActivity {
         trueButton = (Button) findViewById(R.id.trivia_true_button);
         falseButton = (Button) findViewById(R.id.trivia_false_button);
 
+        answeredQuestionsList = new ArrayList<>();
+        inputAnswersList= new ArrayList<>();
+
+        // answerInfo = new TriviaAnswerParcel();
+
         displayNextQuestion();
         incrementScore();
         startTimer();
@@ -49,6 +60,11 @@ public class TriviaGame extends AppCompatActivity {
                 inputAnswer = true;
                 responseToast = checkIfCorrect(nextQuestionNumber, inputAnswer);
                 Toast.makeText(getApplicationContext(), responseToast, Toast.LENGTH_SHORT).show();
+
+                //answerInfo.addQuestion(triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber-1), 0);
+                answeredQuestionsList.add(triviaQuestion);
+                inputAnswersList.add(0);
+
                 displayNextQuestion();
             }
         });
@@ -59,6 +75,11 @@ public class TriviaGame extends AppCompatActivity {
                 inputAnswer = false;
                 String responseToast = checkIfCorrect(nextQuestionNumber, inputAnswer);
                 Toast.makeText(getApplicationContext(), responseToast, Toast.LENGTH_SHORT).show();
+
+                //answerInfo.addQuestion(triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber-1), 1);
+                answeredQuestionsList.add(triviaQuestion);
+                inputAnswersList.add(1);
+
                 displayNextQuestion();
             }
         });
@@ -88,7 +109,7 @@ public class TriviaGame extends AppCompatActivity {
         }
     }
 
-    private String checkIfCorrect(int qNo, boolean inputAnswer){
+    private String checkIfCorrect(Integer qNo, boolean inputAnswer){
         boolean actualAnswer = getAnswer(qNo);
         if(actualAnswer == inputAnswer){
             incrementScore();
@@ -99,7 +120,7 @@ public class TriviaGame extends AppCompatActivity {
         }
     }
 
-    private boolean getAnswer(int qNo){
+    private boolean getAnswer(Integer qNo){
         int qNoLessOne = qNo-1;
         boolean answer = triviaGameManager.checkTriviaQuestionAnswer(qNoLessOne);
         return answer;
@@ -142,7 +163,9 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public void openAnswerActivity(){
+        TriviaAnswerParcel answerInfo = new TriviaAnswerParcel(answeredQuestionsList, inputAnswersList);
         Intent intent = new Intent(this, TriviaAnswerActivity.class);
+        intent.putExtra("answerInfo", answerInfo);
         startActivity(intent);
     }
 }
