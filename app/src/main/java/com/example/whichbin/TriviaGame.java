@@ -22,15 +22,16 @@ public class TriviaGame extends AppCompatActivity {
     private Integer nextQuestionNumber = 0;
     private Button trueButton;
     private Button falseButton;
-    private String displayQuestion;
     private String responseToast;
     private String triviaQuestion;
+    private String answerExplanation;
     private int score = 0;
     private CountDownTimer clock;
     private long timeRemaining = 120000;
 
     //public TriviaAnswerParcel answerInfo;
     public ArrayList<String> answeredQuestionsList;
+    public ArrayList<String> extraAnswerInfoList;
     public ArrayList<Integer> inputAnswersList;
 
     @Override
@@ -46,6 +47,7 @@ public class TriviaGame extends AppCompatActivity {
         falseButton = (Button) findViewById(R.id.trivia_false_button);
 
         answeredQuestionsList = new ArrayList<>();
+        extraAnswerInfoList = new ArrayList<>();
         inputAnswersList= new ArrayList<>();
 
         // answerInfo = new TriviaAnswerParcel();
@@ -63,6 +65,7 @@ public class TriviaGame extends AppCompatActivity {
 
                 //answerInfo.addQuestion(triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber-1), 0);
                 answeredQuestionsList.add(triviaQuestion);
+                extraAnswerInfoList.add(answerExplanation);
                 inputAnswersList.add(0);
 
                 displayNextQuestion();
@@ -78,6 +81,7 @@ public class TriviaGame extends AppCompatActivity {
 
                 //answerInfo.addQuestion(triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber-1), 1);
                 answeredQuestionsList.add(triviaQuestion);
+                extraAnswerInfoList.add(answerExplanation);
                 inputAnswersList.add(1);
 
                 displayNextQuestion();
@@ -93,6 +97,7 @@ public class TriviaGame extends AppCompatActivity {
         if(nextQuestionNumber < 10){
             triviaQuestion = triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber);
             questionDisplay.setText(triviaQuestion);
+            answerExplanation = triviaGameManager.getExtraAnswerInfo(nextQuestionNumber);
             nextQuestionNumber++;
         }
         // For now I'll just have the questions loop back to the beginning instead of the app crashing hence resetting questionNumber
@@ -163,7 +168,7 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     public void openAnswerActivity(){
-        TriviaAnswerParcel answerInfo = new TriviaAnswerParcel(answeredQuestionsList, inputAnswersList);
+        TriviaAnswerParcel answerInfo = new TriviaAnswerParcel(answeredQuestionsList, extraAnswerInfoList, inputAnswersList, score);
         Intent intent = new Intent(this, TriviaAnswerActivity.class);
         intent.putExtra("answerInfo", answerInfo);
         startActivity(intent);

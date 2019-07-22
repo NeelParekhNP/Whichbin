@@ -7,16 +7,22 @@ import java.util.ArrayList;
 
 public class TriviaAnswerParcel implements Parcelable {
     private ArrayList<String> answeredQuestionsList;
+    private ArrayList<String> extraAnswerInfoList;
     private ArrayList<Integer> inputAnswersList;
+    private int score;
 
-    public TriviaAnswerParcel(ArrayList<String> answeredQuestionsList, ArrayList<Integer> inputAnswersList){
+    public TriviaAnswerParcel(ArrayList<String> answeredQuestionsList, ArrayList<String> extraAnswerInfoList, ArrayList<Integer> inputAnswersList, int score){
         this.answeredQuestionsList = answeredQuestionsList;
+        this.extraAnswerInfoList = extraAnswerInfoList;
         this.inputAnswersList =inputAnswersList;
+        this.score = score;
     }
 
     protected TriviaAnswerParcel(Parcel in) {
         this.answeredQuestionsList = in.readArrayList(null);
+        this.extraAnswerInfoList = in.readArrayList(null);
         this.inputAnswersList = in.readArrayList(null);
+        this.score = in.readInt();
 
         //previous code this.answeredQuestionsList = (ArrayList<String>) in.createTypedArrayList();
     }
@@ -41,7 +47,9 @@ public class TriviaAnswerParcel implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeList(answeredQuestionsList);
+        dest.writeList(extraAnswerInfoList);
         dest.writeList(inputAnswersList);
+        dest.writeInt(score);
     }
 
     /** method to add a question that was answered,
@@ -68,6 +76,10 @@ public class TriviaAnswerParcel implements Parcelable {
         return answeredQuestionsList.get(answeredIndex);
     }
 
+    public String getExtraAnswerInfo(int answeredIndex){
+        return extraAnswerInfoList.get(answeredIndex);
+    }
+
     // takes input index of question asked, returns the user's selected answer
     public int getInputAnsweredByQNo(int answerIndex){
         return inputAnswersList.get(answerIndex);
@@ -75,6 +87,10 @@ public class TriviaAnswerParcel implements Parcelable {
 
     public int getNumberOfQsAnswered(){
         return answeredQuestionsList.size();
+    }
+
+    public int getScore(){
+        return score;
     }
 }
 
