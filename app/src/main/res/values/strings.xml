@@ -41,4 +41,8 @@
     <string name="m_question_nine">Which planet\'s poisonous atmosphere has been described as the product of a "runaway greenhouse effect"?</string>
     <string name="m_question_ten">How many human deaths per year does the World Health Organization attribute to climate change?</string>
 
+    <string name="title_activity_level_selection">LevelSelection</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

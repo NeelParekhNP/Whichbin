@@ -25,7 +25,7 @@ tools:layout_editor_absoluteY="8dp">
         android:id="@+id/whichBinButtonX"
         android:layout_width="187dp"
         android:layout_height="100dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="140dp"
         android:text="@string/whichBin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,10 +35,9 @@ tools:layout_editor_absoluteY="8dp">
         android:id="@+id/triviaGameX"
         android:layout_width="187dp"
         android:layout_height="100dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:text="@string/trivia_game"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whichBinButtonX" />
 
@@ -47,11 +46,28 @@ tools:layout_editor_absoluteY="8dp">
         android:layout_width="187dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/multiplayer_game"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/triviaGameX" />
+        app:layout_constraintTop_toBottomOf="@+id/triviaGameX"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/levelSelectorButtonX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="PLAY!"
+        app:layout_constraintBottom_toTopOf="@+id/whichBinButtonX"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 </android.support.constraint.ConstraintLayout>

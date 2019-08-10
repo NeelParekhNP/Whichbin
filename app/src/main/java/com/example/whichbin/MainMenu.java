@@ -2,6 +2,8 @@ package com.example.whichbin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +16,7 @@ public class MainMenu extends AppCompatActivity {
     private Button whichBinButton;
     private Button triviaButton;
     private Button multiplayerGame;
+    private Button levelSelector;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,6 +48,14 @@ public class MainMenu extends AppCompatActivity {
                 openMultiplayerGame();
             }
         });
+
+        levelSelector = (Button) findViewById(R.id.levelSelectorButtonX);
+        levelSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLevelSelectionScreen();
+            }
+        });
     }
     /** Called if the Which Bin game button's clicked. */
     public void openBinGame(){
@@ -59,6 +70,14 @@ public class MainMenu extends AppCompatActivity {
 
     public void openMultiplayerGame(){
         Intent intent = new Intent(this, MultiPlayerGame.class);
+        startActivity(intent);
+    }
+
+    public void openLevelSelectionScreen() {
+        /** Delete first 2 lines if want to keep progress saved even after app reset*/
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().clear().commit();
+        Intent intent = new Intent(this, LevelSelection.class);
         startActivity(intent);
     }
 

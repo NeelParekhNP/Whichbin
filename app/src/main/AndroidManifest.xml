@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MultiPlayerGame"></activity>
-        <activity android:name=".TriviaAnswerActivity"></activity>
+        <activity android:name=".LevelSelection"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".MultiPlayerGame" />
+        <activity android:name=".TriviaAnswerActivity" />
         <activity android:name=".TriviaGame" />
         <activity android:name=".BinGame" />
         <activity android:name=".MainMenu">

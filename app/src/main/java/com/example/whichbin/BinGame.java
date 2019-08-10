@@ -2,7 +2,9 @@ package com.example.whichbin;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -22,6 +24,8 @@ public class BinGame extends AppCompatActivity {
     private LinearLayout allOptions, nameTags;
     private int currentIndex = 0;
     private int totalCorrect = 0;
+
+    public static final String LEVEL_ONE_STATUS = "levelOneStatus";
 
     private BinGameQuestions[] mQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_zero, 1, R.drawable.image_0),
@@ -68,7 +72,8 @@ public class BinGame extends AppCompatActivity {
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+            saveData();
+            Intent myIntent = new Intent(getBaseContext(), LevelSelection.class);
             startActivity(myIntent);
         }
     };
@@ -136,4 +141,14 @@ public class BinGame extends AppCompatActivity {
             return true;
         }
     };
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if(totalCorrect >= 5) {
+            editor.putBoolean(LEVEL_ONE_STATUS, true);
+        }
+        editor.commit();
+    }
 }
