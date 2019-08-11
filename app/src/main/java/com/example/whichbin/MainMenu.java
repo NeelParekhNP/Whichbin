@@ -14,6 +14,7 @@ public class MainMenu extends AppCompatActivity {
     private Button whichBinButton;
     private Button triviaButton;
     private Button multiplayerGame;
+    private Button mainGame;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,6 +46,14 @@ public class MainMenu extends AppCompatActivity {
                 openMultiplayerGame();
             }
         });
+
+        mainGame = (Button) findViewById(R.id.tiledGameButton);
+        mainGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainGame();
+            }
+        });
     }
     /** Called if the Which Bin game button's clicked. */
     public void openBinGame(){
@@ -59,6 +68,11 @@ public class MainMenu extends AppCompatActivity {
 
     public void openMultiplayerGame(){
         Intent intent = new Intent(this, MultiPlayerGame.class);
+        startActivity(intent);
+    }
+
+    public void openMainGame(){
+        Intent intent = new Intent(this, TileBasedGameActivity.class);
         startActivity(intent);
     }
 
