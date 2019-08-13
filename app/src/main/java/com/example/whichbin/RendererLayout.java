@@ -109,8 +109,11 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
             // Slightly concerned by the trail the character is leaving behind and whether this will take up memory
             // This is only visible with the background hidden so comment out the below line to test.
+
             canvas.drawBitmap(backGroundCheck, null, new Rect(0,0, width, height), null);
-            // drawSquare(130,130,650,650);
+
+
+
             canvas.drawBitmap(character, characterPositionX, characterPositionY, null);
             surfaceHolder.unlockCanvasAndPost(canvas);
 
@@ -118,7 +121,8 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
 
             // Unsure whether this is necessary
-            // invalidate();
+            //invalidate(0, 0, width, height);
+            invalidate();
         }
     }
 

@@ -3,15 +3,20 @@ package com.example.whichbin;
 import android.app.Activity;
 import android.graphics.PointF;
 import android.os.Bundle;
-
+import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.whichbin.RendererLayout;
+
 public class TileBasedGameActivity extends Activity {
 
-    RendererLayout rendererLayout_LayoutView;
+    RendererLayout renderer;
+
+    String msg = "Android : TileBasedGameActivity: ";
 
     private float newX;
     private float newY;
@@ -60,6 +65,11 @@ public class TileBasedGameActivity extends Activity {
     private float y14;
     private float y15;
 
+    // Selected map variable and map
+    private TileMapManager tileMapManager;
+    private TileBasedMap currentMap;
+    private int selectedMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,13 +89,16 @@ public class TileBasedGameActivity extends Activity {
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
-        rendererLayout_LayoutView = new RendererLayout(width, height, this);
-        setContentView(rendererLayout_LayoutView);
+        renderer = new RendererLayout(width, height, this);
+        setContentView(renderer);
 
+        tileMapManager = new TileMapManager();
+        selectedMap = 1;
+        currentMap = tileMapManager.getMap(1);
 
         //ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
-        rendererLayout_LayoutView.setOnTouchListener(new View.OnTouchListener() {
+        renderer.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -101,29 +114,35 @@ public class TileBasedGameActivity extends Activity {
                     case MotionEvent.ACTION_DOWN: {
 
                         // Toast.makeText(getApplicationContext(), "NewX is " + newX + " and NewY is " + newY + ".", Toast.LENGTH_LONG).show();
-
-                        if(newX > currentPositionX){
-                            rendererLayout_LayoutView.moveRight();
-                            playerPositionX++;
-                            currentPositionX = convertIntToGridX(playerPositionX);
+                        try {
+                            //if((newX > currentPositionX) && (currentMap.checkSquareBlocked(playerPositionX++, playerPositionY) != true)){
+                            if (newX > currentPositionX) {
+                                renderer.moveRight();
+                                playerPositionX++;
+                                currentPositionX = convertIntToGridX(playerPositionX);
+                            }
+                            if (newX < currentPositionX) {
+                                renderer.moveLeft();
+                                playerPositionX--;
+                                currentPositionX = convertIntToGridX(playerPositionX);
+                            }
+                            if (newY > currentPositionY) {
+                                renderer.moveDown();
+                                playerPositionY++;
+                                currentPositionY = convertIntToGridY(playerPositionY);
+                            }
+                            if (newY < currentPositionY) {
+                                renderer.moveUp();
+                                playerPositionY--;
+                                currentPositionY = convertIntToGridY(playerPositionY);
+                            }
+                            Log.d(msg, "Action down event processed");
+                            break;
                         }
-                        if(newX < currentPositionX){
-                            rendererLayout_LayoutView.moveLeft();
-                            playerPositionX--;
-                            currentPositionX = convertIntToGridX(playerPositionX);
+                        catch(Exception e){
+                            Log.d(msg, "Action down event failed");
+                            break;
                         }
-                        if(newY > currentPositionY){
-                            rendererLayout_LayoutView.moveDown();
-                            playerPositionY++;
-                            currentPositionY = convertIntToGridY(playerPositionY);
-                        }
-                        if(newY < currentPositionY){
-                            rendererLayout_LayoutView.moveUp();
-                            playerPositionY--;
-                            currentPositionY = convertIntToGridY(playerPositionY);
-                        }
-
-                        break;
                     }
                     case MotionEvent.ACTION_MOVE: {
                         break;
@@ -140,17 +159,16 @@ public class TileBasedGameActivity extends Activity {
         });
     }
 
-
     @Override
     protected void onPause(){
         super.onPause();
-        rendererLayout_LayoutView.pause();
+        renderer.pause();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        rendererLayout_LayoutView.resume();
+        renderer.resume();
     }
 
     public int getWidth(){
