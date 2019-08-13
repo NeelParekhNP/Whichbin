@@ -42,4 +42,28 @@
     <string name="m_question_nine">Which planet\'s poisonous atmosphere has been described as the product of a "runaway greenhouse effect"?</string>
     <string name="m_question_ten">How many human deaths per year does the World Health Organization attribute to climate change?</string>
 
+    <!--List of Science MCQ questions-->
+    <string name="s_mcq_question_one">Which of the following gases does not trap heat?</string>
+    <string name="s_mcq_question_two">If you removed the atmosphere\'s natural greenhouse effect, and everything else stayed the same, Earth's temperature would be:</string>
+    <string name="s_mcq_question_three">How do scientists collect evidence about climate?</string>
+    <string name="s_mcq_question_four">Which of the following is a greenhouse gas?</string>
+    <string name="s_mcq_question_five">Why are forests important for mitigating climate change?</string>
+    <string name="s_mcq_question_six">What is the carbon cycle?</string>
+    <string name="s_mcq_question_seven">Which of the following gases does not trap heat?</string>
+    <string name="s_mcq_question_eight">Which of the following gases does not trap heat?</string>
+    <string name="s_mcq_question_nine">Which of the following gases does not trap heat?</string>
+    <string name="s_mcq_question_ten">Which of the following gases does not trap heat?</string>
+
+    <!--List of Nature MCQ questions-->
+    <string name="n_mcq_question_one">How are warming ocean temperatures impacting whales, fish, and other marine mammals?</string>
+    <string name="n_mcq_question_two">How can extreme events like hurricanes, drought, and wildfires impact energy infrastructure?</string>
+    <string name="n_mcq_question_three">Cities and rural communities face some of the same climate issues; these include:</string>
+    <string name="n_mcq_question_four">How is climate change altering precipitation in the U.S.?</string>
+    <string name="n_mcq_question_five">How do climate factors (temperature, precipitation, and humidity) relate to vector-borne disease?</string>
+    <string name="n_mcq_question_six"></string>
+    <string name="n_mcq_question_seven"></string>
+    <string name="n_mcq_question_eight"></string>
+    <string name="n_mcq_question_nine"></string>
+    <string name="n_mcq_question_ten"></string>
+
 </resources>
