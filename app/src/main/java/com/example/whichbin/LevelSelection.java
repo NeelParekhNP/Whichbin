@@ -15,12 +15,23 @@ import android.widget.ImageView;
 public class LevelSelection extends AppCompatActivity {
 
     private ImageView character;
-    private ImageButton world1Level1, world1Level2;
+    private ImageButton world1Level1, world1Level2, world2Level1, world2Level2;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private static final long COUNTDOWN_IN_MILLIS = 3000;
 
-    private boolean levelOnePassed;
+    private boolean levelOneWorldOnePassed;
+    private boolean levelOneWorldTwoPassed;
+
+    public static final String DRAG_DROP_GAME_THEME = "dragDropGameTheme";
+
+    private ImageButton buttons [] = new ImageButton[4];
+    private int[] allButtonIds = {
+            R.id.imageButton_w1_l1,
+            R.id.imageButton_w1_l2,
+            R.id.imageButton_w2_l1,
+            R.id.imageButton_w2_l2
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +41,29 @@ public class LevelSelection extends AppCompatActivity {
         character = (ImageView) findViewById(R.id.imageView_character);
         world1Level1 = (ImageButton) findViewById(R.id.imageButton_w1_l1);
         world1Level2 = (ImageButton) findViewById(R.id.imageButton_w1_l2);
+        world2Level1 = (ImageButton) findViewById(R.id.imageButton_w2_l1);
+        world2Level2 = (ImageButton) findViewById(R.id.imageButton_w2_l2);
 
-        world1Level1.setOnClickListener(clickListener);
-        world1Level2.setOnClickListener(clickListener);
-
-        world1Level2.setEnabled(false);
-        world1Level2.setImageAlpha(0x3F);
+        for (int i = 0; i < buttons.length; i++){
+            buttons[i] = findViewById(allButtonIds[i]);
+            buttons[i].setOnClickListener(clickListener);
+            if ((allButtonIds[i] == R.id.imageButton_w1_l1) || (allButtonIds[i] == R.id.imageButton_w2_l1) || (allButtonIds[i] == R.id.imageButton_w2_l1) || (allButtonIds[i] == R.id.imageButton_w2_l1)){
+                //Do nothing
+            }
+            else{
+                buttons[i].setEnabled(false);
+                buttons[i].setImageAlpha(0x3F);
+            }
+        }
 
         loadData();
-        if (levelOnePassed == true){
+        if (levelOneWorldOnePassed == true){
             world1Level2.setEnabled(true);
             world1Level2.setImageAlpha(0xFF);
+        }
+        if (levelOneWorldTwoPassed == true){
+            world2Level2.setEnabled(true);
+            world2Level2.setImageAlpha(0xFF);
         }
     }
 
@@ -58,9 +81,16 @@ public class LevelSelection extends AppCompatActivity {
                 case R.id.imageButton_w1_l2:
                     myIntent = new Intent(getBaseContext(), TriviaGame.class);
                     break;
+                case R.id.imageButton_w2_l1:
+                    myIntent = new Intent(getBaseContext(), BinGame.class);
+                    break;
+                case R.id.imageButton_w2_l2:
+                    myIntent = new Intent(getBaseContext(), TriviaGame.class);
+                    break;
                 default:
                     myIntent = new Intent(getBaseContext(), LevelSelection.class);
             }
+            changeData(view);
             startCountDown(x, y, myIntent);
         }
     };
@@ -88,6 +118,28 @@ public class LevelSelection extends AppCompatActivity {
 
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        levelOnePassed = sharedPreferences.getBoolean("levelOneStatus", false);
+        levelOneWorldOnePassed = sharedPreferences.getBoolean("levelOneWorldOneStatus", false);
+        levelOneWorldTwoPassed = sharedPreferences.getBoolean("levelOneWorldTwoStatus", false);
+    }
+
+    private void changeData(View clicked) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        switch (clicked.getId()) {
+            case R.id.imageButton_w1_l1 :
+                editor.putInt(DRAG_DROP_GAME_THEME, 1);
+                break;
+            case R.id.imageButton_w2_l1 :
+                editor.putInt(DRAG_DROP_GAME_THEME, 2);
+                break;
+/*            case R.id.imageButton_w3_l1 :
+                editor.putInt(DRAG_DROP_GAME_THEME, 3);
+                break;
+            case R.id.imageButton_w4_l1 :
+                editor.putInt(DRAG_DROP_GAME_THEME, 4);
+                break;*/
+        }
+        editor.commit();
     }
 }

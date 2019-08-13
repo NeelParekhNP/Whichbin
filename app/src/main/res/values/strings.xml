@@ -29,6 +29,18 @@
     <string name="question_nine">dishwasher</string>
     <string name="question_ten">desk</string>
 
+    <!--List of Conservation Status questions-->
+    <string name="animal_question_one">Leatherback Turtle</string>
+    <string name="animal_question_two">White Rhino</string>
+    <string name="animal_question_three">Sumatran Orangutan</string>
+    <string name="animal_question_four">White Tiger</string>
+    <string name="animal_question_five">Amsterdam Albatross</string>
+    <string name="animal_question_six">Beluga Whale</string>
+    <string name="animal_question_seven">Asian Elephant</string>
+    <string name="animal_question_eight">Giant Panda</string>
+    <string name="animal_question_nine">Nubian Giraffe</string>
+    <string name="animal_question_ten">Adriatic Sturgeon</string>
+
     <!--List of MultiplayerGame questions-->
     <string name="m_question_one">Which of these causes the greenhouse effect?</string>
     <string name="m_question_two">Which of these is NOT an expected effect of climate change?</string>
