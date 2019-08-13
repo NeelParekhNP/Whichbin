@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
@@ -15,11 +16,15 @@ import android.widget.Toast;
 public class RendererLayout extends SurfaceView implements Runnable {
 
     Thread thread = null;
-    boolean canDraw = false;
 
+    double frames_per_second, frame_time_seconds, frame_time_ms, frame_time_ns;
+    double tLF, tEOR, delta_t;
+
+    boolean canDraw = false;
+    SurfaceHolder surfaceHolder;
     Bitmap backGroundCheck;
     Canvas canvas;
-    SurfaceHolder surfaceHolder;
+
 
     Bitmap character;
     int characterPositionX;
@@ -65,7 +70,6 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
     public RendererLayout(int width, int height, Context context){
         super(context);
-        surfaceHolder = getHolder();
 
         this.width = width;
         this.height = height;
@@ -84,6 +88,14 @@ public class RendererLayout extends SurfaceView implements Runnable {
         xUnit = Math.round(x1);
         yUnit = Math.round(y1);
 
+        canDraw = false;
+        surfaceHolder = getHolder();
+
+        frames_per_second = 15;
+        frame_time_seconds=1/frames_per_second;
+        frame_time_ms = frame_time_seconds*1000;
+        frame_time_ns = frame_time_ms * 1000000;
+
         // Below is code for testing which starts the character in the bottom right.
         /**
          characterPositionX = Math.round(convertIntToGridX(8));
@@ -95,14 +107,37 @@ public class RendererLayout extends SurfaceView implements Runnable {
     @Override
     public void run() {
 
+        tLF = System.nanoTime();
+        delta_t = 0;
+
         while(canDraw){
 
+            update(delta_t);
 
             if(!surfaceHolder.getSurface().isValid()){
                 continue;
             }
 
-            canvas = surfaceHolder.lockCanvas();
+            draw();
+
+            tEOR = System.nanoTime();
+
+            delta_t = frame_time_ns - (tEOR - tLF);
+
+            stats();
+
+            try {
+                if(delta_t > 0) {
+                    thread.sleep((long) (delta_t / 1000000));
+                }
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+
+
+            // Old code from a past version
+            // canvas = surfaceHolder.lockCanvas();
             // motionCharacter(10);
 
             //moveUp(2);
@@ -110,64 +145,87 @@ public class RendererLayout extends SurfaceView implements Runnable {
             // Slightly concerned by the trail the character is leaving behind and whether this will take up memory
             // This is only visible with the background hidden so comment out the below line to test.
 
+            /**
             canvas.drawBitmap(backGroundCheck, null, new Rect(0,0, width, height), null);
-
-
 
             canvas.drawBitmap(character, characterPositionX, characterPositionY, null);
             surfaceHolder.unlockCanvasAndPost(canvas);
-
+            */
 
 
 
             // Unsure whether this is necessary
             //invalidate(0, 0, width, height);
-            invalidate();
+            //invalidate();
         }
     }
 
-    public void pause(){
-        canDraw = false;
+    private void update(double delta_t){
 
-        while(true){
-            try {
-                thread.join();
-                break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        thread = null;
     }
 
-    public void resume(){
-        canDraw = true;
-        thread = new Thread(this);
-        thread.start();
+    private void draw(){
+        canvas = surfaceHolder.lockCanvas();
+        canvas.drawBitmap(backGroundCheck, 0, 0, null);
+        // Check this is the correct variable
+        canvas.drawBitmap(character, characterPositionX, characterPositionY, null);
+
+        surfaceHolder.unlockCanvasAndPost(canvas);
     }
+
+
 
 
     public void moveUp(){
         characterPositionY = characterPositionY - yUnit;
 
+
+        try {
+            thread.sleep((long) 100);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     public void moveDown(){
         characterPositionY = characterPositionY + yUnit;
 
+
+        try {
+            thread.sleep((long) 100);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     public void moveRight(){
 
         characterPositionX = characterPositionX + xUnit;
 
+
+        try {
+            thread.sleep((long) 100);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     public void moveLeft(){
 
         characterPositionX = characterPositionX - xUnit;
 
+
+        try {
+            thread.sleep((long) 100);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
+
 
     // Previous attempt below will try a simplified version
     /**
@@ -400,5 +458,51 @@ public class RendererLayout extends SurfaceView implements Runnable {
         else{
             return y0;
         }
+    }
+
+    public void pause(){
+        canDraw = false;
+        Log.d("Thread", "Pausing thread..." + Thread.currentThread().getId());
+
+        while(true){
+            try{
+                Log.d("Thread", "Joining");
+                thread.join();
+                break;
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+
+        Log.d("Thread", "THREAD IS PAUSED " + Thread.currentThread().getId());
+        thread = null;
+        Log.d("Thread", "NULLED ******");
+    }
+
+    public void resume(){
+        canDraw = true;
+        Log.d("CanDraw", "true");
+
+        if(thread == null){
+            Log.d("Thread", "Making New");
+            thread = new Thread(this);
+            Log.d("Thread", "STARTING NEW");
+            thread.start();
+            Log.d("Thread", "STARTED");
+        }
+    }
+
+    private void stats(){
+        Log.d("Frames_per_second", Double.toString(frames_per_second));
+        Log.d("Frame_time_seconds", Double.toString(frame_time_seconds));
+        Log.d("Frames_time_ms", Double.toString(frame_time_ms));
+        Log.d("Frame_Time_NS", Double.toString(frame_time_ns));
+        Log.d("TLF", Double.toString(tLF));
+        Log.d("TEOR", Double.toString(tEOR));
+        Log.d("F_delta_t", Double.toString(delta_t));
+        Log.d("delta_t_sec", Double.toString(delta_t/1000000000));
+        Log.d("-----", "---------");
+
     }
 }

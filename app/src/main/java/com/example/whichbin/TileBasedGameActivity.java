@@ -10,9 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import static java.lang.StrictMath.abs;
+
 import com.example.whichbin.RendererLayout;
 
 public class TileBasedGameActivity extends Activity {
+    // Screen dimensions
+    int width;
+    int height;
 
     RendererLayout renderer;
 
@@ -30,10 +35,6 @@ public class TileBasedGameActivity extends Activity {
 
     private int playerDestinationX;
     private int playerDestinationY;
-
-    // Screen dimensions
-    int width;
-    int height;
 
     // Grid locations in pixels depending on screen size
     private float x0;
@@ -68,14 +69,21 @@ public class TileBasedGameActivity extends Activity {
     // Selected map variable and map
     private TileMapManager tileMapManager;
     private TileBasedMap currentMap;
-    private int selectedMap;
+    private int currentMapNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         width = getWidth();
         height = getHeight();
+
+        renderer = new RendererLayout(width, height, this);
+        setContentView(renderer);
 
         assignGridValues();
 
@@ -85,15 +93,8 @@ public class TileBasedGameActivity extends Activity {
         currentPositionX = 0;
         currentPositionY = 0;
 
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-
-        renderer = new RendererLayout(width, height, this);
-        setContentView(renderer);
-
         tileMapManager = new TileMapManager();
-        selectedMap = 1;
+        currentMapNumber = 1;
         currentMap = tileMapManager.getMap(1);
 
         //ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
@@ -109,11 +110,51 @@ public class TileBasedGameActivity extends Activity {
                 newX = findNearestGridX(event.getX());
                 newY = findNearestGridY(event.getY());
 
+                int playerDestinationX = convertGridToIntX(newX);
+                int playerDestinationY = convertGridToIntY(newY);
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
+
+                        int differenceIntX = playerDestinationX - playerPositionX;
+                        int differenceIntY = playerDestinationY - playerPositionY;
+
+                        while (!(differenceIntX == 0 && differenceIntY == 0)) {
+                            if (abs(differenceIntX) >= abs(differenceIntY)) {
+                                if (playerDestinationX < playerPositionX) {
+                                    renderer.moveLeft();
+                                    playerPositionX--;
+                                }
+                                // Next move is right into a free square
+                                //if ((playerDestinationX > playerPositionX) && !trueIfBlockedSquare(playerPositionX++, playerPositionY)) {
+                                if (playerDestinationX > playerPositionX) {
+                                    renderer.moveRight();
+                                    playerPositionX++;
+                                }
+                                // Next move is right into a blocked square
+                                //if ((playerDestinationX > playerPositionX) && trueIfBlockedSquare(playerPositionX++, playerPositionY)) {
+                                //  stopMovement();
+                                //}
+                            }
+                            if (abs(differenceIntX) < abs(differenceIntY)) {
+                                if (playerDestinationY < playerPositionY) {
+                                    renderer.moveUp();
+                                    playerPositionY--;
+                                }
+                                if (playerDestinationY > playerPositionY) {
+                                    renderer.moveDown();
+                                    playerPositionY++;
+                                }
+                            }
+                            differenceIntX = playerDestinationX - playerPositionX;
+                            differenceIntY = playerDestinationY - playerPositionY;
+                        }
+                        break;
+
+                        // Old code below
                         // Toast.makeText(getApplicationContext(), "NewX is " + newX + " and NewY is " + newY + ".", Toast.LENGTH_LONG).show();
+                        /**
                         try {
                             //if((newX > currentPositionX) && (currentMap.checkSquareBlocked(playerPositionX++, playerPositionY) != true)){
                             if (newX > currentPositionX) {
@@ -143,6 +184,7 @@ public class TileBasedGameActivity extends Activity {
                             Log.d(msg, "Action down event failed");
                             break;
                         }
+                        */
                     }
                     case MotionEvent.ACTION_MOVE: {
                         break;
@@ -161,14 +203,25 @@ public class TileBasedGameActivity extends Activity {
 
     @Override
     protected void onPause(){
+        Log.d("Super/Game", "Resume");
         super.onPause();
         renderer.pause();
     }
 
     @Override
     protected void onResume(){
+        Log.d("Super/Game", "Pause");
         super.onResume();
         renderer.resume();
+    }
+
+    private boolean trueIfBlockedSquare(int x, int y){
+        return currentMap.checkSquareBlocked(x,y);
+    }
+
+    private void stopMovement(){
+        playerDestinationX = playerPositionX;
+        playerDestinationY = playerPositionY;
     }
 
     public int getWidth(){
