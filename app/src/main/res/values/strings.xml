@@ -5,6 +5,7 @@
     <string name="trivia_game">Click here to play the climate change trivia game!</string>
     <string name="multiplayer_game">Click here to play the multiplayer game!</string>
     <string name="multipleChoice_game">Click here to play the multiple choice game!</string>
+    <string name="main_game">Click here to play the main game!</string>
 
     <!--Which bin game strings-->
     <string name="app_name">Which bin?</string>
@@ -29,6 +30,18 @@
     <string name="question_eight">brick</string>
     <string name="question_nine">dishwasher</string>
     <string name="question_ten">desk</string>
+
+    <!--List of Conservation Status questions-->
+    <string name="animal_question_one">Leatherback Turtle</string>
+    <string name="animal_question_two">White Rhino</string>
+    <string name="animal_question_three">Sumatran Orangutan</string>
+    <string name="animal_question_four">White Tiger</string>
+    <string name="animal_question_five">Amsterdam Albatross</string>
+    <string name="animal_question_six">Beluga Whale</string>
+    <string name="animal_question_seven">Asian Elephant</string>
+    <string name="animal_question_eight">Giant Panda</string>
+    <string name="animal_question_nine">Nubian Giraffe</string>
+    <string name="animal_question_ten">Adriatic Sturgeon</string>
 
     <!--List of MultiplayerGame questions-->
     <string name="m_question_one">Which of these causes the greenhouse effect?</string>
@@ -68,4 +81,9 @@
 
     <!-- List of How to avoid MCQ questions-->
     <string name="a_mcq_questions_nine">Of the following, the most impactful action you can take to reduce your carbon footprint is:</string>
+
+    <string name="title_activity_level_selection">LevelSelection</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 </resources>

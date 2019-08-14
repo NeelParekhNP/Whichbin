@@ -2,7 +2,9 @@ package com.example.whichbin;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.DragEvent;
@@ -18,12 +20,19 @@ import android.widget.Toast;
 public class BinGame extends AppCompatActivity {
 
     private ImageView question, option1, option2, option3;
-    private TextView questionTextView;
+    private TextView questionTextView, option1Label, option2Label, option3Label;
     private LinearLayout allOptions, nameTags;
     private int currentIndex = 0;
     private int totalCorrect = 0;
+    private String header;
 
-    private BinGameQuestions[] mQuestions = new BinGameQuestions[]{
+    private int levelTheme;
+    private BinGameQuestions[] questionSet;
+
+    public static final String LEVEL_ONE_WORLD_ONE_STATUS = "levelOneWorldOneStatus";
+    public static final String LEVEL_ONE_WORLD_TWO_STATUS = "levelOneWorldTwoStatus";
+
+    private BinGameQuestions[] recycleQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_zero, 1, R.drawable.image_0),
             new BinGameQuestions(R.string.question_one, 2, R.drawable.image_1),
             new BinGameQuestions(R.string.question_two, 3, R.drawable.image_2),
@@ -37,25 +46,65 @@ public class BinGame extends AppCompatActivity {
             new BinGameQuestions(R.string.question_ten, 1, R.drawable.image_10)
     };
 
+    private BinGameQuestions[] conservationStatusQuestions = new BinGameQuestions[]{
+            new BinGameQuestions(R.string.animal_question_one,1,R.drawable.leatherback_turtle_vulnerable),
+            new BinGameQuestions(R.string.animal_question_two,1,R.drawable.white_rhino_vulnerable),
+            new BinGameQuestions(R.string.animal_question_three,3,R.drawable.sumatran_orangutan_ce),
+            new BinGameQuestions(R.string.animal_question_four,2,R.drawable.white_tiger_endangered),
+            new BinGameQuestions(R.string.animal_question_five,3,R.drawable.amsterdam_albatross_ce),
+            new BinGameQuestions(R.string.animal_question_six,2,R.drawable.beluga_whale_endangered),
+            new BinGameQuestions(R.string.animal_question_seven,2,R.drawable.asian_elephant_endangered),
+            new BinGameQuestions(R.string.animal_question_eight,1,R.drawable.giant_panda_vulnerable),
+            new BinGameQuestions(R.string.animal_question_nine,3,R.drawable.nubian_giraffe_ce),
+            new BinGameQuestions(R.string.animal_question_ten,3,R.drawable.adriatic_sturgeon_ce)
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bin_game);
 
+        loadData();
+
         nameTags = (LinearLayout) findViewById(R.id.optionTagsLayout);
         allOptions = (LinearLayout) findViewById((R.id.optionsLayout));
-
         questionTextView = (TextView) findViewById(R.id.questionTextView);
-        final int Question = mQuestions[currentIndex].getQuestion();
-        String header = getString(R.string.questionHeader1) + " " + getString(Question) + " " + getString(R.string.questionHeader2);
-        questionTextView.setText(header);
-
-
         question = (ImageView) findViewById(R.id.qImageView);
-        question.setImageDrawable(getDrawable(mQuestions[currentIndex].getImage()));
         option1 = (ImageView) findViewById(R.id.gWBinImageView);
         option2 = (ImageView) findViewById(R.id.rBImageView);
         option3 = (ImageView) findViewById(R.id.oWImageView);
+        option1Label = (TextView) findViewById(R.id.textView_option1_tag);
+        option2Label = (TextView) findViewById(R.id.textView_option2_tag);
+        option3Label = (TextView) findViewById(R.id.textView_option3_tag);
+
+        switch (levelTheme){
+            case 1 :
+                questionSet = recycleQuestions;
+                option1.setImageDrawable(getDrawable(R.drawable.general_waste));
+                option2.setImageDrawable(getDrawable(R.drawable.recycle_bin));
+                option3.setImageDrawable(getDrawable(R.drawable.food_waste));
+                header = "Which bin does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
+                option1Label.setText("General Waste");
+                option2Label.setText("Recycle");
+                option3Label.setText("Organic Waste");
+                break;
+            case 2 :
+                questionSet = conservationStatusQuestions;
+                option1.setImageDrawable(getDrawable(R.drawable.vulnerable_box));
+                option2.setImageDrawable(getDrawable(R.drawable.endangered_box));
+                option3.setImageDrawable(getDrawable(R.drawable.critically_endangered_box));
+                header = "Which box does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
+                option1Label.setText("Vulnerable Species");
+                option2Label.setText("Endangered Species");
+                option3Label.setText("Critically Endangered Species");
+
+                break;
+            default:
+                    questionSet = recycleQuestions;
+        }
+        questionTextView.setText(header);
+
+        question.setImageDrawable(getDrawable(questionSet[currentIndex].getImage()));
 
         option1.setOnDragListener(dragListener);
         option2.setOnDragListener(dragListener);
@@ -68,7 +117,8 @@ public class BinGame extends AppCompatActivity {
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+            saveData();
+            Intent myIntent = new Intent(getBaseContext(), LevelSelection.class);
             startActivity(myIntent);
         }
     };
@@ -99,7 +149,7 @@ public class BinGame extends AppCompatActivity {
 
                     ImageView dropTarget = (ImageView) v;
 
-                    int answer = mQuestions[currentIndex].isAnswer();
+                    int answer = questionSet[currentIndex].isAnswer();
                     int tagDropTarget = Integer.parseInt((String)dropTarget.getTag());
 
                     if (answer == tagDropTarget ){
@@ -109,7 +159,7 @@ public class BinGame extends AppCompatActivity {
                     else {
                         Toast.makeText(BinGame.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
                     }
-                    if(currentIndex==(mQuestions.length-1)){
+                    if(currentIndex==(questionSet.length-1)){
                         ((ViewGroup) question.getParent()).removeView(question);
                         allOptions.removeAllViews();
                         nameTags.removeAllViews();
@@ -125,10 +175,18 @@ public class BinGame extends AppCompatActivity {
                     }
                     else {
                         currentIndex = (currentIndex + 1);
-                        Drawable imageQuestion = getDrawable(mQuestions[currentIndex].getImage());
+                        Drawable imageQuestion = getDrawable(questionSet[currentIndex].getImage());
                         question.setImageDrawable(imageQuestion);
-                        int question = mQuestions[currentIndex].getQuestion();
-                        String header = getString(R.string.questionHeader1) + " " + getString(question) + " " + getString(R.string.questionHeader2);
+                        int question = questionSet[currentIndex].getQuestion();
+                        String header = "";
+                        switch (levelTheme){
+                            case 1 :
+                                header = "Which bin does this " + getString(question) + " belong in?";
+                                break;
+                            case 2 :
+                                header = "Which box does this " + getString(question) + " belong in?";
+                                break;
+                        }
                         questionTextView.setText(header);
                     }
                     break;
@@ -136,4 +194,27 @@ public class BinGame extends AppCompatActivity {
             return true;
         }
     };
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if(totalCorrect >= 5) {
+            switch (levelTheme){
+                case 1 :
+                    editor.putBoolean(LEVEL_ONE_WORLD_ONE_STATUS, true);
+                    break;
+                case 2 :
+                    editor.putBoolean(LEVEL_ONE_WORLD_TWO_STATUS,true);
+                    break;
+            }
+
+        }
+        editor.commit();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        levelTheme = sharedPreferences.getInt("dragDropGameTheme", 0);
+    }
 }

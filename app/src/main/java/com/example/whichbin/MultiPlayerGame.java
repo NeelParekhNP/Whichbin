@@ -99,6 +99,12 @@ public class MultiPlayerGame extends AppCompatActivity {
         player2RB2.setText(questions[questionCounter].getOption2());
         player2RB3.setText(questions[questionCounter].getOption3());
         player2RB4.setText(questions[questionCounter].getOption4());
+        for (int i = 0; i < player1Group.getChildCount(); i++) {
+            RadioButton player1Button = findViewById(player1Group.getChildAt(i).getId());
+            RadioButton player2Button = findViewById(player2Group.getChildAt(i).getId());
+            player1Button.setTextColor(Color.BLACK);
+            player2Button.setTextColor(Color.BLACK);
+        }
         questionCounter++;
         String questionNumber = "Question " + questionCounter;
         player1QuestionNumber.setText(questionNumber);
@@ -119,6 +125,10 @@ public class MultiPlayerGame extends AppCompatActivity {
             public void onFinish() {
                 timeLeftInMillis = 0;
                 updateCountDownText();
+                for (int i = 0; i < player1Group.getChildCount(); i++) {
+                    player1Group.getChildAt(i).setEnabled(false);
+                    player2Group.getChildAt(i).setEnabled(false);
+                }
                 checkAnswer();
             }
         }.start();
@@ -131,48 +141,80 @@ public class MultiPlayerGame extends AppCompatActivity {
         String timeFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
         countdown1.setText(timeFormatted);
-        countdown1.setTextColor(Color.WHITE);
+        //countdown1.setTextColor(Color.WHITE);
         countdown2.setText(timeFormatted);
-        countdown2.setTextColor(Color.WHITE);
+        //countdown2.setTextColor(Color.WHITE);
     }
 
     private void checkAnswer(){
         countDownTimer.cancel();
-        RadioButton rbSelectedPlayer1 = findViewById(player1Group.getCheckedRadioButtonId());
-        RadioButton rbSelectedPlayer2 = findViewById(player2Group.getCheckedRadioButtonId());
-        int player1Pressed = player1Group.indexOfChild(rbSelectedPlayer1) + 1;
-        int player2Pressed = player2Group.indexOfChild(rbSelectedPlayer2) + 1;
-        int answer = questions[questionCounter-1].getAnswer();
-        player1Group.clearCheck();
-        player2Group.clearCheck();
+        new CountDownTimer(5000,1000){
+            public void onTick(long millisUntilFinished){
+                RadioButton rbSelectedPlayer1 = findViewById(player1Group.getCheckedRadioButtonId());
+                RadioButton rbSelectedPlayer2 = findViewById(player2Group.getCheckedRadioButtonId());
+                int player1Pressed = player1Group.indexOfChild(rbSelectedPlayer1) + 1;
+                int player2Pressed = player2Group.indexOfChild(rbSelectedPlayer2) + 1;
+                int answer = questions[questionCounter-1].getAnswer();
+                RadioButton p1CorrectAnswer = (RadioButton) player1Group.getChildAt(answer-1);
+                RadioButton p2CorrectAnswer = (RadioButton) player2Group.getChildAt(answer-1);
+                p1CorrectAnswer.setTextColor(Color.GREEN);
+                p2CorrectAnswer.setTextColor(Color.GREEN);
 
-        if(player1Pressed == answer){
-            p1Score++;
-        }
-        if(player2Pressed == answer){
-            p2Score++;
-        }
-        if(questionCounter<questions.length){
-            showNextQuestion();
-        }
-        else {
-            player1View.setVisibility(View.GONE);
-            player2View.setVisibility(View.GONE);
-            countdown1.setVisibility(View.GONE);
-            countdown2.setVisibility(View.GONE);
-            player1Group.setVisibility(View.GONE);
-            player2Group.setVisibility(View.GONE);
-            player1QuestionNumber.setVisibility(View.GONE);
-            player2QuestionNumber.setVisibility(View.GONE);
-            player1Score.setText("Player 1 score: " + p1Score);
-            player2Score.setText("Player 2 score: " + p2Score);
-            winnerTextView.setText(winnerChecker());
-            player1Score.setVisibility(View.VISIBLE);
-            player2Score.setVisibility(View.VISIBLE);
-            winnerTextView.setVisibility(View.VISIBLE);
-            mainMenu.setVisibility(View.VISIBLE);
-
-        }
+                if(player1Pressed == answer){
+                    p1Score++;
+                }
+                else if (player1Pressed == 0){
+                    /*player1RB1.setTextColor(Color.RED);
+                    player1RB2.setTextColor(Color.RED);
+                    player1RB3.setTextColor(Color.RED);
+                    player1RB4.setTextColor(Color.RED);
+                    p1CorrectAnswer.setTextColor(Color.GREEN);*/
+                }
+                else{
+                    rbSelectedPlayer1.setTextColor(Color.RED);
+                }
+                if(player2Pressed == answer){
+                    p2Score++;
+                }
+                else if (player2Pressed == 0){
+                    /*player2RB1.setTextColor(Color.RED);
+                    player2RB2.setTextColor(Color.RED);
+                    player2RB3.setTextColor(Color.RED);
+                    player2RB4.setTextColor(Color.RED);
+                    p2CorrectAnswer.setTextColor(Color.GREEN);*/
+                }
+                else{
+                    rbSelectedPlayer2.setTextColor(Color.RED);
+                }
+            }
+            public  void onFinish() {
+                player1Group.clearCheck();
+                player2Group.clearCheck();
+                for (int i = 0; i < player1Group.getChildCount(); i++) {
+                    player1Group.getChildAt(i).setEnabled(true);
+                    player2Group.getChildAt(i).setEnabled(true);
+                }
+                if (questionCounter < questions.length) {
+                    showNextQuestion();
+                } else {
+                    player1View.setVisibility(View.GONE);
+                    player2View.setVisibility(View.GONE);
+                    countdown1.setVisibility(View.GONE);
+                    countdown2.setVisibility(View.GONE);
+                    player1Group.setVisibility(View.GONE);
+                    player2Group.setVisibility(View.GONE);
+                    player1QuestionNumber.setVisibility(View.GONE);
+                    player2QuestionNumber.setVisibility(View.GONE);
+                    player1Score.setText("Player 1 score: " + p1Score);
+                    player2Score.setText("Player 2 score: " + p2Score);
+                    winnerTextView.setText(winnerChecker());
+                    player1Score.setVisibility(View.VISIBLE);
+                    player2Score.setVisibility(View.VISIBLE);
+                    winnerTextView.setVisibility(View.VISIBLE);
+                    mainMenu.setVisibility(View.VISIBLE);
+                }
+            }
+        }.start();
     }
     private String winnerChecker(){
         if(p1Score>p2Score){

@@ -2,6 +2,8 @@ package com.example.whichbin;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +17,18 @@ public class MainMenu extends AppCompatActivity {
     private Button triviaButton;
     private Button multiplayerGame;
     private Button multipleChoiceGame;
+    private Button levelSelector;
+    private Button mainGame;
 
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         setContentView(R.layout.main_menu);
         Log.d(msg, "The onCreate() event");
 
@@ -44,6 +53,22 @@ public class MainMenu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openMultiplayerGame();
+            }
+        });
+
+        levelSelector = (Button) findViewById(R.id.levelSelectorButtonX);
+        levelSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openLevelSelectionScreen();
+            }
+        });
+
+        mainGame = (Button) findViewById(R.id.tiledGameButton);
+        mainGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainGame();
             }
         });
 
@@ -73,6 +98,19 @@ public class MainMenu extends AppCompatActivity {
 
     public void openMultipleChoiceGame(){
         Intent intent = new Intent(this, MultipleChoiceGame.class);
+        startActivity(intent);
+    }
+
+    public void openLevelSelectionScreen() {
+        /** Delete first 2 lines if want to keep progress saved even after app reset*/
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().clear().commit();
+        Intent intent = new Intent(this, LevelSelection.class);
+        startActivity(intent);
+    }
+
+    public void openMainGame(){
+        Intent intent = new Intent(this, TileBasedGameActivity.class);
         startActivity(intent);
     }
 
