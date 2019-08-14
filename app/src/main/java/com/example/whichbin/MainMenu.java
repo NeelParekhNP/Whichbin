@@ -17,11 +17,17 @@ public class MainMenu extends AppCompatActivity {
     private Button triviaButton;
     private Button multiplayerGame;
     private Button levelSelector;
+    private Button mainGame;
 
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
         setContentView(R.layout.main_menu);
         Log.d(msg, "The onCreate() event");
 
@@ -56,6 +62,14 @@ public class MainMenu extends AppCompatActivity {
                 openLevelSelectionScreen();
             }
         });
+
+        mainGame = (Button) findViewById(R.id.tiledGameButton);
+        mainGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMainGame();
+            }
+        });
     }
     /** Called if the Which Bin game button's clicked. */
     public void openBinGame(){
@@ -78,6 +92,11 @@ public class MainMenu extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences.edit().clear().commit();
         Intent intent = new Intent(this, LevelSelection.class);
+        startActivity(intent);
+    }
+
+    public void openMainGame(){
+        Intent intent = new Intent(this, TileBasedGameActivity.class);
         startActivity(intent);
     }
 
