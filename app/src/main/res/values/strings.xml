@@ -57,7 +57,7 @@
 
     <!--List of Science MCQ questions-->
     <string name="s_mcq_question_one">Which of the following gases does not trap heat?</string>
-    <string name="s_mcq_question_two">If you removed the atmosphere\'s natural greenhouse effect, and everything else stayed the same, Earth's temperature would be:</string>
+    <string name="s_mcq_question_two">If you removed the atmosphere\'s natural greenhouse effect, and everything else stayed the same, Earth\'s temperature would be:</string>
     <string name="s_mcq_question_three">How do scientists collect evidence about climate?</string>
     <string name="s_mcq_question_four">Which of the following is a greenhouse gas?</string>
     <string name="s_mcq_question_five">Why are forests important for mitigating climate change?</string>
