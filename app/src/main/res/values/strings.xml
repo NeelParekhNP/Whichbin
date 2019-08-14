@@ -66,4 +66,6 @@
     <string name="n_mcq_question_nine"></string>
     <string name="n_mcq_question_ten"></string>
 
+    <!-- List of How to avoid MCQ questions-->
+    <string name="a_mcq_questions_nine">Of the following, the most impactful action you can take to reduce your carbon footprint is:</string>
 </resources>

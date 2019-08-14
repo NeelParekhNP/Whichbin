@@ -28,7 +28,7 @@ public class MultipleChoiceGame extends AppCompatActivity {
             new MultiplayerGameQuestions(R.string.m_question_six, 2, "1%", "14%", "33%", "70%"),
             new MultiplayerGameQuestions(R.string.m_question_seven, 4, "Transportation", "Buildings", "Industry", " Electricity and heat production"),
             new MultiplayerGameQuestions(R.string.m_question_eight, 2, "0.53 degrees", "0.94 degrees", "1.34 degrees", "0.21 degrees"),
-            new MultiplayerGameQuestions(R.string.m_question_nine, 3, "Jupiter", "Mars", "Venus", "Earth"),
+            new MultiplayerGameQuestions(R.string.a_mcq_questions_nine, 3, "Turn off your lights more often", "Drive a hybrid car", "Eat a plant-based diet", "Hang your clothes to dry"),
             new MultiplayerGameQuestions(R.string.m_question_ten, 3, "10,500", "1,500,000","150,000", "1,500")
     };
 
@@ -37,8 +37,8 @@ public class MultipleChoiceGame extends AppCompatActivity {
             new MultiplayerGameQuestions(R.string.s_mcq_question_two, 1,"17 to 22℃ cooler", "17 to 22℃ warmer", "6 to 11℃ cooler", "6 to 11℃ warmer"),
             new MultiplayerGameQuestions(R.string.s_mcq_question_three, 4, "Using remote sensing from space with satellites", "By ground-based measurements of surface temperature, carbon dioxide concentration and sea level", "By collecting \"proxy data\" from tree rings, ice cores and historical records", "All of the above"),
             new MultiplayerGameQuestions(R.string.s_mcq_question_four, 4,"Carbon Dioxide", "Methane", "Water Vapour", "All of the above"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_five, 1,"Forests serve as a sink in the carbon cycle", "Trees provide building materials", "Trees are an important food source", "Leaves of trees reflect all sunlight away from the Earth"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_six, 2,"A bicycle made of carbon fibre", "A cycle in which carbon flows between the atmosphere, land, and ocean", "Water Vapour", "Methane"),
+            new MultiplayerGameQuestions(R.string.s_mcq_question_five, 2,"A bicycle made of carbon fibre", "A cycle in which carbon flows between the atmosphere, land, and ocean", "the journey water takes as it moves from the land to the sky and back again. ", "None of the above"),
+            new MultiplayerGameQuestions(R.string.s_mcq_question_six, 1,"Forests serve as a sink in the carbon cycle", "Trees provide building materials", "Trees are an important food source", "Leaves of trees reflect all sunlight away from the Earth"),
             new MultiplayerGameQuestions(R.string.s_mcq_question_seven, 1,"17 to 22℃ cooler", "17 to 22℃ warmer", "6 to 11℃ cooler", "6 to 11℃ warmer"),
             new MultiplayerGameQuestions(R.string.s_mcq_question_eight, 4, "Using remote sensing from space with satellites", "By ground-based measurements of surface temperature, carbon dioxide concentration and sea level", "By collecting \"proxy data\" from tree rings, ice cores and historical records", "All of the above"),
             new MultiplayerGameQuestions(R.string.s_mcq_question_nine, 4,"Carbon Dioxide", "Methane", "Water Vapour", "All of the above"),
