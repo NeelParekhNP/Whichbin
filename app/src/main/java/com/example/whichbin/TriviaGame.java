@@ -53,7 +53,7 @@ public class TriviaGame extends AppCompatActivity {
         // answerInfo = new TriviaAnswerParcel();
 
         displayNextQuestion();
-        incrementScore();
+        scoreDisplay.setText(String.valueOf(score));
         startTimer();
 
         trueButton.setOnClickListener(new View.OnClickListener(){
@@ -163,8 +163,12 @@ public class TriviaGame extends AppCompatActivity {
     }
 
     private void incrementScore(){
-        scoreDisplay.setText(String.valueOf(score));
         score++;
+        scoreDisplay.setText(String.valueOf(score));
+        // Make sure the last button click doesn't register twice-hopefully unnecessary but had some problems previously.
+        if(score > 10){
+            score = 10;
+        }
     }
 
     public void openAnswerActivity(){

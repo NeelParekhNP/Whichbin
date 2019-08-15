@@ -86,7 +86,13 @@ public class TriviaAnswerParcel implements Parcelable {
     }
 
     public int getNumberOfQsAnswered(){
-        return answeredQuestionsList.size();
+        // Previously a bug was causing extra questions to be read-this is hopefully unnecessary but stops the number of questions getting too high.
+        if(answeredQuestionsList.size() > 10){
+            return 10;
+        }
+        else {
+            return answeredQuestionsList.size();
+        }
     }
 
     public int getScore(){
