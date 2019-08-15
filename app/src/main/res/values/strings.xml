@@ -18,20 +18,19 @@
     <string name="questionHeader1">Which bin does this</string>
     <string name="questionHeader2">belong in?</string>
 
-    <!--List of BinGame questions-->
-    <string name="question_zero">polystyrene cup</string>
-    <string name="question_one">plastic bottle</string>
-    <string name="question_two">paper bag</string>
-    <string name="question_three">aluminium can</string>
-    <string name="question_four">tree bark</string>
-    <string name="question_five">food waste</string>
-    <string name="question_six">t-shirt</string>
-    <string name="question_seven">fridge</string>
-    <string name="question_eight">brick</string>
-    <string name="question_nine">dishwasher</string>
-    <string name="question_ten">desk</string>
+    <!--List of BinGame DND questions-->
+    <string name="question_one">carrot</string>
+    <string name="question_two">styrofoam</string>
+    <string name="question_three">strawberry</string>
+    <string name="question_four">newspaper</string>
+    <string name="question_five">can</string>
+    <string name="question_six">crisp packet</string>
+    <string name="question_seven">bottle</string>
+    <string name="question_eight">plate</string>
+    <string name="question_nine">paper bag</string>
+    <string name="question_ten">apple</string>
 
-    <!--List of Conservation Status questions-->
+    <!--List of Conservation Status DND questions-->
     <string name="animal_question_one">Leatherback Turtle</string>
     <string name="animal_question_two">White Rhino</string>
     <string name="animal_question_three">Sumatran Orangutan</string>
@@ -42,6 +41,19 @@
     <string name="animal_question_eight">Giant Panda</string>
     <string name="animal_question_nine">Nubian Giraffe</string>
     <string name="animal_question_ten">Adriatic Sturgeon</string>
+
+    <!--List of Impact DND questions-->
+    <string name="impact_question_one">fossil fuels?</string>
+    <string name="impact_question_two">adopting a vegan diet</string>
+    <string name="impact_question_three">deforestation</string>
+    <string name="impact_question_four">leaving light bulbs on</string>
+    <string name="impact_question_five">riding a bicycle</string>
+    <string name="impact_question_six">eating meat</string>
+    <string name="impact_question_seven">solar power</string>
+    <string name="impact_question_eight">adopting a vegetarian diet</string>
+    <string name="impact_question_nine">riding a bus</string>
+    <string name="impact_question_ten">riding a car</string>
+
 
     <!--List of MultiplayerGame questions-->
     <string name="m_question_one">Which of these causes the greenhouse effect?</string>
