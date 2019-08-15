@@ -62,10 +62,10 @@
     <string name="s_mcq_question_four">Which of the following is a greenhouse gas?</string>
     <string name="s_mcq_question_five">Why are forests important for mitigating climate change?</string>
     <string name="s_mcq_question_six">What is the carbon cycle?</string>
-    <string name="s_mcq_question_seven">Which of the following gases does not trap heat?</string>
-    <string name="s_mcq_question_eight">Which of the following gases does not trap heat?</string>
-    <string name="s_mcq_question_nine">Which of the following gases does not trap heat?</string>
-    <string name="s_mcq_question_ten">Which of the following gases does not trap heat?</string>
+    <string name="s_mcq_question_seven">How much increase in global average surface temperature are humans responsible for?</string>
+    <string name="s_mcq_question_eight">When grown under the CO2 levels expected by 2050, common produce could see reductions anywhere from 3&#8211;17 percent of what nutrient(s)?</string>
+    <string name="s_mcq_question_nine">What is more deadly than any other weather-related hazard?</string>
+    <string name="s_mcq_question_ten">Which of these countries has the highest per capita CO2 emissions?</string>
 
     <!--List of Nature MCQ questions-->
     <string name="n_mcq_question_one">How are warming ocean temperatures impacting whales, fish, and other marine mammals?</string>
@@ -73,14 +73,23 @@
     <string name="n_mcq_question_three">Cities and rural communities face some of the same climate issues; these include:</string>
     <string name="n_mcq_question_four">How is climate change altering precipitation in the U.S.?</string>
     <string name="n_mcq_question_five">How do climate factors (temperature, precipitation, and humidity) relate to vector-borne disease?</string>
-    <string name="n_mcq_question_six"></string>
-    <string name="n_mcq_question_seven"></string>
-    <string name="n_mcq_question_eight"></string>
-    <string name="n_mcq_question_nine"></string>
-    <string name="n_mcq_question_ten"></string>
+    <string name="n_mcq_question_six">How many people in the world are vulnerable to the effects of climate change?</string>
+    <string name="n_mcq_question_seven">What percentage of all global greenhouse gas emissions caused by humans are caused by deforestation</string>
+    <string name="n_mcq_question_eight">As air pollution continues to be released into the atmosphere, what becomes more depleted, resulting in an increase of ultraviolet radiation on earth?</string>
+    <string name="n_mcq_question_nine">How much has wildlife population dropped by in the last 40 years?</string>
+    <string name="n_mcq_question_ten">As carbon dioxide emissions increase, the ocean\'s ability to absorb carbon dioxide declines, resulting in a more acidic ocean. What species is the most at risk in acidic water?</string>
 
     <!-- List of How to avoid MCQ questions-->
-    <string name="a_mcq_questions_nine">Of the following, the most impactful action you can take to reduce your carbon footprint is:</string>
+    <string name="a_mcq_question_one">Which of the following energy sources is environmentally friendly?</string>
+    <string name="a_mcq_question_two">If the global temperature rises by over 1.5°C what percentage of species will be at risk of extinction? </string>
+    <string name="a_mcq_question_three">What can you do to help fight climate change?</string>
+    <string name="a_mcq_question_four">Which of the following modes of transport should you use to reduce impact on climate change?</string>
+    <string name="a_mcq_question_five">What is the best solution to tackle climate change?</string>
+    <string name="a_mcq_question_six">What kind of diet should you adopt to reduce impact on climate change?</string>
+    <string name="a_mcq_question_seven">What should be done with household waste?</string>
+    <string name="a_mcq_question_eight">What changes should you make in your household to reduce the impact on climate change?</string>
+    <string name="a_mcq_question_nine">Of the following, the most impactful action you can take to reduce your carbon footprint is:</string>
+    <string name="a_mcq_question_ten">What kind of light bulbs have the least impact on climate change?</string>
 
     <string name="title_activity_level_selection">LevelSelection</string>
     <string name="dummy_button">Dummy Button</string>

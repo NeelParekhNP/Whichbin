@@ -31,6 +31,7 @@ public class BinGame extends AppCompatActivity {
 
     public static final String LEVEL_ONE_WORLD_ONE_STATUS = "levelOneWorldOneStatus";
     public static final String LEVEL_ONE_WORLD_TWO_STATUS = "levelOneWorldTwoStatus";
+    public static final String LEVEL_ONE_WORLD_THREE_STATUS = "levelOneWorldThreeStatus";
 
     private BinGameQuestions[] recycleQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_zero, 1, R.drawable.image_0),
@@ -97,7 +98,16 @@ public class BinGame extends AppCompatActivity {
                 option1Label.setText("Vulnerable Species");
                 option2Label.setText("Endangered Species");
                 option3Label.setText("Critically Endangered Species");
-
+                break;
+            case 3 :
+                questionSet = conservationStatusQuestions;
+                option1.setImageDrawable(getDrawable(R.drawable.vulnerable_box));
+                option2.setImageDrawable(getDrawable(R.drawable.endangered_box));
+                option3.setImageDrawable(getDrawable(R.drawable.critically_endangered_box));
+                header = "Which box does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
+                option1Label.setText("Vulnerable Species");
+                option2Label.setText("Endangered Species");
+                option3Label.setText("Critically Endangered Species");
                 break;
             default:
                     questionSet = recycleQuestions;
@@ -207,6 +217,8 @@ public class BinGame extends AppCompatActivity {
                 case 2 :
                     editor.putBoolean(LEVEL_ONE_WORLD_TWO_STATUS,true);
                     break;
+                case 3:
+                    editor.putBoolean(LEVEL_ONE_WORLD_THREE_STATUS,true);
             }
 
         }
