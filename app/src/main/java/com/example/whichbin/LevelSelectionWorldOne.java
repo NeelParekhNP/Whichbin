@@ -9,15 +9,15 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import java.util.Map;
-
-public class LevelSelection extends AppCompatActivity {
+public class LevelSelectionWorldOne extends AppCompatActivity {
 
     private ImageView character;
     private ImageButton world1Level1, world1Level2, world1Level3, world2Level1, world2Level2, world2Level3, world3Level1, world3Level2, world3Level3;
+    private Button launchWorldTwo;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private static final long COUNTDOWN_IN_MILLIS = 3000;
@@ -31,7 +31,7 @@ public class LevelSelection extends AppCompatActivity {
 
     public static final String DRAG_DROP_GAME_THEME = "dragDropGameTheme";
     public static final String MULTIPLE_CHOICE_GAME_THEME = "multipleChoiceGameTheme";
-    public static final String TRIVA_GAME_THEME = "triviaGameTheme";
+    public static final String TRIVIA_GAME_THEME = "triviaGameTheme";
 
     private ImageButton buttons [] = new ImageButton[9];
     private int[] allButtonIds = {
@@ -49,9 +49,10 @@ public class LevelSelection extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_selection);
+        setContentView(R.layout.activity_level_selection_world_one);
 
         character = (ImageView) findViewById(R.id.imageView_character);
+        launchWorldTwo = (Button) findViewById(R.id.button_world_one_right);
         world1Level1 = (ImageButton) findViewById(R.id.imageButton_w1_l1);
         world1Level2 = (ImageButton) findViewById(R.id.imageButton_w1_l2);
         world1Level3 = (ImageButton) findViewById(R.id.imageButton_w1_l3);
@@ -61,6 +62,15 @@ public class LevelSelection extends AppCompatActivity {
         world3Level1 = (ImageButton) findViewById(R.id.imageButton_w3_l1);
         world3Level2 = (ImageButton) findViewById(R.id.imageButton_w3_l2);
         world3Level3 = (ImageButton) findViewById(R.id.imageButton_w3_l3);
+
+        launchWorldTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
+                startActivity(myIntent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         for (int i = 0; i < buttons.length; i++){
             buttons[i] = findViewById(allButtonIds[i]);
@@ -137,7 +147,7 @@ public class LevelSelection extends AppCompatActivity {
                     myIntent = new Intent(getBaseContext(), TriviaGame.class);
                     break;
                 default:
-                    myIntent = new Intent(getBaseContext(), LevelSelection.class);
+                    myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
             }
             changeData(view);
             startCountDown(x, y, myIntent);
@@ -199,15 +209,21 @@ public class LevelSelection extends AppCompatActivity {
                 editor.putInt(MULTIPLE_CHOICE_GAME_THEME, 3);
                 break;
             case R.id.imageButton_w1_l3 :
-                editor.putInt(TRIVA_GAME_THEME, 1);
+                editor.putInt(TRIVIA_GAME_THEME, 1);
                 break;
             case R.id.imageButton_w2_l3 :
-                editor.putInt(TRIVA_GAME_THEME, 2);
+                editor.putInt(TRIVIA_GAME_THEME, 2);
                 break;
             case R.id.imageButton_w3_l3 :
-                editor.putInt(TRIVA_GAME_THEME, 3);
+                editor.putInt(TRIVIA_GAME_THEME, 3);
                 break;
         }
         editor.commit();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

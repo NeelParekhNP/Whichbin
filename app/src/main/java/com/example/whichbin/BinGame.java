@@ -1,5 +1,6 @@
 package com.example.whichbin;
 
+import android.animation.ValueAnimator;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -81,6 +83,29 @@ public class BinGame extends AppCompatActivity {
 
         loadData();
 
+        final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
+        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
+        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
+        final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(30000L);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundZero.getWidth();
+                final float translationX = 3 * width * progress;
+                backgroundZero.setTranslationX(translationX);
+                backgroundOne.setTranslationX(translationX - width);
+                backgroundTwo.setTranslationX(translationX - (width * 2));
+                backgroundThree.setTranslationX(translationX - (width * 3));
+            }
+        });
+        animator.start();
+
         nameTags = (LinearLayout) findViewById(R.id.optionTagsLayout);
         allOptions = (LinearLayout) findViewById((R.id.optionsLayout));
         questionTextView = (TextView) findViewById(R.id.questionTextView);
@@ -147,7 +172,7 @@ public class BinGame extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             saveData();
-            Intent myIntent = new Intent(getBaseContext(), LevelSelection.class);
+            Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
             startActivity(myIntent);
         }
     };

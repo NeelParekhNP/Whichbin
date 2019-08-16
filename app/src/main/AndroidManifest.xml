@@ -9,28 +9,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MultipleChoiceGame"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"></activity>
-        <activity android:name=".TileBasedGameActivity"></activity>
-        <activity android:name=".LevelSelection"
-            android:screenOrientation="landscape"
-            android:configChanges="orientation|keyboardHidden"></activity>
-        <activity android:name=".MultiPlayerGame"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".TriviaAnswerActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".TriviaGame"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".BinGame"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
-        <activity android:name=".MainMenu"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden">
+        <activity android:name=".LevelSelectionWorldThree"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"></activity>
+        <activity android:name=".LevelSelectionWorldTwo"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".MultipleChoiceGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
+        <activity android:name=".TileBasedGameActivity" />
+        <activity
+            android:name=".LevelSelectionWorldOne"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".MultiPlayerGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TriviaAnswerActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TriviaGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BinGame"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainMenu"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
