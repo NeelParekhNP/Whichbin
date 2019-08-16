@@ -4,14 +4,16 @@ package com.example.whichbin;
 public class BinGameQuestions {
 
     private int question;
-    private int answer;
+    private int answerInt;
     private int image;
+    private String answer;
 
 
-    public BinGameQuestions(int question, int answer, int image) {
+    public BinGameQuestions(int question, int answerInt, int image, String answer) {
         this.question = question;
-        this.answer = answer;
+        this.answerInt = answerInt;
         this.image = image;
+        this.answer = answer;
     }
 
     public int getQuestion() {
@@ -23,11 +25,11 @@ public class BinGameQuestions {
     }
 
     public int isAnswer() {
-        return answer;
+        return answerInt;
     }
 
-    public void setAnswer(int answer) {
-        this.answer = answer;
+    public void setAnswerInt(int answerInt) {
+        this.answerInt = answerInt;
     }
 
     public int getImage() {
@@ -36,5 +38,13 @@ public class BinGameQuestions {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }
