@@ -29,12 +29,18 @@ public class TileBasedGameActivity extends Activity {
     // Player's current grid values
     private int playerPositionX;
     private int playerPositionY;
-    // Grid values of where the player will move
-    private float currentPositionX;
-    private float currentPositionY;
-
+    // Grid square set on click for the character to move to
     private int playerDestinationX;
     private int playerDestinationY;
+    // Difference between position and destination
+    private int differenceIntX;
+    private int differenceIntY;
+
+    // next position variables
+    public int nextRight;
+    private int nextLeft;
+    private int nextUp;
+    private int nextDown;
 
     // Grid locations in pixels depending on screen size
     private float x0;
@@ -87,11 +93,10 @@ public class TileBasedGameActivity extends Activity {
 
         assignGridValues();
 
-        playerPositionX = 0;
-        playerPositionY = 0;
+        playerPositionX = 4;
+        playerPositionY = 14;
 
-        currentPositionX = 0;
-        currentPositionY = 0;
+        setNextPositions();
 
         tileMapManager = new TileMapManager();
         currentMapNumber = 1;
@@ -110,16 +115,97 @@ public class TileBasedGameActivity extends Activity {
                 newX = findNearestGridX(event.getX());
                 newY = findNearestGridY(event.getY());
 
-                int playerDestinationX = convertGridToIntX(newX);
-                int playerDestinationY = convertGridToIntY(newY);
+                playerDestinationX = convertGridToIntX(newX);
+                playerDestinationY = convertGridToIntY(newY);
+
+
+
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
 
 
-                        int differenceIntX = playerDestinationX - playerPositionX;
-                        int differenceIntY = playerDestinationY - playerPositionY;
+                        differenceIntX = playerDestinationX - playerPositionX;
+                        differenceIntY = playerDestinationY - playerPositionY;
 
+                        while (!(differenceIntX == 0 && differenceIntY == 0)) {
+                            // If further away in X value than Y from destination move in X dimension
+                            // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                            if (abs(differenceIntX) >= abs(differenceIntY)) {
+                                // Move left condition
+                                // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                                if (playerDestinationX < playerPositionX) {
+                                    if(currentMap.checkSquareBlocked((nextLeft), playerPositionY) == true) {
+
+                                        stopMovement();
+                                    }
+                                    if(currentMap.checkSquareBlocked((nextLeft), playerPositionY) == false) {
+                                        renderer.moveLeft();
+                                        playerPositionX--;
+                                        setNextPositions();
+                                        updateJourneyDifference();
+                                    }
+                                    //gameLoop001_LayoutView.moveLeft();
+
+                                }
+                                // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+                                // Move right condition
+                                // RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+                                if (playerDestinationX > playerPositionX) {
+                                    // Check if next square is blocked
+                                    if(currentMap.checkSquareBlocked((nextRight), playerPositionY) == true) {
+                                        stopMovement();
+                                    }
+
+                                    if(currentMap.checkSquareBlocked((nextRight), playerPositionY) == false) {
+                                        renderer.moveRight();
+                                        playerPositionX++;
+                                        setNextPositions();
+                                        updateJourneyDifference();
+                                    }
+
+
+                                }
+                                // RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+                            }
+                            // XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                            // Below is concerned with movement in Y
+                            // YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                            if (abs(differenceIntX) < abs(differenceIntY)) {
+                                // Move up condition
+                                // UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
+                                if (playerDestinationY < playerPositionY) {
+                                    if(currentMap.checkSquareBlocked(playerPositionX, nextUp) == true) {
+                                        stopMovement();
+                                    }
+                                    if(currentMap.checkSquareBlocked(playerPositionX, nextUp) == false) {
+                                        renderer.moveUp();
+                                        playerPositionY--;
+                                        setNextPositions();
+                                        updateJourneyDifference();
+                                    }
+                                }
+                                // UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
+                                // Move down condition
+                                // DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                                if (playerDestinationY > playerPositionY) {
+                                    if(currentMap.checkSquareBlocked(playerPositionX, nextDown) == true) {
+                                        stopMovement();
+                                    }
+                                    if(currentMap.checkSquareBlocked(playerPositionX, nextDown) == false) {
+                                        renderer.moveDown();
+                                        playerPositionY++;
+                                        setNextPositions();
+                                        updateJourneyDifference();
+                                    }
+                                }
+                                // DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+                            }
+                            // YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                        }
+
+
+                        /**
                         while (!(differenceIntX == 0 && differenceIntY == 0)) {
                             if (abs(differenceIntX) >= abs(differenceIntY)) {
                                 if (playerDestinationX < playerPositionX) {
@@ -150,41 +236,10 @@ public class TileBasedGameActivity extends Activity {
                             differenceIntX = playerDestinationX - playerPositionX;
                             differenceIntY = playerDestinationY - playerPositionY;
                         }
+                        */
                         break;
 
-                        // Old code below
-                        // Toast.makeText(getApplicationContext(), "NewX is " + newX + " and NewY is " + newY + ".", Toast.LENGTH_LONG).show();
-                        /**
-                        try {
-                            //if((newX > currentPositionX) && (currentMap.checkSquareBlocked(playerPositionX++, playerPositionY) != true)){
-                            if (newX > currentPositionX) {
-                                renderer.moveRight();
-                                playerPositionX++;
-                                currentPositionX = convertIntToGridX(playerPositionX);
-                            }
-                            if (newX < currentPositionX) {
-                                renderer.moveLeft();
-                                playerPositionX--;
-                                currentPositionX = convertIntToGridX(playerPositionX);
-                            }
-                            if (newY > currentPositionY) {
-                                renderer.moveDown();
-                                playerPositionY++;
-                                currentPositionY = convertIntToGridY(playerPositionY);
-                            }
-                            if (newY < currentPositionY) {
-                                renderer.moveUp();
-                                playerPositionY--;
-                                currentPositionY = convertIntToGridY(playerPositionY);
-                            }
-                            Log.d(msg, "Action down event processed");
-                            break;
-                        }
-                        catch(Exception e){
-                            Log.d(msg, "Action down event failed");
-                            break;
-                        }
-                        */
+
                     }
                     case MotionEvent.ACTION_MOVE: {
                         break;
@@ -219,9 +274,24 @@ public class TileBasedGameActivity extends Activity {
         return currentMap.checkSquareBlocked(x,y);
     }
 
+    // Method to reset variables when the character meets a blocked tile
     private void stopMovement(){
         playerDestinationX = playerPositionX;
         playerDestinationY = playerPositionY;
+        differenceIntX = 0;
+        differenceIntY = 0;
+    }
+
+    private void updateJourneyDifference() {
+        differenceIntX = playerDestinationX - playerPositionX;
+        differenceIntY = playerDestinationY - playerPositionY;
+    }
+
+    private void setNextPositions() {
+        nextRight = playerPositionX + 1;
+        nextLeft = playerPositionX - 1;
+        nextUp = playerPositionY - 1;
+        nextDown = playerPositionY + 1;
     }
 
     public int getWidth(){

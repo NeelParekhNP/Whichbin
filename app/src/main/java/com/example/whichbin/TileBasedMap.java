@@ -16,6 +16,16 @@ public class TileBasedMap {
         portalSquares = new String [9][16];
     }
 
+    // Method when initialising a new map to default all squares to unblocked.
+    // This can then be ovewritten by individual assignments of blocked squares.
+    public void setAllSquaresUnblocked() {
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 16; j++) {
+                blockedSquares[i][j] = false;
+            }
+        }
+    }
+
     public void setBlockedSquare(int x, int y){
         blockedSquares[x][y] = true;
     }

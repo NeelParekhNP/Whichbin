@@ -89,8 +89,12 @@ public class RendererLayout extends SurfaceView implements Runnable {
         character = BitmapFactory.decodeResource(getResources(), R.drawable.character);
         character = Bitmap.createScaledBitmap(character, (width/9), (height/16), true);
 
-        characterPositionX = 0;
-        characterPositionY = 0;
+        characterPositionX = Math.round(convertIntToGridX(4));
+        characterPositionY = Math.round(convertIntToGridY(14));
+
+        // Previous code for starting the character in the top left
+        // characterPositionX = 0;
+        // characterPositionY = 0;
 
         xUnit = Math.round(x1);
         yUnit = Math.round(y1);
