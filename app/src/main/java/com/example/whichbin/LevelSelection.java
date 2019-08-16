@@ -31,6 +31,7 @@ public class LevelSelection extends AppCompatActivity {
 
     public static final String DRAG_DROP_GAME_THEME = "dragDropGameTheme";
     public static final String MULTIPLE_CHOICE_GAME_THEME = "multipleChoiceGameTheme";
+    public static final String TRIVA_GAME_THEME = "triviaGameTheme";
 
     private ImageButton buttons [] = new ImageButton[9];
     private int[] allButtonIds = {
@@ -196,6 +197,15 @@ public class LevelSelection extends AppCompatActivity {
                 break;
             case R.id.imageButton_w3_l2 :
                 editor.putInt(MULTIPLE_CHOICE_GAME_THEME, 3);
+                break;
+            case R.id.imageButton_w1_l3 :
+                editor.putInt(TRIVA_GAME_THEME, 1);
+                break;
+            case R.id.imageButton_w2_l3 :
+                editor.putInt(TRIVA_GAME_THEME, 2);
+                break;
+            case R.id.imageButton_w3_l3 :
+                editor.putInt(TRIVA_GAME_THEME, 3);
                 break;
         }
         editor.commit();

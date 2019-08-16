@@ -1,6 +1,8 @@
 package com.example.whichbin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 
 public class TriviaAnswerActivity extends AppCompatActivity {
 
+    private int trivaGameLevel;
     private TextView questionDisplay;
     private TextView answerDisplay;
     private TextView scoreDisplay;
@@ -20,7 +23,7 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private String question;
     private String scoreString;
     private String answerText;
-    private TriviaGameManager triviaGameManager = new TriviaGameManager();
+    private TriviaGameManager triviaGameManager;
 
     private TriviaAnswerParcel answerInfo;
 
@@ -39,6 +42,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
         nextButton = (Button) findViewById(R.id.next_answer_button);
         prevButton = (Button) findViewById(R.id.prev_answer_button);
         mainMenuButton = (Button) findViewById(R.id.main_menu_button);
+
+        loadData();
+        triviaGameManager = new TriviaGameManager(trivaGameLevel);
 
         displayAnsweredQuestion(questionIndex);
         displayAnswerFeedback(questionIndex);
@@ -127,5 +133,10 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     public void openMainMenu(){
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        trivaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
     }
 }

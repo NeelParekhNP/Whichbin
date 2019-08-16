@@ -223,7 +223,7 @@ public class TriviaGame extends AppCompatActivity {
 
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        trivaGameLevel = sharedPreferences.getInt("dragDropGameTheme", 0);
+        trivaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
     }
 }
 
