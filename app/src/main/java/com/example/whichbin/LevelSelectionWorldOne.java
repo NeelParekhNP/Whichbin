@@ -16,34 +16,24 @@ import android.widget.ImageView;
 public class LevelSelectionWorldOne extends AppCompatActivity {
 
     private ImageView character;
-    private ImageButton world1Level1, world1Level2, world1Level3, world2Level1, world2Level2, world2Level3, world3Level1, world3Level2, world3Level3;
+    private ImageButton world1Level1, world1Level2, world1Level3;
     private Button launchWorldTwo;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private static final long COUNTDOWN_IN_MILLIS = 3000;
 
     private boolean levelOneWorldOnePassed;
-    private boolean levelOneWorldTwoPassed;
-    private boolean levelOneWorldThreePassed;
     private boolean levelTwoWorldOnePassed;
-    private boolean levelTwoWorldTwoPassed;
-    private boolean levelTwoWorldThreePassed;
 
     public static final String DRAG_DROP_GAME_THEME = "dragDropGameTheme";
     public static final String MULTIPLE_CHOICE_GAME_THEME = "multipleChoiceGameTheme";
     public static final String TRIVIA_GAME_THEME = "triviaGameTheme";
 
-    private ImageButton buttons [] = new ImageButton[9];
+    private ImageButton buttons [] = new ImageButton[3];
     private int[] allButtonIds = {
             R.id.imageButton_w1_l1,
             R.id.imageButton_w1_l2,
-            R.id.imageButton_w1_l3,
-            R.id.imageButton_w2_l1,
-            R.id.imageButton_w2_l2,
-            R.id.imageButton_w2_l3,
-            R.id.imageButton_w3_l1,
-            R.id.imageButton_w3_l2,
-            R.id.imageButton_w3_l3
+            R.id.imageButton_w1_l3
     };
 
     @Override
@@ -51,17 +41,11 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_level_selection_world_one);
 
-        character = (ImageView) findViewById(R.id.imageView_character);
+        character = (ImageView) findViewById(R.id.imageView_character_world_one);
         launchWorldTwo = (Button) findViewById(R.id.button_world_one_right);
         world1Level1 = (ImageButton) findViewById(R.id.imageButton_w1_l1);
         world1Level2 = (ImageButton) findViewById(R.id.imageButton_w1_l2);
         world1Level3 = (ImageButton) findViewById(R.id.imageButton_w1_l3);
-        world2Level1 = (ImageButton) findViewById(R.id.imageButton_w2_l1);
-        world2Level2 = (ImageButton) findViewById(R.id.imageButton_w2_l2);
-        world2Level3 = (ImageButton) findViewById(R.id.imageButton_w2_l3);
-        world3Level1 = (ImageButton) findViewById(R.id.imageButton_w3_l1);
-        world3Level2 = (ImageButton) findViewById(R.id.imageButton_w3_l2);
-        world3Level3 = (ImageButton) findViewById(R.id.imageButton_w3_l3);
 
         launchWorldTwo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +59,7 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
         for (int i = 0; i < buttons.length; i++){
             buttons[i] = findViewById(allButtonIds[i]);
             buttons[i].setOnClickListener(clickListener);
-            if ((allButtonIds[i] == R.id.imageButton_w1_l1) || (allButtonIds[i] == R.id.imageButton_w2_l1) || (allButtonIds[i] == R.id.imageButton_w3_l1)){
+            if ((allButtonIds[i] == R.id.imageButton_w1_l1) || (allButtonIds[i] == R.id.imageButton_w3_l1)){
                 //Do nothing
             }
             else{
@@ -89,25 +73,9 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
             world1Level2.setEnabled(true);
             world1Level2.setImageAlpha(0xFF);
         }
-        if (levelOneWorldTwoPassed){
-            world2Level2.setEnabled(true);
-            world2Level2.setImageAlpha(0xFF);
-        }
-        if (levelOneWorldThreePassed){
-            world3Level2.setEnabled(true);
-            world3Level2.setImageAlpha(0xFF);
-        }
         if (levelTwoWorldOnePassed){
             world1Level3.setEnabled(true);
             world1Level3.setImageAlpha(0xFF);
-        }
-        if (levelTwoWorldTwoPassed){
-            world2Level3.setEnabled(true);
-            world2Level3.setImageAlpha(0xFF);
-        }
-        if (levelTwoWorldThreePassed){
-            world3Level3.setEnabled(true);
-            world3Level3.setImageAlpha(0xFF);
         }
     }
 
@@ -126,24 +94,6 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
                     myIntent = new Intent(getBaseContext(), MultipleChoiceGame.class);
                     break;
                 case R.id.imageButton_w1_l3:
-                    myIntent = new Intent(getBaseContext(), TriviaGame.class);
-                    break;
-                case R.id.imageButton_w2_l1:
-                    myIntent = new Intent(getBaseContext(), BinGame.class);
-                    break;
-                case R.id.imageButton_w2_l2:
-                    myIntent = new Intent(getBaseContext(), MultipleChoiceGame.class);
-                    break;
-                case R.id.imageButton_w2_l3:
-                    myIntent = new Intent(getBaseContext(), TriviaGame.class);
-                    break;
-                case R.id.imageButton_w3_l1:
-                    myIntent = new Intent(getBaseContext(), BinGame.class);
-                    break;
-                case R.id.imageButton_w3_l2:
-                    myIntent = new Intent(getBaseContext(), MultipleChoiceGame.class);
-                    break;
-                case R.id.imageButton_w3_l3:
                     myIntent = new Intent(getBaseContext(), TriviaGame.class);
                     break;
                 default:
@@ -178,11 +128,7 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         levelOneWorldOnePassed = sharedPreferences.getBoolean("levelOneWorldOneStatus", false);
-        levelOneWorldTwoPassed = sharedPreferences.getBoolean("levelOneWorldTwoStatus", false);
-        levelOneWorldThreePassed = sharedPreferences.getBoolean("levelOneWorldThreeStatus", false);
         levelTwoWorldOnePassed = sharedPreferences.getBoolean("levelTwoWorldOneStatus", false);
-        levelTwoWorldTwoPassed = sharedPreferences.getBoolean("levelTwoWorldTwoStatus", false);
-        levelTwoWorldThreePassed = sharedPreferences.getBoolean("levelTwoWorldThreeStatus", false);
     }
 
     private void changeData(View clicked) {
@@ -193,29 +139,11 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
             case R.id.imageButton_w1_l1 :
                 editor.putInt(DRAG_DROP_GAME_THEME, 1);
                 break;
-            case R.id.imageButton_w2_l1 :
-                editor.putInt(DRAG_DROP_GAME_THEME, 2);
-                break;
-            case R.id.imageButton_w3_l1 :
-                editor.putInt(DRAG_DROP_GAME_THEME, 3);
-                break;
             case R.id.imageButton_w1_l2 :
                 editor.putInt(MULTIPLE_CHOICE_GAME_THEME, 1);
                 break;
-            case R.id.imageButton_w2_l2 :
-                editor.putInt(MULTIPLE_CHOICE_GAME_THEME, 2);
-                break;
-            case R.id.imageButton_w3_l2 :
-                editor.putInt(MULTIPLE_CHOICE_GAME_THEME, 3);
-                break;
             case R.id.imageButton_w1_l3 :
                 editor.putInt(TRIVIA_GAME_THEME, 1);
-                break;
-            case R.id.imageButton_w2_l3 :
-                editor.putInt(TRIVIA_GAME_THEME, 2);
-                break;
-            case R.id.imageButton_w3_l3 :
-                editor.putInt(TRIVIA_GAME_THEME, 3);
                 break;
         }
         editor.commit();

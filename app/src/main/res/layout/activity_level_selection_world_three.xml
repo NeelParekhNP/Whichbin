@@ -7,6 +7,69 @@
     android:background="@drawable/cloud"
     tools:context=".LevelSelectionWorldThree">
 
+    <ImageView
+        android:id="@+id/imageView_character_world_three"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Character"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/puffin32x32" />
+
+    <ImageButton
+        android:id="@+id/imageButton_w3_l1"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="400dp"
+        android:layout_marginBottom="180dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:contentDescription="World 3 Level 1"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/world1level1" />
+
+    <ImageButton
+        android:id="@+id/imageButton_w3_l2"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:contentDescription="World 3 Level 2"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/world1level2" />
+
+    <ImageButton
+        android:id="@+id/imageButton_w3_l3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="350dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="100dp"
+        android:background="@null"
+        android:contentDescription="World 3 Level 3"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/castle" />
+
     <Button
         android:id="@+id/button_world_three_left"
         android:layout_width="wrap_content"

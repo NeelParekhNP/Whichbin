@@ -42,7 +42,7 @@ public class MultipleChoiceGame extends AppCompatActivity {
     };
     
     private MultiplayerGameQuestions[] natureQuestions = new MultiplayerGameQuestions[]{
-            new MultiplayerGameQuestions(R.string.n_mcq_question_one, 1,"They aren’t as hungry because it’s so hot", "Warmer water makes them sleepy", "Their migratory patterns are changing", "Summer seems longer so fish are schooling less"),
+            new MultiplayerGameQuestions(R.string.n_mcq_question_one, 3,"They aren’t as hungry because it’s so hot", "Warmer water makes them sleepy", "Their migratory patterns are changing", "Summer seems longer so fish are schooling less"),
             new MultiplayerGameQuestions(R.string.n_mcq_question_two, 4,"Water shortages", "Power outages", "Higher electricity and gas prices", "All of the above"),
             new MultiplayerGameQuestions(R.string.n_mcq_question_three, 3, "Too many people with the same name slows emergency response", "There are not enough celebrities focused on climate issues", "The need to upgrade aging infrastructure", "People can’t identify the needed solutions so take no action"),
             new MultiplayerGameQuestions(R.string.n_mcq_question_four, 3,"Increasing extreme precipitation everywhere", "Increasing length of droughts everywhere", "Increase in both wet and dry extremes", "Climate change doesn’t alter precipitation"),
