@@ -9,10 +9,10 @@ public class TriviaGameManager {
     private ArrayList<TriviaQuestion> triviaArray;
 
     /** Constructor method to set up the game and get it running. */
-    public TriviaGameManager(){
+    public TriviaGameManager(int level){
         triviaArray = new ArrayList<>();
 
-        createQuestions(3);
+        createQuestions(level);
     }
 
     /** Method to populate the questions */

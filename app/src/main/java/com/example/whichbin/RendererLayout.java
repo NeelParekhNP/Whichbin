@@ -12,6 +12,13 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+/**
+ * CITATION: this class was based on the helpful tutorials of youtube user "clientuser.net" found here:
+ * https://www.youtube.com/playlist?list=PLjAaEVR74i-AMRQnNQ3fsRPzZ98J2iaut
+ * I followed some of the videos to learn about animation and game loops-in particular tutorials 42-46 and 49-52.
+ * This is what let me implement some basic animation of the character moving-but this was changed
+ * and combined with other logic for the tile based movement I set up.
+ */
 
 public class RendererLayout extends SurfaceView implements Runnable {
 

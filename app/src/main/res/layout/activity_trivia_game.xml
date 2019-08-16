@@ -4,7 +4,38 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#53a4f5"
     tools:context=".TriviaGame">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/background_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/clouds0"/>
+
+        <ImageView
+            android:id="@+id/background_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/clouds1"/>
+
+        <ImageView
+            android:id="@+id/background_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/clouds2"/>
+
+        <ImageView
+            android:id="@+id/background_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/clouds3"/>
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,6 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="True"
+        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,13 +82,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="False"
+        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.75"
         tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="433dp" />
+        tools:layout_editor_absoluteY="433dp"
+        />
 
     <TextView
         android:id="@+id/score_string"

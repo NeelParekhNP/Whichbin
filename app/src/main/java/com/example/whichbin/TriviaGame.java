@@ -1,11 +1,16 @@
 package com.example.whichbin;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,11 +18,12 @@ import java.util.ArrayList;
 
 public class TriviaGame extends AppCompatActivity {
 
-    private TriviaGameManager triviaGameManager = new TriviaGameManager();
+    private TriviaGameManager triviaGameManager;
     private TextView questionDisplay;
     private TextView scoreDisplay;
     private TextView timeDisplay;
 
+    private int trivaGameLevel;
     private boolean inputAnswer;
     private Integer nextQuestionNumber = 0;
     private Button trueButton;
@@ -39,6 +45,43 @@ public class TriviaGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_game);
 
+        loadData();
+        triviaGameManager = new TriviaGameManager(trivaGameLevel);
+
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+
+        final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
+        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
+        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
+        final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
+
+        /**
+         * The below code was based on a stack overflow answer which can be found here:
+         * https://stackoverflow.com/questions/36894384/android-move-background-continuously-with-animation
+         * I did adjust it however as it was only for two images but this caused stutter so I sandwiched my
+         * cloud frames between two identical blank blue backgrounds (adjusting the corresponding code).
+         * There was also a slight gap between the frames but I hid this by matching the general background's
+         * rgb value to the blue of the clouds.
+         */
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(30000L);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundZero.getWidth();
+                final float translationX = 3 * width * progress;
+                backgroundZero.setTranslationX(translationX);
+                backgroundOne.setTranslationX(translationX - width);
+                backgroundTwo.setTranslationX(translationX - (width * 2));
+                backgroundThree.setTranslationX(translationX - (width * 3));
+            }
+        });
+        animator.start();
 
         questionDisplay = (TextView) findViewById(R.id.trivia_question);
         scoreDisplay = (TextView) findViewById(R.id.score_int);
@@ -176,6 +219,11 @@ public class TriviaGame extends AppCompatActivity {
         Intent intent = new Intent(this, TriviaAnswerActivity.class);
         intent.putExtra("answerInfo", answerInfo);
         startActivity(intent);
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        trivaGameLevel = sharedPreferences.getInt("dragDropGameTheme", 0);
     }
 }
 
