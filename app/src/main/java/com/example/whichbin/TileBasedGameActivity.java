@@ -1,8 +1,11 @@
 package com.example.whichbin;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -76,6 +79,7 @@ public class TileBasedGameActivity extends Activity {
     private TileMapManager tileMapManager;
     private TileBasedMap currentMap;
     private int currentMapNumber;
+    private int actionInstructionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +105,12 @@ public class TileBasedGameActivity extends Activity {
         tileMapManager = new TileMapManager();
         currentMapNumber = 1;
         currentMap = tileMapManager.getMap(1);
+
+        actionInstructionNumber = 0;
+
+        updateInstruction();
+
+        // currentMap.allTasksComplete();
 
         //ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
 
@@ -135,8 +145,12 @@ public class TileBasedGameActivity extends Activity {
                                 // Move left condition
                                 // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
                                 if (playerDestinationX < playerPositionX) {
+                                    if(currentMap.checkIfPortalSquare(nextLeft, playerPositionY) != null && !currentMap.checkIfPortalSquare(nextLeft, playerPositionY).isEmpty()){
+                                        if(currentMap.checkIfPortalSquare(nextLeft, playerPositionY).equals("exit")){
+                                            openLevelSelectionScreen();
+                                        }
+                                    }
                                     if(currentMap.checkSquareBlocked((nextLeft), playerPositionY) == true) {
-
                                         stopMovement();
                                     }
                                     if(currentMap.checkSquareBlocked((nextLeft), playerPositionY) == false) {
@@ -145,8 +159,6 @@ public class TileBasedGameActivity extends Activity {
                                         setNextPositions();
                                         updateJourneyDifference();
                                     }
-                                    //gameLoop001_LayoutView.moveLeft();
-
                                 }
                                 // LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
                                 // Move right condition
@@ -156,15 +168,12 @@ public class TileBasedGameActivity extends Activity {
                                     if(currentMap.checkSquareBlocked((nextRight), playerPositionY) == true) {
                                         stopMovement();
                                     }
-
                                     if(currentMap.checkSquareBlocked((nextRight), playerPositionY) == false) {
                                         renderer.moveRight();
                                         playerPositionX++;
                                         setNextPositions();
                                         updateJourneyDifference();
                                     }
-
-
                                 }
                                 // RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
                             }
@@ -203,40 +212,10 @@ public class TileBasedGameActivity extends Activity {
                             }
                             // YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                         }
+                        checkIfExitSquare();
+                        checkIfActionSquare();
 
 
-                        /**
-                        while (!(differenceIntX == 0 && differenceIntY == 0)) {
-                            if (abs(differenceIntX) >= abs(differenceIntY)) {
-                                if (playerDestinationX < playerPositionX) {
-                                    renderer.moveLeft();
-                                    playerPositionX--;
-                                }
-                                // Next move is right into a free square
-                                //if ((playerDestinationX > playerPositionX) && !trueIfBlockedSquare(playerPositionX++, playerPositionY)) {
-                                if (playerDestinationX > playerPositionX) {
-                                    renderer.moveRight();
-                                    playerPositionX++;
-                                }
-                                // Next move is right into a blocked square
-                                //if ((playerDestinationX > playerPositionX) && trueIfBlockedSquare(playerPositionX++, playerPositionY)) {
-                                //  stopMovement();
-                                //}
-                            }
-                            if (abs(differenceIntX) < abs(differenceIntY)) {
-                                if (playerDestinationY < playerPositionY) {
-                                    renderer.moveUp();
-                                    playerPositionY--;
-                                }
-                                if (playerDestinationY > playerPositionY) {
-                                    renderer.moveDown();
-                                    playerPositionY++;
-                                }
-                            }
-                            differenceIntX = playerDestinationX - playerPositionX;
-                            differenceIntY = playerDestinationY - playerPositionY;
-                        }
-                        */
                         break;
 
 
@@ -270,6 +249,28 @@ public class TileBasedGameActivity extends Activity {
         renderer.resume();
     }
 
+    public void openMainMenu(){
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
+    }
+
+    public void openLevelSelectionScreen() {
+        /** Delete first 2 lines if want to keep progress saved even after app reset*/
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.edit().clear().commit();
+        Intent intent = new Intent(this, LevelSelection.class);
+        startActivity(intent);
+    }
+
+    private void checkIfExitSquare(){
+        if(currentMap.checkIfPortalSquare(playerPositionX, playerPositionY) != null && !currentMap.checkIfPortalSquare(playerPositionX, playerPositionY).isEmpty()){
+            if(currentMap.checkIfPortalSquare(playerPositionX, playerPositionY).equals("exit") && (currentMap.areTasksComplete() == true)){
+            // if(currentMap.checkIfPortalSquare(playerPositionX, playerPositionY).equals("exit")){
+                openLevelSelectionScreen();
+            }
+        }
+    }
+
     private boolean trueIfBlockedSquare(int x, int y){
         return currentMap.checkSquareBlocked(x,y);
     }
@@ -292,6 +293,32 @@ public class TileBasedGameActivity extends Activity {
         nextLeft = playerPositionX - 1;
         nextUp = playerPositionY - 1;
         nextDown = playerPositionY + 1;
+    }
+
+    private void checkIfActionSquare(){
+        if(currentMap.checkIfActiveActionSquare(playerPositionX, playerPositionY) == true){
+            updateInstruction();
+        }
+    }
+
+    private void updateInstruction(){
+        if(actionInstructionNumber < (currentMap.getNumberOfActionInstructions()-1)) {
+            currentMap.activateNextActionSquare(actionInstructionNumber);
+            Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumber), Toast.LENGTH_LONG).show();
+            actionInstructionNumber++;
+        }
+
+        else{
+            //Activate portal square
+            currentMap.setPortalSquare(4, 14, "exit");
+            currentMap.allTasksComplete();
+            Toast.makeText(getApplicationContext(), "You completed the tasks! Go to the front door to leave.", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void showInstruction(int x, int y){
+        Toast.makeText(getApplicationContext(), currentMap.getActionSquareDescription(x, y), Toast.LENGTH_LONG).show();
     }
 
     public int getWidth(){

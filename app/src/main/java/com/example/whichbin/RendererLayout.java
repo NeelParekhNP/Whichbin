@@ -83,7 +83,7 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
         assignGridValues();
 
-        backGroundCheck = BitmapFactory.decodeResource(getResources(), R.drawable.check);
+        backGroundCheck = BitmapFactory.decodeResource(getResources(), R.drawable.downstairs);
         backGroundCheck = Bitmap.createScaledBitmap(backGroundCheck, width, height, true);
 
         character = BitmapFactory.decodeResource(getResources(), R.drawable.character);
@@ -135,7 +135,7 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
             delta_t = frame_time_ns - (tEOR - tLF);
 
-            stats();
+            //stats();
 
             try {
                 if(delta_t > 0) {
