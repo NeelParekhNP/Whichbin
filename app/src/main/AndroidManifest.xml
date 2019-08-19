@@ -9,12 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LevelSelectionWorldThree"
+        <activity android:name=".OnboardingScreen"></activity>
+        <activity
+            android:name=".LevelSelectionWorldThree"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".LevelSelectionWorldTwo"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".LevelSelectionWorldTwo"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".MultipleChoiceGame"
             android:configChanges="orientation|keyboardHidden"

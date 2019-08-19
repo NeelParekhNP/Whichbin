@@ -104,7 +104,7 @@ public class MainMenu extends AppCompatActivity {
         /** Delete first 2 lines if want to keep progress saved even after app reset*/
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedPreferences.edit().clear().commit();
-        Intent intent = new Intent(this, LevelSelectionWorldOne.class);
+        Intent intent = new Intent(this, OnboardingScreen.class);
         startActivity(intent);
     }
 
