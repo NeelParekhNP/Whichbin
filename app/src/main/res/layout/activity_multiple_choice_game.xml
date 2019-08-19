@@ -44,6 +44,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="8dp"
+        android:fontFamily="@font/bubblegum_sans"
         android:text="PlaceHolder Text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,59 +52,61 @@
 
     <LinearLayout
         android:id="@+id/linearLayout_MCQ_1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_MCQ_2"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button_MCQ_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="310dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:text="Button"
-            android:tag="1"/>
+            android:fontFamily="@font/bubblegum_sans"
+            android:tag="1"
+            android:text="Button" />
 
         <Button
-            android:id="@+id/button_MCQ_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/button_MCQ_3"
+            android:layout_width="310dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:text="Button"
-            android:tag="2"/>
+            android:fontFamily="@font/bubblegum_sans"
+            android:tag="3"
+            android:text="Button" />
+
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout_MCQ_2"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
         <Button
-            android:id="@+id/button_MCQ_3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/button_MCQ_2"
+            android:layout_width="310dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:text="Button"
-            android:tag="3"/>
+            android:fontFamily="@font/bubblegum_sans"
+            android:tag="2"
+            android:text="Button" />
 
         <Button
             android:id="@+id/button_MCQ_4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="310dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:text="Button"
-            android:tag="4"/>
+            android:fontFamily="@font/bubblegum_sans"
+            android:tag="4"
+            android:text="Button" />
     </LinearLayout>
 
     <Button

@@ -65,6 +65,8 @@ public class MainMenu extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                //sharedPreferences.edit().clear().commit();
                 if (dialogueStatus == false){
                     openDialogueScreen();
                 }
