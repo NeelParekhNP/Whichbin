@@ -12,7 +12,9 @@
         <activity android:name=".MultipleChoiceGame"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"></activity>
-        <activity android:name=".TileBasedGameActivity"></activity>
+        <activity android:name=".TileBasedGameActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"></activity>
         <activity android:name=".LevelSelection"
             android:screenOrientation="landscape"
             android:configChanges="orientation|keyboardHidden"></activity>

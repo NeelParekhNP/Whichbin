@@ -51,7 +51,7 @@ public class TriviaGameManager {
                         false);
                 // Information sources: https://earthobservatory.nasa.gov/features/GlobalWarming/page3.php & https://www.livescience.com/58891-why-2-degrees-celsius-increase-matters.html
                 TriviaQuestion q7 = new TriviaQuestion("In the past century the Earth’s average temperature has increased by 0.7 degrees Celsius.",
-                        "While 0.7 degrees may not seem like much of a difference locally as a global change this is massive! To put this amount in perspective, the global average temperature during " +
+                        "While 0.7 degrees may not seem like much of a difference locally, as a global change this is massive! To put this amount in perspective, the global average temperature during " +
                                 "the last ice age (ending 15,000 years ago) was about 5 degrees lower than the average today-a few degrees change in the global average is a big deal!",
                         true);
                 // Information sources: https://www.nationalgeographic.com/environment/global-warming/methane/
@@ -98,7 +98,7 @@ public class TriviaGameManager {
                         true);
                 // Information sources: https://www.bbc.co.uk/news/science-environment-48827490
                 TriviaQuestion q4 = new TriviaQuestion("An area of trees the size of a football pitch is cut down from the amazon rainforest every minute.",
-                        "Trees are frequently pushed over by bulldozers or flattened by a chain pulled between two vehicles. Trees are import as they pull carbon dioxide from the air and store " +
+                        "Trees are frequently pushed over by bulldozers or flattened by a chain pulled between two vehicles. Trees are important as they pull carbon dioxide from the air and store " +
                                 "it, so there’s less in the atmosphere. Less trees means more greenhouse gases heating the planet.",
                         true);
                 // Information sources: http://news.bbc.co.uk/earth/hi/earth_news/newsid_9455000/9455661.stm
@@ -119,13 +119,13 @@ public class TriviaGameManager {
                 // Information sources: https://www.ucsusa.org/global-warming/science-and-impacts/impacts/causes-of-drought-climate-change-connection.html
                 TriviaQuestion q8 = new TriviaQuestion("Climate change will produce more floods but also and more droughts.",
                         "The impact of climate change on the weather is complicated. Climate and weather both describe the conditions of the atmosphere-climate in the long term and weather in the " +
-                                "short term. Weather changes are likely to include less snow, which usually melts to provide water in the summer and more evaporation-causing drought.",
+                                "short term. Weather changes are likely to include less snow (which usually melts to provide water in the summer) and more evaporation-causing drought.",
                         true);
                 // Information sources: https://www.worldwildlife.org/pages/everything-you-need-to-know-about-coral-bleaching-and-how-we-can-stop-it
                 // & https://www.cntraveler.com/gallery/10-places-to-visit-before-theyre-lost-to-climate-change & https://www.bbc.co.uk/programmes/articles/3ShcTJ032pp1z2mmkBJMhLX/10-amazing-facts-about-coral-reefs-and-one-terrible-truth
                 TriviaQuestion q9 = new TriviaQuestion("Coral bleaching is spilled chemicals turning these underwater plants white.",
                         "Corals are actually classed as animals, though they house microscopic algae which give them their vibrant colours. Coral bleaching happens when increased ocean " +
-                                "temperatures and acidity (caused by the ocean absorbing) make them eject the algae.  50% of the Great Barrier Reef in Australia has died due to climate change.",
+                                "temperatures and acidity (caused by the ocean absorbing carbon dioxide) make them eject the algae.  50% of the Great Barrier Reef in Australia has died due to climate change.",
                         false);
                 // Information sources: https://environmentjournal.online/articles/uks-longest-ever-coal-free-run-comes-to-an-end/ & https://www.bbc.co.uk/news/business-48215896
                 TriviaQuestion q10 = new TriviaQuestion("Britain has been burning coal for electricity continuously for the last 100 years.",
@@ -148,7 +148,7 @@ public class TriviaGameManager {
             case 3:{
                 // Information sources: https://www.theguardian.com/environment/2018/may/31/avoiding-meat-and-dairy-is-single-biggest-way-to-reduce-your-impact-on-earth
                 TriviaQuestion q1 = new TriviaQuestion("Being a vegan is better for the environment.",
-                        "Even beef cattle not raised on deforested land creates 6 to 12 times as much greenhouse gas as peas. Decreasing the amount of meat and dairy you consume has a big impact.",
+                        "Even beef cattle not raised on deforested land create 6 to 12 times as much greenhouse gas as the equivalent weight of peas. Decreasing the amount of meat and dairy you consume has a big impact.",
                         true);
                 // Information sources: http://www.bbc.com/future/story/20181102-what-can-i-do-about-climate-change
                 TriviaQuestion q2 = new TriviaQuestion("Cars are better for the environment than most other forms of transport.",
@@ -168,7 +168,7 @@ public class TriviaGameManager {
                 // Information sources: https://www.transportenvironment.org/sites/te/files/publications/2018_04_CO2_emissions_cars_The_facts_report_final_0_0.pdf
                 TriviaQuestion q5 = new TriviaQuestion("Carbon emissions from transport have increased in Europe since 1990.",
                         "Other polluters like agriculture, industry and power generation have all lowered their environmental impact. Transport has on average increased its impact. " +
-                                "Where possible, people can share one car instead of taking two to reduce their impact.",
+                                "Where possible, people can share one car instead of taking two to reduce their carbon footprint.",
                         true);
                 // Information sources: https://iopscience.iop.org/article/10.1088/1748-9326/aa7541
                 TriviaQuestion q6 = new TriviaQuestion("Someone reduces their carbon footprint (the amount of carbon dioxide emissions they cause) more by eating a plant-based diet than by switching to a green energy provider.",
@@ -177,12 +177,12 @@ public class TriviaGameManager {
                         false);
                 // Information sources: https://iopscience.iop.org/article/10.1088/1748-9326/aa7541
                 TriviaQuestion q7 = new TriviaQuestion("Washing clothes in cold water reduces your carbon footprint more than recycling.",
-                        "These are fairly close with washing clothes in cold was reducing carbon dioxide emissions by 0.247 tonnes per year and recycling reducing it by 0.2125. " +
+                        "These are fairly close with washing clothes in cold water reducing carbon dioxide emissions by 0.247 tonnes per year and recycling reducing it by 0.2125. " +
                                 "Every little helps though so even reducing the temperature you run your washing machine at and recycling a few extra items is good!",
                         true);
                 // Information sources: https://oxfamapps.org/media/press_release/2016-06-over-three-billion-clothes-left-unworn-in-the-nations-wardrobes-survey-finds/ & https://sharecloth.com/blog/reports/apparel-overproduction
                 TriviaQuestion q8 = new TriviaQuestion("The average person in the UK has an average of 11 items of clothing with the tags still on in their wardrobe.",
-                        "Fashion produces a lot of greenhouse gas as oil is used to produce polyester fabrics in energy intensive processs and growing cotton requires lots of water. " +
+                        "Fashion produces a lot of greenhouse gas as oil is used to produce polyester fabrics in energy intensive processes and growing cotton requires lots of water. " +
                                 "Only buying clothes you will wear, buying second hand clothes and wearing them for longer can all help fight climate change.",
                         true);
                 // Information sources: https://www.edenproject.com/learn/for-everyone/water-saving-tips & https://www.south-staffs-water.co.uk/help-and-advice/read/how-does-saving-water-help-the-environment-200100000002621
