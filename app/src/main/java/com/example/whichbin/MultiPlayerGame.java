@@ -6,7 +6,6 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -16,7 +15,7 @@ import java.util.Locale;
 
 public class MultiPlayerGame extends AppCompatActivity {
 
-    private static final long COUNTDOWN_IN_MILLIS = 10000;
+    private static final long COUNTDOWN_IN_MILLIS = 20000;
     private TextView player1View, player2View,countdown1,countdown2, player1Score, player2Score, player1QuestionNumber, player2QuestionNumber, winnerTextView;
     private RadioButton player1RB1, player1RB2, player1RB3, player1RB4;
     private RadioButton player2RB1, player2RB2, player2RB3, player2RB4;
@@ -29,19 +28,20 @@ public class MultiPlayerGame extends AppCompatActivity {
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
 
+    /** Array of questions */
 
-    private MultiplayerGameQuestions[] questions = new MultiplayerGameQuestions[]{
-            new MultiplayerGameQuestions(R.string.m_question_one, 2, "Excess of nitrogen in the atmosphere", "Excess of carbon dioxide in the atmosphere", "Heat from cooking fires of ever-increasing population",
+    private MultipleChoiceQuestions[] questions = new MultipleChoiceQuestions[]{
+            new MultipleChoiceQuestions(R.string.m_question_one, 2, "Excess of nitrogen in the atmosphere", "Excess of carbon dioxide in the atmosphere", "Heat from cooking fires of ever-increasing population",
                     "None of the above" ),
-            new MultiplayerGameQuestions(R.string.m_question_two, 3, "Sea levels rising", "Flooding in coastal cities", "Expanding glaciers", "Extreme weather"),
-            new MultiplayerGameQuestions(R.string.m_question_three, 3, "The name of climate change legislation that passed by congress", "When you paint your house green to become an environmentalist", "When the gasses in our atmosphere trap heat and block it from escaping our planet", "When you build a greenhouse"),
-            new MultiplayerGameQuestions(R.string.m_question_four, 4, "Divest from fossil fuel companies", "Engage yourself in the science behind climate change", "Vote for political candidates who will advocate for climate-related legislation and policy improvements", "All of the above"),
-            new MultiplayerGameQuestions(R.string.m_question_five, 1, "China", "USA", "UK", "Russia"),
-            new MultiplayerGameQuestions(R.string.m_question_six, 2, "1%", "14%", "33%", "70%"),
-            new MultiplayerGameQuestions(R.string.m_question_seven, 4, "Transportation", "Buildings", "Industry", " Electricity and heat production"),
-            new MultiplayerGameQuestions(R.string.m_question_eight, 2, "0.53 degrees", "0.94 degrees", "1.34 degrees", "0.21 degrees"),
-            new MultiplayerGameQuestions(R.string.m_question_nine, 3, "Jupiter", "Mars", "Venus", "Earth"),
-            new MultiplayerGameQuestions(R.string.m_question_ten, 3, "10,500", "1,500,000","150,000", "1,500")
+            new MultipleChoiceQuestions(R.string.m_question_two, 3, "Sea levels rising", "Flooding in coastal cities", "Expanding glaciers", "Extreme weather"),
+            new MultipleChoiceQuestions(R.string.m_question_three, 3, "The name of climate change legislation that passed by congress", "When you paint your house green to become an environmentalist", "When the gasses in our atmosphere trap heat and block it from escaping our planet", "When you build a greenhouse"),
+            new MultipleChoiceQuestions(R.string.m_question_four, 4, "Divest from fossil fuel companies", "Engage yourself in the science behind climate change", "Vote for political candidates who will advocate for climate-related legislation and policy improvements", "All of the above"),
+            new MultipleChoiceQuestions(R.string.m_question_five, 1, "China", "USA", "UK", "Russia"),
+            new MultipleChoiceQuestions(R.string.m_question_six, 2, "1%", "14%", "33%", "70%"),
+            new MultipleChoiceQuestions(R.string.m_question_seven, 4, "Transportation", "Buildings", "Industry", " Electricity and heat production"),
+            new MultipleChoiceQuestions(R.string.m_question_eight, 2, "0.53 degrees", "0.94 degrees", "1.34 degrees", "0.21 degrees"),
+            new MultipleChoiceQuestions(R.string.m_question_nine, 3, "Jupiter", "Mars", "Venus", "Earth"),
+            new MultipleChoiceQuestions(R.string.m_question_ten, 3, "10,500", "1,500,000","150,000", "1,500")
 
     };
 
@@ -83,6 +83,8 @@ public class MultiPlayerGame extends AppCompatActivity {
         }
     };
 
+    /** Sets up the next question */
+
     private void showNextQuestion(){
         player1Score.setVisibility(View.GONE);
         player2Score.setVisibility(View.GONE);
@@ -113,6 +115,8 @@ public class MultiPlayerGame extends AppCompatActivity {
         startCountDown();
     }
 
+    /** Starts a countdown in the background */
+
     private void startCountDown(){
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -134,6 +138,8 @@ public class MultiPlayerGame extends AppCompatActivity {
         }.start();
     }
 
+    /** Displays the countdown */
+
     private void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
@@ -145,6 +151,8 @@ public class MultiPlayerGame extends AppCompatActivity {
         countdown2.setText(timeFormatted);
         //countdown2.setTextColor(Color.WHITE);
     }
+
+    /** Checks both players answers and checks if there's anymore questions left. If no questions are left it moves on to the winner declaration screen */
 
     private void checkAnswer(){
         countDownTimer.cancel();
@@ -187,6 +195,9 @@ public class MultiPlayerGame extends AppCompatActivity {
                     rbSelectedPlayer2.setTextColor(Color.RED);
                 }
             }
+
+            /** Changes the layout of the activity to show the winner screen */
+
             public  void onFinish() {
                 player1Group.clearCheck();
                 player2Group.clearCheck();
@@ -216,6 +227,9 @@ public class MultiPlayerGame extends AppCompatActivity {
             }
         }.start();
     }
+
+    /** Compares the players scores and declares a winner */
+
     private String winnerChecker(){
         if(p1Score>p2Score){
             return "Player 1 is the winner!";

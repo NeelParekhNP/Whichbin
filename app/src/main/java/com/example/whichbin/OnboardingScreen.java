@@ -46,7 +46,7 @@ public class OnboardingScreen extends AppCompatActivity {
 
         slideViewPager.addOnPageChangeListener(viewListener);
 
-        //OnClickListeners
+        /** OnClickListeners for all the different buttons */
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +72,8 @@ public class OnboardingScreen extends AppCompatActivity {
         });
     }
 
+    /** Checks how many different pages there are for instructions and dynamically generates dots at the bottom of the screen */
+
     public void addDotsIndicator(int position){
 
         dots = new TextView[3];
@@ -96,6 +98,8 @@ public class OnboardingScreen extends AppCompatActivity {
         public void onPageScrolled(int i, float v, int i1) {
 
         }
+
+        /** Sets up the buttons depending on which instruction screen page the user is on */
 
         @Override
         public void onPageSelected(int i) {
@@ -143,6 +147,8 @@ public class OnboardingScreen extends AppCompatActivity {
 
         }
     };
+
+    /** Information saved to tell main screen that dialogue screen has been seen by user */
 
     private void saveData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

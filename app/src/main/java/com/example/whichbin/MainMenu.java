@@ -59,6 +59,8 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        /** Checks if the dialogues and instructions have already been seen and opens an activity accordingly */
+
         playButton = (Button) findViewById(R.id.levelSelectorButtonX);
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,20 +99,28 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** Called if the Trivia game button's clicked. */
+
     public void openTriviaGame(){
         Intent intent = new Intent(this, TriviaGame.class);
         startActivity(intent);
     }
+
+    /** Called if the Multiplayer game button's clicked. */
 
     public void openMultiplayerGame(){
         Intent intent = new Intent(this, MultiPlayerGame.class);
         startActivity(intent);
     }
 
+    /** Called if the Multiple choice game button's clicked. */
+
     public void openMultipleChoiceGame(){
         Intent intent = new Intent(this, MultipleChoiceGame.class);
         startActivity(intent);
     }
+
+    /** Called if the play button's clicked depending on whether the dialogues have already been seen. */
 
     public void openDialogueScreen() {
         /** Delete first 2 lines if want to keep progress saved even after app reset*/
@@ -120,10 +130,14 @@ public class MainMenu extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** Called if the play button's clicked depending on whether the instructions have already been seen. */
+
     public void openOnboardingScreen(){
         Intent intent = new Intent(this, OnboardingScreen.class);
         startActivity(intent);
     }
+
+    /** Called if the play button's clicked depending on whether the dialogues and instructions have already been seen. */
 
     public void openLevelSelectionScreen(){
         Intent intent = new Intent(this, LevelSelectionWorldOne.class);
@@ -169,6 +183,8 @@ public class MainMenu extends AppCompatActivity {
         super.onDestroy();
         Log.d(msg, "The onDestroy() event");
     }
+
+    /** Loads data on whether the instructions and dialogues have already been seen */
 
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

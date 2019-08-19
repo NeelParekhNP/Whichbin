@@ -1,5 +1,7 @@
 package com.example.whichbin;
 
+/** Object class to save information about the questions in the bin game */
+
 
 public class BinGameQuestions {
 

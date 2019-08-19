@@ -20,7 +20,7 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
     private Button launchWorldTwo;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
-    private static final long COUNTDOWN_IN_MILLIS = 3000;
+    private static final long COUNTDOWN_IN_MILLIS = 2000;
 
     private boolean levelOneWorldOnePassed;
     private boolean levelTwoWorldOnePassed;
@@ -56,6 +56,8 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
             }
         });
 
+        /** Dynamically sets the click listeners to the buttons and visibility */
+
         for (int i = 0; i < buttons.length; i++){
             buttons[i] = findViewById(allButtonIds[i]);
             buttons[i].setOnClickListener(clickListener);
@@ -68,6 +70,8 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
             }
         }
 
+        /** Unlocks the next level if enough points were scored in previous levels */
+
         loadData();
         if (levelOneWorldOnePassed){
             world1Level2.setEnabled(true);
@@ -78,6 +82,8 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
             world1Level3.setImageAlpha(0xFF);
         }
     }
+
+    /** Opens the level that is clicked on */
 
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
@@ -104,6 +110,8 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
         }
     };
 
+    /** Moves the character to clicked image and adds a delay before level is started */
+
     private void startCountDown(final float x, final float y, final Intent myIntent){
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -125,11 +133,15 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
         }.start();
     }
 
+    /** Checks if enough points were scored in previous level to unlock next levels */
+
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         levelOneWorldOnePassed = sharedPreferences.getBoolean("levelOneWorldOneStatus", false);
         levelTwoWorldOnePassed = sharedPreferences.getBoolean("levelTwoWorldOneStatus", false);
     }
+
+    /** Feeds information to other games about which level was picked */
 
     private void changeData(View clicked) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

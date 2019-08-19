@@ -36,6 +36,8 @@ public class DialogueActivity extends AppCompatActivity {
 
         background = (ConstraintLayout) findViewById(R.id.constraint_layout_dialogue);
 
+        /** Code to change the dialogue when the screen is tapped */
+
         background.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

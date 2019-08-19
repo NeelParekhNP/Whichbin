@@ -36,6 +36,8 @@ public class BinGame extends AppCompatActivity {
     public static final String LEVEL_ONE_WORLD_TWO_STATUS = "levelOneWorldTwoStatus";
     public static final String LEVEL_ONE_WORLD_THREE_STATUS = "levelOneWorldThreeStatus";
 
+    /** Arrays of different sets of questions */
+
     private BinGameQuestions[] recycleQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_one, 3, R.drawable.carrot_organic, "Carrots are organic waste"),
             new BinGameQuestions(R.string.question_two, 1, R.drawable.styrofoam_trash, "Styrofoam isn't currently recyclable."),
@@ -118,6 +120,8 @@ public class BinGame extends AppCompatActivity {
         option3Label = (TextView) findViewById(R.id.textView_option3_tag);
         resultsView = (TextView) findViewById(R.id.textView_DND_game_results);
 
+        /** The questions and containers will be setup according to which button was pressed in the selection screen */
+
         switch (levelTheme){
             case 1 :
                 questionSet = recycleQuestions;
@@ -177,6 +181,8 @@ public class BinGame extends AppCompatActivity {
         }
     };
 
+    /** Makes the item image view into an draggable shadow */
+
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -189,6 +195,8 @@ public class BinGame extends AppCompatActivity {
             return false;
         }
     };
+
+    /** Carries out a set of instructions when the image shadow is dropped inside a container */
 
     View.OnDragListener dragListener = new View.OnDragListener() {
         @Override
@@ -254,6 +262,7 @@ public class BinGame extends AppCompatActivity {
         }
     };
 
+
     private void displayAnswers(){
         String results = "";
         for(int i = 0; i < userAnswers.length; i++){
@@ -268,6 +277,8 @@ public class BinGame extends AppCompatActivity {
         resultsView.setVisibility(View.VISIBLE);
         resultsView.setText(results);
     }
+
+    /** Checks whether user has scored sufficient enough points to move onto the next level */
 
     private void saveData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -288,6 +299,8 @@ public class BinGame extends AppCompatActivity {
         }
         editor.commit();
     }
+
+    /** Loads up information on which level was selected in the level selection screen */
 
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

@@ -22,49 +22,49 @@ public class MultipleChoiceGame extends AppCompatActivity {
     private int scoreCounter;
     private int questionNumber;
     private int levelTheme;
-    private MultiplayerGameQuestions[] questionSet;
+    private MultipleChoiceQuestions[] questionSet;
 
     public static final String LEVEL_TWO_WORLD_ONE_STATUS = "levelTwoWorldOneStatus";
     public static final String LEVEL_TWO_WORLD_TWO_STATUS = "levelTwoWorldTwoStatus";
     public static final String LEVEL_TWO_WORLD_THREE_STATUS = "levelTwoWorldThreeStatus";
 
-    private MultiplayerGameQuestions[] scienceQuestions = new MultiplayerGameQuestions[]{
-            new MultiplayerGameQuestions(R.string.s_mcq_question_one, 2,"Carbon Dioxide", "Nitrogen", "Water Vapour", "Methane"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_two, 1,"17 to 22℃ cooler", "17 to 22℃ warmer", "6 to 11℃ cooler", "6 to 11℃ warmer"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_three, 4, "Using remote sensing from space with satellites", "By ground-based measurements of surface temperature, carbon dioxide concentration and sea level", "By collecting \"proxy data\" from tree rings, ice cores and historical records", "All of the above"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_four, 4,"Carbon Dioxide", "Methane", "Water Vapour", "All of the above"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_six, 2,"A bicycle made of carbon fibre", "A cycle in which carbon flows between the atmosphere, land, and ocean", "the journey water takes as it moves from the land to the sky and back again. ", "None of the above"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_five, 1,"Forests serve as a sink in the carbon cycle", "Trees provide building materials", "Trees are an important food source", "Leaves of trees reflect all sunlight away from the Earth"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_seven, 1,"10%", "30%", "50%", "75%"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_eight, 4, "Protein", "Zinc", "Iron", "All of the above"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_nine, 1,"Heat waves", "Hurricanes", "Floods", "Blizzards"),
-            new MultiplayerGameQuestions(R.string.s_mcq_question_ten, 3,"USA", "India", "China", "UK")
+    private MultipleChoiceQuestions[] scienceQuestions = new MultipleChoiceQuestions[]{
+            new MultipleChoiceQuestions(R.string.s_mcq_question_one, 2,"Carbon Dioxide", "Nitrogen", "Water Vapour", "Methane"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_two, 1,"17 to 22℃ cooler", "17 to 22℃ warmer", "6 to 11℃ cooler", "6 to 11℃ warmer"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_three, 4, "Using remote sensing from space with satellites", "By ground-based measurements of surface temperature, carbon dioxide concentration and sea level", "By collecting \"proxy data\" from tree rings, ice cores and historical records", "All of the above"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_four, 4,"Carbon Dioxide", "Methane", "Water Vapour", "All of the above"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_six, 2,"A bicycle made of carbon fibre", "A cycle in which carbon flows between the atmosphere, land, and ocean", "the journey water takes as it moves from the land to the sky and back again. ", "None of the above"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_five, 1,"Forests serve as a sink in the carbon cycle", "Trees provide building materials", "Trees are an important food source", "Leaves of trees reflect all sunlight away from the Earth"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_seven, 1,"10%", "30%", "50%", "75%"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_eight, 4, "Protein", "Zinc", "Iron", "All of the above"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_nine, 1,"Heat waves", "Hurricanes", "Floods", "Blizzards"),
+            new MultipleChoiceQuestions(R.string.s_mcq_question_ten, 3,"USA", "India", "China", "UK")
     };
     
-    private MultiplayerGameQuestions[] natureQuestions = new MultiplayerGameQuestions[]{
-            new MultiplayerGameQuestions(R.string.n_mcq_question_one, 3,"They aren’t as hungry because it’s so hot", "Warmer water makes them sleepy", "Their migratory patterns are changing", "Summer seems longer so fish are schooling less"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_two, 4,"Water shortages", "Power outages", "Higher electricity and gas prices", "All of the above"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_three, 3, "Too many people with the same name slows emergency response", "There are not enough celebrities focused on climate issues", "The need to upgrade aging infrastructure", "People can’t identify the needed solutions so take no action"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_four, 3,"Increasing extreme precipitation everywhere", "Increasing length of droughts everywhere", "Increase in both wet and dry extremes", "Climate change doesn’t alter precipitation"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_five, 2,"Heavy rain increases the risk of animals transmitting rabies", "Milder winters increase the tick density & risk of lyme", "Dry summers & drought increase the risk of West Nile virus", "Snow storms increase mosquito density & risk of malaria"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_six,4,"400 thousand", "4 million", "40 million", "4 billion"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_seven, 2,"6%", "11%", "17%", "23%"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_eight, 3, "Oceans", "Rainforest's", "Ozone layer", "Carbon Dioxide"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_nine, 3,"40%", "50%", "60%", "70%"),
-            new MultiplayerGameQuestions(R.string.n_mcq_question_ten, 1,"Coral", "Plankton", "Fish", "Whales")
+    private MultipleChoiceQuestions[] natureQuestions = new MultipleChoiceQuestions[]{
+            new MultipleChoiceQuestions(R.string.n_mcq_question_one, 3,"They aren’t as hungry because it’s so hot", "Warmer water makes them sleepy", "Their migratory patterns are changing", "Summer seems longer so fish are schooling less"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_two, 4,"Water shortages", "Power outages", "Higher electricity and gas prices", "All of the above"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_three, 3, "Too many people with the same name slows emergency response", "There are not enough celebrities focused on climate issues", "The need to upgrade aging infrastructure", "People can’t identify the needed solutions so take no action"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_four, 3,"Increasing extreme precipitation everywhere", "Increasing length of droughts everywhere", "Increase in both wet and dry extremes", "Climate change doesn’t alter precipitation"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_five, 2,"Heavy rain increases the risk of animals transmitting rabies", "Milder winters increase the tick density & risk of lyme", "Dry summers & drought increase the risk of West Nile virus", "Snow storms increase mosquito density & risk of malaria"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_six,4,"400 thousand", "4 million", "40 million", "4 billion"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_seven, 2,"6%", "11%", "17%", "23%"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_eight, 3, "Oceans", "Rainforest's", "Ozone layer", "Carbon Dioxide"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_nine, 3,"40%", "50%", "60%", "70%"),
+            new MultipleChoiceQuestions(R.string.n_mcq_question_ten, 1,"Coral", "Plankton", "Fish", "Whales")
     };
 
-    private MultiplayerGameQuestions[] reduceImpactQuestions = new MultiplayerGameQuestions[]{
-            new MultiplayerGameQuestions(R.string.a_mcq_question_one, 1, "Solar power", "Coal", "Fossil fuels", "None of the above" ),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_two, 2, "100%", "15-20%", "0%", "10-15%"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_three, 4, "Divest from fossil fuel companies", "Engage yourself in the science behind climate change", "Vote for political candidates who will advocate for climate-related legislation and policy improvements", "All of the above"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_four, 3, "Car", "Bus", "Bicycle", "Airplane"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_five, 2, "Use more cars", "Plant 1 trillion trees", "Travel in public transport", "Do nothing"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_six, 3, "Vegetarian", "Non-vegetarian", "Vegan", "Pescatarian"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_seven, 3, "Recycle", "Dump in river", "Send all trash to dumping sites", "Do nothing and hope for the best"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_eight, 4, "Insulate your walls", "Get double glazed windows", "Use less hot water", "All of the above"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_nine, 3, "Turn off your lights more often", "Drive a hybrid car", "Eat a plant-based diet", "Hang your clothes to dry"),
-            new MultiplayerGameQuestions(R.string.a_mcq_question_ten, 1, "LED bulbs", "Halogen bulbs","Incandescent bulbs", "Fluorescent bulbs")
+    private MultipleChoiceQuestions[] reduceImpactQuestions = new MultipleChoiceQuestions[]{
+            new MultipleChoiceQuestions(R.string.a_mcq_question_one, 1, "Solar power", "Coal", "Fossil fuels", "None of the above" ),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_two, 2, "100%", "15-20%", "0%", "10-15%"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_three, 4, "Divest from fossil fuel companies", "Engage yourself in the science behind climate change", "Vote for political candidates who will advocate for climate-related legislation and policy improvements", "All of the above"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_four, 3, "Car", "Bus", "Bicycle", "Airplane"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_five, 2, "Use more cars", "Plant 1 trillion trees", "Travel in public transport", "Do nothing"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_six, 3, "Vegetarian", "Non-vegetarian", "Vegan", "Pescatarian"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_seven, 3, "Recycle", "Dump in river", "Send all trash to dumping sites", "Do nothing and hope for the best"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_eight, 4, "Insulate your walls", "Get double glazed windows", "Use less hot water", "All of the above"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_nine, 3, "Turn off your lights more often", "Drive a hybrid car", "Eat a plant-based diet", "Hang your clothes to dry"),
+            new MultipleChoiceQuestions(R.string.a_mcq_question_ten, 1, "LED bulbs", "Halogen bulbs","Incandescent bulbs", "Fluorescent bulbs")
     };
 
     @Override
