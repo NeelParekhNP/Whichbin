@@ -83,14 +83,18 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
         assignGridValues();
 
-        backGroundCheck = BitmapFactory.decodeResource(getResources(), R.drawable.check);
+        backGroundCheck = BitmapFactory.decodeResource(getResources(), R.drawable.downstairs);
         backGroundCheck = Bitmap.createScaledBitmap(backGroundCheck, width, height, true);
 
         character = BitmapFactory.decodeResource(getResources(), R.drawable.character);
         character = Bitmap.createScaledBitmap(character, (width/9), (height/16), true);
 
-        characterPositionX = 0;
-        characterPositionY = 0;
+        characterPositionX = Math.round(convertIntToGridX(4));
+        characterPositionY = Math.round(convertIntToGridY(14));
+
+        // Previous code for starting the character in the top left
+        // characterPositionX = 0;
+        // characterPositionY = 0;
 
         xUnit = Math.round(x1);
         yUnit = Math.round(y1);
@@ -131,7 +135,7 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
             delta_t = frame_time_ns - (tEOR - tLF);
 
-            stats();
+            //stats();
 
             try {
                 if(delta_t > 0) {

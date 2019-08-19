@@ -9,8 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DialogueActivity"></activity>
-        <activity android:name=".OnboardingScreen" />
+        <activity android:name=".DialogueActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".OnboardingScreen"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LevelSelectionWorldThree"
             android:configChanges="orientation|keyboardHidden"
@@ -23,7 +27,6 @@
             android:name=".MultipleChoiceGame"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
-        <activity android:name=".TileBasedGameActivity" />
         <activity
             android:name=".LevelSelectionWorldOne"
             android:configChanges="orientation|keyboardHidden"
@@ -44,10 +47,12 @@
             android:name=".BinGame"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".MainMenu"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait">
+        <activity android:name=".TileBasedGameActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"></activity>
+        <activity android:name=".MainMenu"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
