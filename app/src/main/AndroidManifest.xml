@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OnboardingScreen"></activity>
+        <activity android:name=".DialogueActivity"></activity>
+        <activity android:name=".OnboardingScreen" />
         <activity
             android:name=".LevelSelectionWorldThree"
             android:configChanges="orientation|keyboardHidden"
