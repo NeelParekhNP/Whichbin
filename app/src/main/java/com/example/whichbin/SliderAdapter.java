@@ -64,16 +64,6 @@ public class SliderAdapter extends PagerAdapter {
         slideHeading.setText(slideHeadings[position]);
         slideInformation.setText(slideInformations[position]);
 
-        Typeface face = ResourcesCompat.getFont(context, R.font.bubblegum_sans);
-        slideHeading.setTypeface(face);
-        slideInformation.setTypeface(face);
-
-        slideHeading.setTextColor(Color.WHITE);
-        slideInformation.setTextColor(Color.WHITE);
-
-        slideHeading.setTextSize(40);
-        slideInformation.setTextSize(20);
-
         container.addView(view);
 
         return  view;
