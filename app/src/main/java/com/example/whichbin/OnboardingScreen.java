@@ -1,7 +1,9 @@
 package com.example.whichbin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.preference.PreferenceManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ public class OnboardingScreen extends AppCompatActivity {
     private SliderAdapter sliderAdapter;
 
     private int currentPage;
+
+    public static final String INSTRUCTIONS_SEEN = "instructionsSeen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class OnboardingScreen extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveData();
                 Intent readMore = new Intent(view.getContext(), LevelSelectionWorldOne.class);
                 view.getContext().startActivity(readMore);
             }
@@ -138,4 +143,13 @@ public class OnboardingScreen extends AppCompatActivity {
 
         }
     };
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(INSTRUCTIONS_SEEN, true);
+        editor.commit();
+    }
+
 }

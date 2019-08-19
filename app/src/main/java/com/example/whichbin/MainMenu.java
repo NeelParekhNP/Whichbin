@@ -16,13 +16,17 @@ public class MainMenu extends AppCompatActivity {
     private Button triviaButton;
     private Button multiplayerGame;
     private Button multipleChoiceGame;
-    private Button levelSelector;
+    private Button playButton;
     private Button mainGame;
+
+    private boolean dialogueStatus, instructionsStatus;
 
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        loadData();
 
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -55,11 +59,19 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
-        levelSelector = (Button) findViewById(R.id.levelSelectorButtonX);
-        levelSelector.setOnClickListener(new View.OnClickListener() {
+        playButton = (Button) findViewById(R.id.levelSelectorButtonX);
+        playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openDialogueScreen();
+                if (dialogueStatus == false){
+                    openDialogueScreen();
+                }
+                else if(instructionsStatus == false){
+                    openOnboardingScreen();
+                }
+                else {
+                    openLevelSelectionScreen();
+                }
             }
         });
 
@@ -102,9 +114,19 @@ public class MainMenu extends AppCompatActivity {
 
     public void openDialogueScreen() {
         /** Delete first 2 lines if want to keep progress saved even after app reset*/
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        sharedPreferences.edit().clear().commit();
+        //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //sharedPreferences.edit().clear().commit();
         Intent intent = new Intent(this, DialogueActivity.class);
+        startActivity(intent);
+    }
+
+    public void openOnboardingScreen(){
+        Intent intent = new Intent(this, OnboardingScreen.class);
+        startActivity(intent);
+    }
+
+    public void openLevelSelectionScreen(){
+        Intent intent = new Intent(this, LevelSelectionWorldOne.class);
         startActivity(intent);
     }
 
@@ -146,6 +168,12 @@ public class MainMenu extends AppCompatActivity {
     public void onDestroy() {
         super.onDestroy();
         Log.d(msg, "The onDestroy() event");
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        dialogueStatus = sharedPreferences.getBoolean("dialogueSeen", false);
+        instructionsStatus = sharedPreferences.getBoolean("instructionsSeen", false);
     }
 }
 

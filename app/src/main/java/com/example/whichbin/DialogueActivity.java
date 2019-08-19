@@ -1,6 +1,8 @@
 package com.example.whichbin;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +27,8 @@ public class DialogueActivity extends AppCompatActivity {
 
     private int dialogueNumber;
 
+    public static final String DIALOGUE_SEEN = "dialogueSeen";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +44,20 @@ public class DialogueActivity extends AppCompatActivity {
                     dialogueNumber++;
                 }
                 else{
+                    saveData();
                     Intent myIntent = new Intent(getBaseContext(), OnboardingScreen.class);
                     startActivity(myIntent);
                 }
             }
         });
     }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putBoolean(DIALOGUE_SEEN, true);
+        editor.commit();
+    }
+
 }
