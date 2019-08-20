@@ -6,12 +6,17 @@ import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 public class DialogueActivity extends AppCompatActivity {
 
     private ConstraintLayout background;
+
     private int[] allDialogues = new int[] {
+            R.drawable.bad_art_puffin,
             R.drawable.dialogue_1,
             R.drawable.dialogue_2,
             R.drawable.dialogue_3,
@@ -26,6 +31,7 @@ public class DialogueActivity extends AppCompatActivity {
     };
 
     private int dialogueNumber;
+    private float screenWidth;
 
     public static final String DIALOGUE_SEEN = "dialogueSeen";
 
@@ -36,23 +42,45 @@ public class DialogueActivity extends AppCompatActivity {
 
         background = (ConstraintLayout) findViewById(R.id.constraint_layout_dialogue);
 
-        /** Code to change the dialogue when the screen is tapped */
+        /** Get's the physical size of phone screen */
 
-        background.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(dialogueNumber<allDialogues.length){
-                    background.setBackground(getDrawable(allDialogues[dialogueNumber]));
-                    dialogueNumber++;
-                }
-                else{
-                    saveData();
-                    Intent myIntent = new Intent(getBaseContext(), OnboardingScreen.class);
-                    startActivity(myIntent);
-                }
-            }
-        });
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+
+        background.setBackground(getDrawable(allDialogues[dialogueNumber]));
+        background.setOnTouchListener(touchListener);
+
     }
+    /** Moves to the next dialogue if clicked on right of screen and moves to the previous dialogue if clicked on left of screen */
+    View.OnTouchListener touchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            float x = motionEvent.getX();
+
+            switch (motionEvent.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    if(x < screenWidth/2 && dialogueNumber > 0 && dialogueNumber <= allDialogues.length){
+                        background.setBackground(getDrawable(allDialogues[dialogueNumber-1]));
+                        dialogueNumber--;
+                    }
+                    else if(x < screenWidth/2 && dialogueNumber == 0){
+                        //Do nothing
+                    }
+                    else if (dialogueNumber == 11){
+                        saveData();
+                        Intent myIntent = new Intent(getBaseContext(), OnboardingScreen.class);
+                        startActivity(myIntent);
+                    }
+                    else if (x > screenWidth/2 && (dialogueNumber-1) < allDialogues.length){
+                        dialogueNumber++;
+                        background.setBackground(getDrawable(allDialogues[dialogueNumber]));
+                    }
+                    break;
+            }
+            return true;
+        }
+    };
 
     private void saveData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -61,5 +89,4 @@ public class DialogueActivity extends AppCompatActivity {
         editor.putBoolean(DIALOGUE_SEEN, true);
         editor.commit();
     }
-
 }
