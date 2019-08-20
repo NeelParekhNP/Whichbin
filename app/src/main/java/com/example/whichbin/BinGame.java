@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,13 +23,15 @@ import android.widget.Toast;
 public class BinGame extends AppCompatActivity {
 
     private ImageView question, option1, option2, option3;
-    private TextView questionTextView, option1Label, option2Label, option3Label, resultsView;
-    private LinearLayout allOptions, nameTags;
+    private TextView questionTextView, resultsView;
+    private LinearLayout allOptions;
     private int currentIndex = 0;
     private int totalCorrect = 0;
     private String header;
 
     private int levelTheme;
+    private int screenWidth;
+    private int screenHeight;
     private BinGameQuestions[] questionSet;
     private int [] userAnswers = new int[10];
 
@@ -87,6 +90,13 @@ public class BinGame extends AppCompatActivity {
 
         loadData();
 
+        /** Get's the physical size of phone screen */
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
+
         final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
@@ -110,17 +120,24 @@ public class BinGame extends AppCompatActivity {
         });
         animator.start();
 
-        nameTags = (LinearLayout) findViewById(R.id.optionTagsLayout);
         allOptions = (LinearLayout) findViewById((R.id.optionsLayout));
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         question = (ImageView) findViewById(R.id.qImageView);
         option1 = (ImageView) findViewById(R.id.gWBinImageView);
         option2 = (ImageView) findViewById(R.id.rBImageView);
         option3 = (ImageView) findViewById(R.id.oWImageView);
-        option1Label = (TextView) findViewById(R.id.textView_option1_tag);
-        option2Label = (TextView) findViewById(R.id.textView_option2_tag);
-        option3Label = (TextView) findViewById(R.id.textView_option3_tag);
         resultsView = (TextView) findViewById(R.id.textView_DND_game_results);
+
+        View theImageViews = null;
+        int imageViewWidth = screenWidth/3;
+        int imageViewHeight = screenHeight/5;
+
+        for(int i=0; i<allOptions.getChildCount(); i++) {
+            theImageViews = allOptions.getChildAt(i);
+            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(imageViewWidth,imageViewHeight);
+            theImageViews.setLayoutParams(parms);
+        }
+
 
         /** The questions and containers will be setup according to which button was pressed in the selection screen */
 
@@ -132,9 +149,6 @@ public class BinGame extends AppCompatActivity {
                 option2.setImageDrawable(getDrawable(R.drawable.recycle_bin));
                 option3.setImageDrawable(getDrawable(R.drawable.food_waste));
                 header = "Which bin does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
-                option1Label.setText("General Waste");
-                option2Label.setText("Recycle");
-                option3Label.setText("Organic Waste");
                 resultsView.setTextSize(18);
                 break;
             case 2 :
@@ -144,7 +158,6 @@ public class BinGame extends AppCompatActivity {
                 option2.setImageDrawable(getDrawable(R.drawable.endangered_box));
                 option3.setImageDrawable(getDrawable(R.drawable.critically_endangered_box));
                 header = "Which box does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
-                nameTags.setVisibility(View.GONE);
                 resultsView.setTextSize(16);
                 break;
             case 3 :
@@ -154,7 +167,6 @@ public class BinGame extends AppCompatActivity {
                 option2.setImageDrawable(getDrawable(R.drawable.medium_impact_sign));
                 option3.setImageDrawable(getDrawable(R.drawable.low_impact_sign));
                 header = "How much does " + getString(questionSet[currentIndex].getQuestion()) + " impact climate change?";
-                nameTags.setVisibility(View.GONE);
                 resultsView.setTextSize(14);
                 break;
             default:
@@ -226,7 +238,6 @@ public class BinGame extends AppCompatActivity {
                     if(currentIndex==(questionSet.length-1)){
                         ((ViewGroup) question.getParent()).removeView(question);
                         allOptions.removeAllViews();
-                        nameTags.removeAllViews();
                         questionTextView.setText("Your total score was: " + totalCorrect);
 
                         Button menuButton = new Button(BinGame.this);

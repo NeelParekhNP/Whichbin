@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
@@ -22,6 +23,8 @@ public class MultipleChoiceGame extends AppCompatActivity {
     private int scoreCounter;
     private int questionNumber;
     private int levelTheme;
+    private int screenWidth;
+    private int screenHeight;
     private MultipleChoiceQuestions[] questionSet;
     private Intent myIntent;
 
@@ -74,6 +77,13 @@ public class MultipleChoiceGame extends AppCompatActivity {
         setContentView(R.layout.activity_multiple_choice_game);
         
         loadData();
+
+        /** Get's the physical size of phone screen */
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenWidth = displayMetrics.widthPixels;
+        screenHeight = displayMetrics.heightPixels;
 
         final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
@@ -137,6 +147,22 @@ public class MultipleChoiceGame extends AppCompatActivity {
                 questionSet = scienceQuestions;
         }
 
+        View currentButton = null;
+        int imageViewWidth = screenWidth/2;
+        int imageViewHeight = screenHeight/5;
+
+        for(int i=0; i<layerOne.getChildCount(); i++) {
+            currentButton = layerOne.getChildAt(i);
+            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(imageViewWidth,imageViewHeight);
+            currentButton.setLayoutParams(parms);
+        }
+
+        for(int i=0; i<layerTwo.getChildCount(); i++) {
+            currentButton = layerTwo.getChildAt(i);
+            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(imageViewWidth,imageViewHeight);
+            currentButton.setLayoutParams(parms);
+        }
+
         mainMenu.setVisibility(View.INVISIBLE);
 
         showNextQuestion();
@@ -164,6 +190,10 @@ public class MultipleChoiceGame extends AppCompatActivity {
                 layerOne.setVisibility(View.GONE);
                 layerTwo.setVisibility(View.GONE);
             }
+
+            View theImageViews = null;
+            int imageViewWidth = screenWidth/3;
+            int imageViewHeight = screenHeight/5;
         }
     };
 

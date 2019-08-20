@@ -12,13 +12,11 @@
         android:id="@+id/button_world_one_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_chevron_right_black_20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/imageView_character_world_one"
@@ -37,17 +35,12 @@
         android:id="@+id/imageButton_w1_l1"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="300dp"
-        android:layout_marginBottom="150dp"
         android:adjustViewBounds="true"
         android:background="@null"
         android:contentDescription="World 1 Level 1"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/w1_l1_guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/world1level1" />
 
@@ -55,14 +48,13 @@
         android:id="@+id/imageButton_w1_l2"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="8dp"
         android:background="@null"
         android:contentDescription="World 1 Level 2"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton_w1_l1"
+        app:layout_constraintEnd_toStartOf="@+id/w1_l2_guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/world1level2" />
 
@@ -70,14 +62,13 @@
         android:id="@+id/imageButton_w1_l3"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginStart="100dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="8dp"
         android:background="@null"
         android:contentDescription="World 1 Level 3"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageButton_w1_l2"
+        app:layout_constraintEnd_toStartOf="@+id/w1_l3_guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/castle" />
 
@@ -94,5 +85,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/w1_l1_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.48" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/w1_l2_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.73" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/w1_l3_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98" />
 
 </android.support.constraint.ConstraintLayout>

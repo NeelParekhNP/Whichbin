@@ -16,25 +16,25 @@
             android:id="@+id/background_0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/clouds0"/>
+            android:src="@drawable/clouds0" />
 
         <ImageView
             android:id="@+id/background_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/clouds1"/>
+            android:src="@drawable/clouds1" />
 
         <ImageView
             android:id="@+id/background_2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/clouds2"/>
+            android:src="@drawable/clouds2" />
 
         <ImageView
             android:id="@+id/background_3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/clouds3"/>
+            android:src="@drawable/clouds3" />
     </FrameLayout>
 
     <TextView
@@ -46,6 +46,9 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/bubblegum_sans"
         android:text="PlaceHolder Text"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -55,28 +58,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/MCQ_guideline"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/button_MCQ_1"
-            android:layout_width="310dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bubblegum_sans"
             android:tag="1"
-            android:text="Button" />
+            android:text="Button"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_MCQ_3"
-            android:layout_width="310dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bubblegum_sans"
             android:tag="3"
-            android:text="Button" />
+            android:text="Button"
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -84,29 +91,33 @@
         android:id="@+id/linearLayout_MCQ_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/MCQ_guideline">
 
         <Button
             android:id="@+id/button_MCQ_2"
-            android:layout_width="310dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bubblegum_sans"
             android:tag="2"
-            android:text="Button" />
+            android:text="Button"
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/button_MCQ_4"
-            android:layout_width="310dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/bubblegum_sans"
             android:tag="4"
-            android:text="Button" />
+            android:text="Button"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button
@@ -120,5 +131,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/MCQ_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </android.support.constraint.ConstraintLayout>
