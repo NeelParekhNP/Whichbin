@@ -32,6 +32,8 @@ public class BinGame extends AppCompatActivity {
     private BinGameQuestions[] questionSet;
     private int [] userAnswers = new int[10];
 
+    private Intent myIntent;
+
     public static final String LEVEL_ONE_WORLD_ONE_STATUS = "levelOneWorldOneStatus";
     public static final String LEVEL_ONE_WORLD_TWO_STATUS = "levelOneWorldTwoStatus";
     public static final String LEVEL_ONE_WORLD_THREE_STATUS = "levelOneWorldThreeStatus";
@@ -124,6 +126,7 @@ public class BinGame extends AppCompatActivity {
 
         switch (levelTheme){
             case 1 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
                 questionSet = recycleQuestions;
                 option1.setImageDrawable(getDrawable(R.drawable.general_waste));
                 option2.setImageDrawable(getDrawable(R.drawable.recycle_bin));
@@ -135,6 +138,7 @@ public class BinGame extends AppCompatActivity {
                 resultsView.setTextSize(18);
                 break;
             case 2 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
                 questionSet = conservationStatusQuestions;
                 option1.setImageDrawable(getDrawable(R.drawable.vulnerable_box));
                 option2.setImageDrawable(getDrawable(R.drawable.endangered_box));
@@ -142,11 +146,9 @@ public class BinGame extends AppCompatActivity {
                 header = "Which box does this " + getString(questionSet[currentIndex].getQuestion()) + " belong in?";
                 nameTags.setVisibility(View.GONE);
                 resultsView.setTextSize(16);
-/*                option1Label.setText("Vulnerable Species");
-                option2Label.setText("Endangered Species");
-                option3Label.setText("Critically Endangered Species");*/
                 break;
             case 3 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldThree.class);
                 questionSet = impactQuestions;
                 option1.setImageDrawable(getDrawable(R.drawable.high_impact_sign));
                 option2.setImageDrawable(getDrawable(R.drawable.medium_impact_sign));
@@ -176,7 +178,6 @@ public class BinGame extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             saveData();
-            Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
             startActivity(myIntent);
         }
     };

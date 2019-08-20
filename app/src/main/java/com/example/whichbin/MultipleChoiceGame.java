@@ -23,6 +23,7 @@ public class MultipleChoiceGame extends AppCompatActivity {
     private int questionNumber;
     private int levelTheme;
     private MultipleChoiceQuestions[] questionSet;
+    private Intent myIntent;
 
     public static final String LEVEL_TWO_WORLD_ONE_STATUS = "levelTwoWorldOneStatus";
     public static final String LEVEL_TWO_WORLD_TWO_STATUS = "levelTwoWorldTwoStatus";
@@ -115,19 +116,21 @@ public class MultipleChoiceGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveData();
-                Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
                 startActivity(myIntent);
             }
         });
 
         switch (levelTheme){
             case 1 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
                 questionSet = scienceQuestions;
                 break;
             case 2 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
                 questionSet = natureQuestions;
                 break;
             case 3 :
+                myIntent = new Intent(getBaseContext(), LevelSelectionWorldThree.class);
                 questionSet = reduceImpactQuestions;
                 break;
             default:
