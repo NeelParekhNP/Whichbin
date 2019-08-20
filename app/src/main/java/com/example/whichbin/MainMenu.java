@@ -65,6 +65,7 @@ public class MainMenu extends AppCompatActivity {
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /** Delete first 2 lines if want to keep progress saved even after app reset*/
                 //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 //sharedPreferences.edit().clear().commit();
                 if (dialogueStatus == false){
@@ -125,9 +126,6 @@ public class MainMenu extends AppCompatActivity {
     /** Called if the play button's clicked depending on whether the dialogues have already been seen. */
 
     public void openDialogueScreen() {
-        /** Delete first 2 lines if want to keep progress saved even after app reset*/
-        //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //sharedPreferences.edit().clear().commit();
         Intent intent = new Intent(this, DialogueActivity.class);
         startActivity(intent);
     }
