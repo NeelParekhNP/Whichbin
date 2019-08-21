@@ -212,7 +212,7 @@ public class TriviaAnswerActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        if(answerInfo.getScore() >= 5) {
+        if(answerInfo.getScore() >= 5 && triviaGameLevel==3) {
                     editor.putBoolean(LEVEL_THREE_WORLD_THREE_STATUS,true);
         }
         editor.commit();
