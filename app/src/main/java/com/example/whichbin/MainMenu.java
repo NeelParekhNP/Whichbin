@@ -110,6 +110,7 @@ public class MainMenu extends AppCompatActivity {
                                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     sharedPreferences.edit().clear().commit();
+                                    multiplayerGame.setEnabled(false);
                                     loadData();
                                 }
                             })

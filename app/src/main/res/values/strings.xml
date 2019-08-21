@@ -7,7 +7,7 @@
     <string name="reset_button">Reset Progress</string>
 
     <!--Which bin game strings-->
-    <string name="app_name">Which bin?</string>
+    <string name="app_name">Schooling For Cooling</string>
     <string name="generalWasteButton">General Waste</string>
     <string name="recycleButton">Recycle</string>
     <string name="organicWasteButton">Organic Waste</string>

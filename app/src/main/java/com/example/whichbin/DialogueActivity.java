@@ -74,7 +74,7 @@ public class DialogueActivity extends AppCompatActivity {
                     else if(x < screenWidth/2 && dialogueNumber == 0){
                         //Do nothing
                     }
-                    else if (dialogueNumber == 11){
+                    else if (dialogueNumber == (allDialogues.length -1)){
                         saveData();
                         if(dialogueButtonClicked){
                             Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
