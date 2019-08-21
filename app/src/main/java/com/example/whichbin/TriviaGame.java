@@ -23,7 +23,7 @@ public class TriviaGame extends AppCompatActivity {
     private TextView scoreDisplay;
     private TextView timeDisplay;
 
-    private int trivaGameLevel;
+    private int triviaGameLevel;
     private boolean inputAnswer;
     private Integer nextQuestionNumber = 0;
     private Button trueButton;
@@ -35,7 +35,6 @@ public class TriviaGame extends AppCompatActivity {
     private CountDownTimer clock;
     private long timeRemaining = 120000;
 
-    //public TriviaAnswerParcel answerInfo;
     public ArrayList<String> answeredQuestionsList;
     public ArrayList<String> extraAnswerInfoList;
     public ArrayList<Integer> inputAnswersList;
@@ -46,22 +45,25 @@ public class TriviaGame extends AppCompatActivity {
         setContentView(R.layout.activity_trivia_game);
 
         loadData();
-        triviaGameManager = new TriviaGameManager(trivaGameLevel);
+        triviaGameManager = new TriviaGameManager(triviaGameLevel);
 
+        // Hide battery bar
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
+        // Background imageViews for cloud animation
         final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
         final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
 
         /**
-         * The below code was based on a stack overflow answer which can be found here:
+         * The below code runs a background animation which I've set to clouds moving across the sky,
+         * this was based on a stack overflow answer which can be found here:
          * https://stackoverflow.com/questions/36894384/android-move-background-continuously-with-animation
          * I did adjust it however as it was only for two images but this caused stutter so I sandwiched my
-         * cloud frames between two identical blank blue backgrounds (adjusting the corresponding code).
+         * cloud frames between two identical blank blue backgrounds (adjusting the corresponding xml code).
          * There was also a slight gap between the frames but I hid this by matching the general background's
          * rgb value to the blue of the clouds.
          */
@@ -83,17 +85,17 @@ public class TriviaGame extends AppCompatActivity {
         });
         animator.start();
 
+        // Set up TextViews and buttons
         questionDisplay = (TextView) findViewById(R.id.trivia_question);
         scoreDisplay = (TextView) findViewById(R.id.score_int);
         timeDisplay = (TextView) findViewById(R.id.timer_time);
         trueButton = (Button) findViewById(R.id.trivia_true_button);
         falseButton = (Button) findViewById(R.id.trivia_false_button);
 
+        // ArrayLists to hold answer information
         answeredQuestionsList = new ArrayList<>();
         extraAnswerInfoList = new ArrayList<>();
         inputAnswersList= new ArrayList<>();
-
-        // answerInfo = new TriviaAnswerParcel();
 
         displayNextQuestion();
         scoreDisplay.setText(String.valueOf(score));
@@ -135,7 +137,7 @@ public class TriviaGame extends AppCompatActivity {
 
 
 
-    /** Method to increment the question-currently cycles back to the beginning after 10 questions.*/
+    // Method to increment the question
     private void displayNextQuestion(){
         if(nextQuestionNumber < 10){
             triviaQuestion = triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber);
@@ -143,20 +145,13 @@ public class TriviaGame extends AppCompatActivity {
             answerExplanation = triviaGameManager.getExtraAnswerInfo(nextQuestionNumber);
             nextQuestionNumber++;
         }
-        // For now I'll just have the questions loop back to the beginning instead of the app crashing hence resetting questionNumber
+        // If all ten questions are answered the next activity opens
         else{
-
-            /**
-            nextQuestionNumber = 0;
-            triviaQuestion = triviaGameManager.getTriviaQuestionByNo(nextQuestionNumber);
-            questionDisplay.setText(triviaQuestion);
-            nextQuestionNumber++;
-            */
-
             openAnswerActivity();
         }
     }
 
+    // Creates the String to be shown in the feedback toast
     private String checkIfCorrect(Integer qNo, boolean inputAnswer){
         boolean actualAnswer = getAnswer(qNo);
         if(actualAnswer == inputAnswer){
@@ -181,7 +176,7 @@ public class TriviaGame extends AppCompatActivity {
                 timeRemaining = millisUntilFinished;
                 getTimeString();
             }
-
+            // If the player runs out of time without answering all questions the next activity is opened
             @Override
             public void onFinish() {
                 openAnswerActivity();
@@ -189,6 +184,7 @@ public class TriviaGame extends AppCompatActivity {
         }.start();
     }
 
+    // Converts the time remaining into a string in minutes:seconds format
     private void getTimeString(){
         int mins = (int) timeRemaining / 60000;
         int secs = (int) timeRemaining % 60000 /1000;
@@ -214,6 +210,7 @@ public class TriviaGame extends AppCompatActivity {
         }
     }
 
+    // Opens the feedback activity with the answers and passes it a parcelable containing the input information
     public void openAnswerActivity(){
         TriviaAnswerParcel answerInfo = new TriviaAnswerParcel(answeredQuestionsList, extraAnswerInfoList, inputAnswersList, score);
         Intent intent = new Intent(this, TriviaAnswerActivity.class);
@@ -221,9 +218,10 @@ public class TriviaGame extends AppCompatActivity {
         startActivity(intent);
     }
 
+    // Checks the world theme so that the questions can be set accordingly
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        trivaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
+        triviaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
     }
 }
 

@@ -43,6 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/trivia_title"
+        android:fontFamily="@font/bubblegum_sans"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -55,6 +56,7 @@
         android:layout_centerHorizontal="true"
         android:padding="8dp"
         android:text="Default question"
+        android:fontFamily="@font/bubblegum_sans"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,6 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="True"
+        android:fontFamily="@font/bubblegum_sans"
         android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="False"
+        android:fontFamily="@font/bubblegum_sans"
         android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,12 +103,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Score: "
+        android:fontFamily="@font/bubblegum_sans"
         app:layout_constraintStart_toStartOf="@+id/trivia_question"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/score_int"
         android:text="0"
+        android:fontFamily="@font/bubblegum_sans"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -118,6 +124,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="2:00"
+        android:fontFamily="@font/bubblegum_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -128,6 +135,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Time Remaining:"
+        android:fontFamily="@font/bubblegum_sans"
         app:layout_constraintEnd_toStartOf="@+id/timer_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
