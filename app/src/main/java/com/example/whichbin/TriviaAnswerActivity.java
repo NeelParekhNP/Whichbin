@@ -29,6 +29,7 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private TriviaGameManager triviaGameManager;
 
     private TriviaAnswerParcel answerInfo;
+    public static final String LEVEL_THREE_WORLD_THREE_STATUS = "levelThreeWorldThreeStatus";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,5 +205,17 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         triviaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if(answerInfo.getScore() >= 5) {
+
+                case 3:
+                    editor.putBoolean(LEVEL_THREE_WORLD_THREE_STATUS,true);
+        }
+        editor.commit();
     }
 }
