@@ -32,7 +32,7 @@ public class TriviaGameManager {
                 // Information sources: https://www.space.com/17683-earth-atmosphere.html
                 TriviaQuestion q3 = new TriviaQuestion("As of 2019, greenhouse gases make up a quarter of the atmosphere.",
                         "The overwhelming majority of the atmosphere is not made of greenhouse gas-78% is nitrogen and 21% is oxygen. " +
-                                "Greenhouse gases make up less than 1% of the but they have a very powerful effect on global temperature.",
+                                "Greenhouse gases make up less than 1% of the atmosphere but they have a very powerful effect on global temperature.",
                         false);
                 // Information sources: https://www.epa.gov/ghgemissions/overview-greenhouse-gases
                 TriviaQuestion q4 = new TriviaQuestion("Much less carbon dioxide than methane is put into the atmosphere each year.",
@@ -152,7 +152,7 @@ public class TriviaGameManager {
                         true);
                 // Information sources: http://www.bbc.com/future/story/20181102-what-can-i-do-about-climate-change
                 TriviaQuestion q2 = new TriviaQuestion("Cars are better for the environment than most other forms of transport.",
-                        "Walking and cycling are great for short journeys as they don't use fossil fuels. For longer journeys more people sharing transport (like trains and buses) produce less greenhouse gas per person than cars.",
+                        "Walking and cycling are great for short journeys as they don't use fossil fuels. For longer journeys more people sharing transport (like trains and buses) produces less greenhouse gas per person than cars.",
                         false);
                 // Information sources: https://www.bbc.co.uk/news/uk-scotland-48257019
                 TriviaQuestion q3 = new TriviaQuestion("In Scotland twice as much plastic as food waste was thrown away in 2016.",

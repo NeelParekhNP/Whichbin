@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class TriviaAnswerActivity extends AppCompatActivity {
 
-    private int trivaGameLevel;
+    private int triviaGameLevel;
     private TextView questionDisplay;
     private TextView answerDisplay;
     private TextView scoreDisplay;
@@ -29,26 +29,30 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private TriviaGameManager triviaGameManager;
 
     private TriviaAnswerParcel answerInfo;
+    public static final String LEVEL_THREE_WORLD_THREE_STATUS = "levelThreeWorldThreeStatus";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trivia_answer);
 
+        // Hide battery bar
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
 
+        // Background imageViews for cloud animation
         final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
         final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
         final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
 
         /**
-         * The below code was based on a stack overflow answer which can be found here:
+         * The below code runs a background animation which I've set to clouds moving across the sky,
+         * this was based on a stack overflow answer which can be found here:
          * https://stackoverflow.com/questions/36894384/android-move-background-continuously-with-animation
          * I did adjust it however as it was only for two images but this caused stutter so I sandwiched my
-         * cloud frames between two identical blank blue backgrounds (adjusting the corresponding code).
+         * cloud frames between two identical blank blue backgrounds (adjusting the corresponding xml code).
          * There was also a slight gap between the frames but I hid this by matching the general background's
          * rgb value to the blue of the clouds.
          */
@@ -70,19 +74,20 @@ public class TriviaAnswerActivity extends AppCompatActivity {
         });
         animator.start();
 
+        // Get the parcelable with the player's input information
         Intent intent = getIntent();
         answerInfo = intent.getParcelableExtra("answerInfo");
 
+        // Set up TextViews and buttons
         questionDisplay = (TextView) findViewById(R.id.question_info);
         answerDisplay = (TextView) findViewById(R.id.answer_info);
         scoreDisplay = (TextView) findViewById(R.id.score_info);
-
         nextButton = (Button) findViewById(R.id.next_answer_button);
         prevButton = (Button) findViewById(R.id.prev_answer_button);
         mainMenuButton = (Button) findViewById(R.id.main_menu_button);
 
         loadData();
-        triviaGameManager = new TriviaGameManager(trivaGameLevel);
+        triviaGameManager = new TriviaGameManager(triviaGameLevel);
 
         displayAnsweredQuestion(questionIndex);
         displayAnswerFeedback(questionIndex);
@@ -95,8 +100,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
                     questionIndex++;
                     displayAnsweredQuestion(questionIndex);
                     displayAnswerFeedback(questionIndex);
-                }else{
-
+                }
+                else{
+                    //Do nothing as you have reached the last question answered-no subsequent questions to view
                 }
             }
         });
@@ -108,8 +114,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
                     questionIndex--;
                     displayAnsweredQuestion(questionIndex);
                     displayAnswerFeedback(questionIndex);
-                }else{
-
+                }
+                else{
+                    //Do nothing as you have reached the first question answered-no preceding questions to view
                 }
             }
         });
@@ -125,7 +132,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private void displayScoreInfo(){
         if(answerInfo.getNumberOfQsAnswered() > 0) {
             scoreString = "You answered " + answerInfo.getNumberOfQsAnswered() + " questions and got " + answerInfo.getScore() + " correct.";
-        }else{
+        }
+        // Else statement in case no questions are answered during the 2 minutes
+        else{
             scoreString= "Unfortunately you didn't get any points.";
         }
         scoreDisplay.setText(scoreString);
@@ -134,7 +143,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
     private void displayAnsweredQuestion(int qNo){
         if(answerInfo.getNumberOfQsAnswered() > 0) {
             question = answerInfo.getAnsweredQuestion(questionIndex);
-        }else{
+        }
+        // Else statement in case no questions are answered during the 2 minutes
+        else{
             question = "You didn't answer any questions, why not have another go!";
         }
         questionDisplay.setText(question);
@@ -146,7 +157,9 @@ public class TriviaAnswerActivity extends AppCompatActivity {
             boolean trueFalse = triviaGameManager.checkTriviaQuestionAnswer(questionIndex);
 
             answerText = generateAnswerResponse(answerGiven, trueFalse);
-        }else{
+        }
+        // This else replaces the answer feedback if no questions are answered.
+        else{
             answerText = "You never lose when you learn!";
         }
         answerDisplay.setText(answerText);
@@ -157,24 +170,52 @@ public class TriviaAnswerActivity extends AppCompatActivity {
 
         if(answerGiven == 0 && trueFalse == true){
             return "You said this statement is true-you're correct. " + extraInfo;
-        }if(answerGiven == 1 && trueFalse == false){
+        }
+        if(answerGiven == 1 && trueFalse == false){
             return "You said this statement is false-you're correct. "+ extraInfo;
-        }if(answerGiven == 0 && trueFalse == false){
+        }
+        if(answerGiven == 0 && trueFalse == false){
             return "You said this statement is true-actually it's false. "+ extraInfo;
-        }if(answerGiven == 1 && trueFalse == true){
+        }
+        if(answerGiven == 1 && trueFalse == true){
             return "You answered false-but actually this statement is true! Who knew! "+ extraInfo;
-        }else{
+        }
+        // This else statement should never be used
+        else{
             return "Something's gone wrong here...";
         }
     }
 
     public void openMainMenu(){
-        Intent intent = new Intent(this, MainMenu.class);
-        startActivity(intent);
+        if(triviaGameLevel == 1){
+            Intent intent = new Intent(this, LevelSelectionWorldOne.class);
+            startActivity(intent);
+        }
+        if(triviaGameLevel == 2){
+            Intent intent = new Intent(this, LevelSelectionWorldTwo.class);
+            startActivity(intent);
+        }
+        if(triviaGameLevel == 3){
+            Intent intent = new Intent(this, LevelSelectionWorldThree.class);
+            startActivity(intent);
+        }
     }
 
+    // Checks the world theme so that the questions can be set accordingly
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        trivaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
+        triviaGameLevel = sharedPreferences.getInt("triviaGameTheme", 0);
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if(answerInfo.getScore() >= 5) {
+
+                case 3:
+                    editor.putBoolean(LEVEL_THREE_WORLD_THREE_STATUS,true);
+        }
+        editor.commit();
     }
 }

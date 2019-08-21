@@ -1,24 +1,20 @@
 package com.example.whichbin;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 
 public class TileBasedMap {
     private boolean readyToExit;
+    // Two dimesional array represents [x][y] grid values of blocked squares the character can't move into.
     private boolean blockedSquares[][];
-    // Grid location represented by index of the array and string for the toast's instruction
-    private String actionSquaresDescription[][];
-    // Grid location as index with the number representing the order of the task
+    // ArrayLists of task Strings and X and Y locations
     private ArrayList<String> nextActionInstruction;
     private ArrayList<Integer> actionSquareXLocation;
     private ArrayList<Integer> actionSquareYLocation;
+    // Grid locations of action squares with tasks-set dynamically based on the above ArrayLists
     private boolean activeActionSquare[][];
-
-    private int actionSquaresOrder[][];
-    // int representing what task currently needs to be completed
-    private int currentTask;
-    private int numberOfTasks;
+    // Holds the XY location of stair squares to other maps-only currently used once but could be extended.
+    private boolean stairSquares[][];
+    // Holds the XY location of the square to trigger exiting the activity.
     private String portalSquares[][];
 
 
@@ -26,9 +22,8 @@ public class TileBasedMap {
     public TileBasedMap(){
         readyToExit = false;
         blockedSquares = new boolean[9][16];
-        actionSquaresDescription = new String[9][16];
-        actionSquaresOrder = new int[9][16];
-        currentTask = 1;
+        stairSquares = new boolean[9][16];
+
 
         portalSquares = new String [9][16];
 
@@ -50,14 +45,20 @@ public class TileBasedMap {
     }
 
     // Check if the action square holds the current task
-    public boolean isCurrentTask(int xPosition, int yPosition){
-        if(actionSquaresOrder[xPosition][yPosition] == currentTask){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean isAStairSquare(int xPosition, int yPosition){
+        return stairSquares[xPosition][yPosition];
+    }
 
+    public void deactivateAllStairSquares() {
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 16; j++) {
+                activeActionSquare[i][j] = false;
+            }
+        }
+    }
+
+    public void setStairSquareLocation(int x, int y){
+        stairSquares[x][y] = true;
     }
 
     public boolean areTasksComplete(){
@@ -74,12 +75,6 @@ public class TileBasedMap {
 
     public boolean checkSquareBlocked(int x, int y){
         return blockedSquares[x][y];
-    }
-
-
-
-    public String getActionSquareDescription(int x, int y){
-        return actionSquaresDescription[x][y];
     }
 
     public void setNextActionInstruction(String instruction){
@@ -125,17 +120,4 @@ public class TileBasedMap {
         return portalSquares[x][y];
     }
 
-
-    // The below methods might become irrelevant in refactoring
-    public String checkIfActionSquare(int x, int y){
-        return actionSquaresDescription[x][y];
-    }
-
-    public void setActionSquareDescription(int x, int y, String taskDescription){
-        actionSquaresDescription[x][y] = taskDescription;
-    }
-
-    public void setActionSquareOrder(int x, int y, int orderNumber){
-        actionSquaresOrder[x][y] = orderNumber;
-    }
 }

@@ -2,7 +2,6 @@ package com.example.whichbin;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import java.util.ArrayList;
 
 public class TriviaAnswerParcel implements Parcelable {
@@ -23,8 +22,6 @@ public class TriviaAnswerParcel implements Parcelable {
         this.extraAnswerInfoList = in.readArrayList(null);
         this.inputAnswersList = in.readArrayList(null);
         this.score = in.readInt();
-
-        //previous code this.answeredQuestionsList = (ArrayList<String>) in.createTypedArrayList();
     }
 
     public static Creator<TriviaAnswerParcel> CREATOR = new Creator<TriviaAnswerParcel>() {
@@ -51,19 +48,6 @@ public class TriviaAnswerParcel implements Parcelable {
         dest.writeList(inputAnswersList);
         dest.writeInt(score);
     }
-
-    /** method to add a question that was answered,
-     *
-      * @param question - the question's index in TriviaGameManager
-     * @param selectedAnswer - the user's selected answer (0 is true, 1 is false)
-     *
-     *                       Might now be irrelevant...
-
-    public void addQuestion(String question, int selectedAnswer){
-        answeredQuestionsList.add(question);
-        inputAnswersList.add(selectedAnswer);
-    }
-     */
 
 
     /** takes input of index of question asked, returns the question number
