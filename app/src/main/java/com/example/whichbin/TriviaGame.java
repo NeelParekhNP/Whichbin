@@ -34,6 +34,7 @@ public class TriviaGame extends AppCompatActivity {
     private int score = 0;
     private CountDownTimer clock;
     private long timeRemaining = 120000;
+    private boolean stopped;
 
     public ArrayList<String> answeredQuestionsList;
     public ArrayList<String> extraAnswerInfoList;
@@ -97,6 +98,7 @@ public class TriviaGame extends AppCompatActivity {
         extraAnswerInfoList = new ArrayList<>();
         inputAnswersList= new ArrayList<>();
 
+        stopped = false;
         displayNextQuestion();
         scoreDisplay.setText(String.valueOf(score));
         startTimer();
@@ -147,6 +149,7 @@ public class TriviaGame extends AppCompatActivity {
         }
         // If all ten questions are answered the next activity opens
         else{
+            stopped = true;
             openAnswerActivity();
         }
     }
@@ -179,7 +182,10 @@ public class TriviaGame extends AppCompatActivity {
             // If the player runs out of time without answering all questions the next activity is opened
             @Override
             public void onFinish() {
-                openAnswerActivity();
+                // Check stopped is false so the activity isn't opened twice
+                if(stopped == false) {
+                    openAnswerActivity();
+                }
             }
         }.start();
     }

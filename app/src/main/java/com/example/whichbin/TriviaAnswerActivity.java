@@ -157,7 +157,7 @@ public class TriviaAnswerActivity extends AppCompatActivity {
 
             answerText = generateAnswerResponse(answerGiven, trueFalse);
         }
-        // This else statement should never be used-just put in to stop a null value
+        // This else replaces the answer feedback if no questions are answered.
         else{
             answerText = "You never lose when you learn!";
         }
