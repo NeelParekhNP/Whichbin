@@ -4,20 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
 /**
  * CITATION: this class was based on the helpful tutorials of youtube user "clientuser.net" found here:
  * https://www.youtube.com/playlist?list=PLjAaEVR74i-AMRQnNQ3fsRPzZ98J2iaut
  * I followed some of the videos to learn about animation and game loops-in particular tutorials 42-46 and 49-52.
+ * Notably I used the logic that lets the thread sleep only if delta_t is greater than zero and learnt about the canvas.
  * This is what let me implement some basic animation of the character moving-but this was changed
- * and combined with other logic for the tile based movement I set up.
+ * and combined with other logic for the tile based movement I set up and my own images. Any parts relating to dividing
+ * the screen into a grid, to create movement in discrete steps, I wrote myself.
  */
 
 public class RendererLayout extends SurfaceView implements Runnable {
@@ -97,10 +95,6 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
         characterPositionX = Math.round(convertIntToGridX(4));
         characterPositionY = Math.round(convertIntToGridY(14));
-
-        // Previous code for starting the character in the top left
-        // characterPositionX = 0;
-        // characterPositionY = 0;
 
         xUnit = Math.round(x1);
         yUnit = Math.round(y1);
@@ -238,34 +232,6 @@ public class RendererLayout extends SurfaceView implements Runnable {
         }
     }
 
-
-    // Previous attempt below will try a simplified version
-    /**
-     public void moveUp(int destinationY){
-     if(characterPositionY > convertIntToGridY(destinationY)){
-     characterPositionY = characterPositionY - 5;
-     }
-     }
-
-     public void moveDown(int destinationY){
-     if(characterPositionY < convertIntToGridY(destinationY)){
-     characterPositionY = characterPositionY + 5;
-     }
-     }
-
-     public void moveRight(int destinationX){
-     if(characterPositionX < convertIntToGridX(destinationX)){
-     characterPositionX = characterPositionX + 5;
-     }
-     }
-
-     public void moveLeft(int destinationX){
-     if(characterPositionX > convertIntToGridX(destinationX)){
-     characterPositionX = characterPositionX - 5;
-     }
-     }
-     */
-
     public void assignGridValues(){
 
         //Create variables for the 10 possible positions
@@ -296,93 +262,6 @@ public class RendererLayout extends SurfaceView implements Runnable {
         y13 = (height / 16) * 13;
         y14 = (height / 16) * 14;
         y15 = (height / 16) * 15;
-    }
-
-    private int convertGridToIntX(float gridPosition){
-        if(gridPosition == x0){
-            return 0;
-        }
-        if(gridPosition == x1){
-            return 1;
-        }
-        if(gridPosition == x2){
-            return 2;
-        }
-        if(gridPosition == x3){
-            return 3;
-        }
-        if(gridPosition == x4){
-            return 4;
-        }
-        if(gridPosition == x5){
-            return 5;
-        }
-        if(gridPosition == x6){
-            return 6;
-        }
-        if(gridPosition == x7){
-            return 7;
-        }
-        if(gridPosition == x8){
-            return 8;
-        }
-        else{
-            return 0;
-        }
-    }
-
-    private int convertGridToIntY(float gridPosition){
-        if(gridPosition == y0){
-            return 0;
-        }
-        if(gridPosition == y1){
-            return 1;
-        }
-        if(gridPosition == y2){
-            return 2;
-        }
-        if(gridPosition == y3){
-            return 3;
-        }
-        if(gridPosition == y4){
-            return 4;
-        }
-        if(gridPosition == y5){
-            return 5;
-        }
-        if(gridPosition == y6){
-            return 6;
-        }
-        if(gridPosition == y7){
-            return 7;
-        }
-        if(gridPosition == y8){
-            return 8;
-        }
-        if(gridPosition == y9){
-            return 9;
-        }
-        if(gridPosition == y10){
-            return 10;
-        }
-        if(gridPosition == y11){
-            return 11;
-        }
-        if(gridPosition == y12){
-            return 12;
-        }
-        if(gridPosition == y13){
-            return 13;
-        }
-        if(gridPosition == y14){
-            return 14;
-        }
-        if(gridPosition == y15){
-            return 15;
-        }
-        else{
-            return 0;
-        }
     }
 
     public float convertIntToGridX(int gridPosition){
@@ -503,18 +382,5 @@ public class RendererLayout extends SurfaceView implements Runnable {
             thread.start();
             Log.d("Thread", "STARTED");
         }
-    }
-
-    private void stats(){
-        Log.d("Frames_per_second", Double.toString(frames_per_second));
-        Log.d("Frame_time_seconds", Double.toString(frame_time_seconds));
-        Log.d("Frames_time_ms", Double.toString(frame_time_ms));
-        Log.d("Frame_Time_NS", Double.toString(frame_time_ns));
-        Log.d("TLF", Double.toString(tLF));
-        Log.d("TEOR", Double.toString(tEOR));
-        Log.d("F_delta_t", Double.toString(delta_t));
-        Log.d("delta_t_sec", Double.toString(delta_t/1000000000));
-        Log.d("-----", "---------");
-
     }
 }

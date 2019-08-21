@@ -1,22 +1,20 @@
 package com.example.whichbin;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 
 public class TileBasedMap {
     private boolean readyToExit;
+    // Two dimesional array represents [x][y] grid values of blocked squares the character can't move into.
     private boolean blockedSquares[][];
-    // Grid location represented by index of the array and string for the toast's instruction
-    private String actionSquaresDescription[][];
-    // Grid location as index with the number representing the order of the task
+    // ArrayLists of task Strings and X and Y locations
     private ArrayList<String> nextActionInstruction;
     private ArrayList<Integer> actionSquareXLocation;
     private ArrayList<Integer> actionSquareYLocation;
+    // Grid locations of action squares with tasks-set dynamically based on the above ArrayLists
     private boolean activeActionSquare[][];
-
+    // Holds the XY location of stair squares to other maps-only currently used once but could be extended.
     private boolean stairSquares[][];
-
+    // Holds the XY location of the square to trigger exiting the activity.
     private String portalSquares[][];
 
 
@@ -24,7 +22,6 @@ public class TileBasedMap {
     public TileBasedMap(){
         readyToExit = false;
         blockedSquares = new boolean[9][16];
-        actionSquaresDescription = new String[9][16];
         stairSquares = new boolean[9][16];
 
 
@@ -78,12 +75,6 @@ public class TileBasedMap {
 
     public boolean checkSquareBlocked(int x, int y){
         return blockedSquares[x][y];
-    }
-
-
-
-    public String getActionSquareDescription(int x, int y){
-        return actionSquaresDescription[x][y];
     }
 
     public void setNextActionInstruction(String instruction){

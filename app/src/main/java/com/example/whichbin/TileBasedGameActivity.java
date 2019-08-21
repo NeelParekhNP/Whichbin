@@ -81,7 +81,6 @@ public class TileBasedGameActivity extends Activity {
     private int currentMapNumber;
     private int actionInstructionNumberMap1;
     private int actionInstructionNumberMap2;
-    private int crossMapNumberOfCompletedTasks;
     private boolean timeForUpstairsTasks;
     private boolean allTasksComplete;
     private boolean mapJustChanged;
@@ -112,7 +111,6 @@ public class TileBasedGameActivity extends Activity {
         currentMap = tileMapManager.getMap(1);
         mapJustChanged = false;
 
-        crossMapNumberOfCompletedTasks = 0;
         actionInstructionNumberMap1 = 0;
         actionInstructionNumberMap2 = 0;
         timeForUpstairsTasks = false;
@@ -120,16 +118,10 @@ public class TileBasedGameActivity extends Activity {
 
         updateInstruction();
 
-        // currentMap.allTasksComplete();
-
-        //ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
-
         renderer.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                float destinationX = event.getX();
-                float destinationY = event.getY();
 
                 // Set the x and y values separately
                 newX = findNearestGridX(event.getX());
@@ -137,9 +129,6 @@ public class TileBasedGameActivity extends Activity {
 
                 playerDestinationX = convertGridToIntX(newX);
                 playerDestinationY = convertGridToIntY(newY);
-
-
-
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
@@ -261,11 +250,6 @@ public class TileBasedGameActivity extends Activity {
         renderer.resume();
     }
 
-    public void openMainMenu(){
-        Intent intent = new Intent(this, MainMenu.class);
-        startActivity(intent);
-    }
-
     public void openLevelSelectionScreen() {
         Intent intent = new Intent(this, LevelSelectionWorldOne.class);
         startActivity(intent);
@@ -310,10 +294,6 @@ public class TileBasedGameActivity extends Activity {
         }
     }
 
-    private boolean trueIfBlockedSquare(int x, int y){
-        return currentMap.checkSquareBlocked(x,y);
-    }
-
     // Method to reset variables when the character meets a blocked tile
     private void stopMovement(){
         playerDestinationX = playerPositionX;
@@ -346,7 +326,6 @@ public class TileBasedGameActivity extends Activity {
                 currentMap.activateNextActionSquare(actionInstructionNumberMap1);
                 Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumberMap1), Toast.LENGTH_LONG).show();
                 actionInstructionNumberMap1++;
-                crossMapNumberOfCompletedTasks = actionInstructionNumberMap1 + actionInstructionNumberMap2;
             }
             // Set the time for upstairs tasks variable to true and increment actionInstructionNumberMap1 so it doesn't get set to true again.
             if (actionInstructionNumberMap1 == (currentMap.getNumberOfActionInstructions() - 1)) {
@@ -359,25 +338,13 @@ public class TileBasedGameActivity extends Activity {
                 currentMap.activateNextActionSquare(actionInstructionNumberMap2);
                 Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumberMap2), Toast.LENGTH_LONG).show();
                 actionInstructionNumberMap2++;
-                crossMapNumberOfCompletedTasks = actionInstructionNumberMap1 + actionInstructionNumberMap2;
             }
             if (actionInstructionNumberMap2 == (currentMap.getNumberOfActionInstructions() - 1)) {
                 allTasksComplete = true;
                 actionInstructionNumberMap1++;
             }
         }
-        /**
-        else{
-            //Activate portal square
-            currentMap.setPortalSquare(4, 14, "exit");
-            currentMap.allTasksComplete();
-            Toast.makeText(getApplicationContext(), "You completed the tasks! Go to the front door to leave.", Toast.LENGTH_LONG).show();
-        }
-        */
-    }
 
-    private void showInstruction(int x, int y){
-        Toast.makeText(getApplicationContext(), currentMap.getActionSquareDescription(x, y), Toast.LENGTH_LONG).show();
     }
 
     public int getWidth(){
@@ -424,7 +391,6 @@ public class TileBasedGameActivity extends Activity {
         y14 = (height / 16) * 14;
         y15 = (height / 16) * 15;
     }
-
 
     public float findNearestGridX(float touchX) {
 
@@ -622,90 +588,4 @@ public class TileBasedGameActivity extends Activity {
         }
     }
 
-    public float convertIntToGridX(int gridPosition){
-        if(gridPosition == 0){
-            return x0;
-        }
-        if(gridPosition == 1){
-            return x1;
-        }
-        if(gridPosition == 2){
-            return x2;
-        }
-        if(gridPosition == 3){
-            return x3;
-        }
-        if(gridPosition == 4){
-            return x4;
-        }
-        if(gridPosition == 5){
-            return x5;
-        }
-        if(gridPosition == 6){
-            return x6;
-        }
-        if(gridPosition == 7){
-            return x7;
-        }
-        if(gridPosition == 8){
-            return x8;
-        }
-        else{
-            return x0;
-        }
-    }
-
-    public float convertIntToGridY(int gridPosition){
-        if(gridPosition == 0){
-            return y0;
-        }
-        if(gridPosition == 1){
-            return y1;
-        }
-        if(gridPosition == 2){
-            return y2;
-        }
-        if(gridPosition == 3){
-            return y3;
-        }
-        if(gridPosition == 4){
-            return y4;
-        }
-        if(gridPosition == 5){
-            return y5;
-        }
-        if(gridPosition == 6){
-            return y6;
-        }
-        if(gridPosition == 7){
-            return y7;
-        }
-        if(gridPosition == 8){
-            return y8;
-        }
-        if(gridPosition == 9){
-            return y9;
-        }
-        if(gridPosition == 10){
-            return y10;
-        }
-        if(gridPosition == 11){
-            return y11;
-        }
-        if(gridPosition == 12){
-            return y12;
-        }
-        if(gridPosition == 13){
-            return y13;
-        }
-        if(gridPosition == 14){
-            return y14;
-        }
-        if(gridPosition == 15){
-            return y15;
-        }
-        else{
-            return y0;
-        }
-    }
 }
