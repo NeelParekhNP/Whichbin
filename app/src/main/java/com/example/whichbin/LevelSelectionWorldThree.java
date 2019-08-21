@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 public class LevelSelectionWorldThree extends AppCompatActivity {
 
-    private Button launchWorldTwo;
+    private Button launchWorldTwo, mainMenu;
     private ImageView character;
     private ImageButton world3Level1, world3Level2, world3Level3, world3Level4;
     private CountDownTimer countDownTimer;
@@ -43,6 +43,7 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
         setContentView(R.layout.activity_level_selection_world_three);
 
         launchWorldTwo = (Button) findViewById(R.id.button_world_three_left);
+        mainMenu = (Button) findViewById(R.id.button_world_three_menu);
 
         launchWorldTwo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +51,14 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
                 Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
                 startActivity(myIntent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(myIntent);
             }
         });
 

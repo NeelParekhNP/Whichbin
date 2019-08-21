@@ -17,7 +17,7 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
 
     private ImageView character;
     private ImageButton world1Level1, world1Level2, world1Level3;
-    private Button launchWorldTwo;
+    private Button launchWorldTwo, mainMenu;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private static final long COUNTDOWN_IN_MILLIS = 2000;
@@ -43,6 +43,7 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
 
         character = (ImageView) findViewById(R.id.imageView_character_world_one);
         launchWorldTwo = (Button) findViewById(R.id.button_world_one_right);
+        mainMenu = (Button) findViewById(R.id.button_world_one_menu);
         world1Level1 = (ImageButton) findViewById(R.id.imageButton_w1_l1);
         world1Level2 = (ImageButton) findViewById(R.id.imageButton_w1_l2);
         world1Level3 = (ImageButton) findViewById(R.id.imageButton_w1_l3);
@@ -53,6 +54,14 @@ public class LevelSelectionWorldOne extends AppCompatActivity {
                 Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
                 startActivity(myIntent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(myIntent);
             }
         });
 

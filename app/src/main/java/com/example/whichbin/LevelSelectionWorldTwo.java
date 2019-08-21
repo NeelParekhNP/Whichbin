@@ -15,7 +15,7 @@ import android.widget.ImageView;
 
 public class LevelSelectionWorldTwo extends AppCompatActivity {
 
-    private Button launchWorldOne, launchWorldThree;
+    private Button launchWorldOne, launchWorldThree, mainMenu;
     private ImageView character;
     private ImageButton world2Level1, world2Level2, world2Level3;
     private CountDownTimer countDownTimer;
@@ -43,9 +43,18 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
 
         launchWorldOne = (Button) findViewById(R.id.button_world_two_left);
         launchWorldThree = (Button) findViewById(R.id.button_world_two_right);
+        mainMenu = (Button) findViewById(R.id.button_world_two_menu);
 
         launchWorldOne.setOnClickListener(clickListenerNavigation);
         launchWorldThree.setOnClickListener(clickListenerNavigation);
+
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+                startActivity(myIntent);
+            }
+        });
 
         character = (ImageView) findViewById(R.id.imageView_character_world_two);
 
@@ -156,8 +165,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        switch (clicked.getId()) {
-            case R.id.imageButton_w2_l1 :
+        switch (clicked.getId()) {            case R.id.imageButton_w2_l1 :
                 editor.putInt(DRAG_DROP_GAME_THEME, 2);
                 break;
             case R.id.imageButton_w2_l2 :
