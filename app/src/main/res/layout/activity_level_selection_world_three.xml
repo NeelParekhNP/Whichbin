@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cloud"
+    android:background="@drawable/world_three"
     tools:context=".LevelSelectionWorldThree">
 
     <TextView
@@ -48,7 +48,7 @@
         app:layout_constraintEnd_toStartOf="@+id/w3_l1_guideline"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.501"
-        app:srcCompat="@drawable/world1level1" />
+        app:srcCompat="@drawable/icon_whichbin_impact" />
 
     <ImageButton
         android:id="@+id/imageButton_w3_l2"
@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w3_l2_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/world1level2" />
+        app:srcCompat="@drawable/icon_multiple_choice" />
 
     <ImageButton
         android:id="@+id/imageButton_w3_l3"
@@ -72,11 +72,26 @@
         android:layout_marginBottom="8dp"
         android:background="@null"
         android:contentDescription="World 3 Level 3"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w3_l3_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/castle" />
+        app:srcCompat="@drawable/icon_true_or_false" />
+
+    <ImageButton
+        android:id="@+id/imageButton_w3_l4"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@null"
+        android:contentDescription="World 3 Level 4"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/w3_l4_guideline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_tile_based_game" />
 
     <Button
         android:id="@+id/button_world_three_left"
@@ -93,17 +108,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.48" />
+        app:layout_constraintGuide_percent="0.38" />
 
     <android.support.constraint.Guideline
         android:id="@+id/w3_l2_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.73" />
+        app:layout_constraintGuide_percent="0.58" />
 
     <android.support.constraint.Guideline
         android:id="@+id/w3_l3_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.78" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/w3_l4_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"

@@ -2,10 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/imageview_character"
+    android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cloud"
+    android:background="@drawable/world_one"
     tools:context=".LevelSelectionWorldOne">
 
     <Button
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w1_l2_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/world1level2" />
+        app:srcCompat="@drawable/icon_multiple_choice" />
 
     <ImageButton
         android:id="@+id/imageButton_w1_l3"
@@ -70,7 +70,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w1_l3_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/castle" />
+        app:srcCompat="@drawable/icon_true_or_false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/bubblegum_sans"
         android:text="World One"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

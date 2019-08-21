@@ -17,7 +17,7 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
 
     private Button launchWorldTwo;
     private ImageView character;
-    private ImageButton world3Level1, world3Level2, world3Level3;
+    private ImageButton world3Level1, world3Level2, world3Level3, world3Level4;
     private CountDownTimer countDownTimer;
     private long timeLeftInMillis;
     private static final long COUNTDOWN_IN_MILLIS = 3000;
@@ -29,11 +29,12 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
     public static final String MULTIPLE_CHOICE_GAME_THEME = "multipleChoiceGameTheme";
     public static final String TRIVIA_GAME_THEME = "triviaGameTheme";
 
-    private ImageButton buttons [] = new ImageButton[3];
+    private ImageButton buttons [] = new ImageButton[4];
     private int[] allButtonIds = {
             R.id.imageButton_w3_l1,
             R.id.imageButton_w3_l2,
-            R.id.imageButton_w3_l3
+            R.id.imageButton_w3_l3,
+            R.id.imageButton_w3_l4
     };
 
     @Override
@@ -56,11 +57,12 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
         world3Level1 = (ImageButton) findViewById(R.id.imageButton_w3_l1);
         world3Level2 = (ImageButton) findViewById(R.id.imageButton_w3_l2);
         world3Level3 = (ImageButton) findViewById(R.id.imageButton_w3_l3);
+        world3Level4 = (ImageButton) findViewById(R.id.imageButton_w3_l4);
 
         for (int i = 0; i < buttons.length; i++){
             buttons[i] = findViewById(allButtonIds[i]);
             buttons[i].setOnClickListener(clickListener);
-            if ((allButtonIds[i] == R.id.imageButton_w1_l1) || (allButtonIds[i] == R.id.imageButton_w3_l1)){
+            if ((allButtonIds[i] == R.id.imageButton_w3_l1)){
                 //Do nothing
             }
             else{
@@ -96,6 +98,9 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
                     break;
                 case R.id.imageButton_w3_l3:
                     myIntent = new Intent(getBaseContext(), TriviaGame.class);
+                    break;
+                case R.id.imageButton_w3_l4:
+                    myIntent = new Intent(getBaseContext(), TileBasedGameActivity.class);
                     break;
                 default:
                     myIntent = new Intent(getBaseContext(), LevelSelectionWorldThree.class);

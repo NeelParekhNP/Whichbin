@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cloud"
+    android:background="@drawable/world_two"
     tools:context=".LevelSelectionWorldTwo">
 
     <TextView
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w2_l1_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/world1level1" />
+        app:srcCompat="@drawable/icon_whichbin_nature" />
 
     <ImageButton
         android:id="@+id/imageButton_w2_l2"
@@ -62,7 +62,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w2_l2_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/world1level2" />
+        app:srcCompat="@drawable/icon_multiple_choice" />
 
     <ImageButton
         android:id="@+id/imageButton_w2_l3"
@@ -76,7 +76,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/w2_l3_guideline"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/castle" />
+        app:srcCompat="@drawable/icon_true_or_false" />
 
     <Button
         android:id="@+id/button_world_two_right"
