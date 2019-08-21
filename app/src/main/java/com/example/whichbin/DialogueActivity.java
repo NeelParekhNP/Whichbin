@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 public class DialogueActivity extends AppCompatActivity {
@@ -41,23 +42,20 @@ public class DialogueActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_dialogue);
 
         loadData();
 
-        //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         background = (ConstraintLayout) findViewById(R.id.constraint_layout_dialogue);
 
         /** Get's the physical size of phone screen */
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenWidth = displayMetrics.widthPixels;
 
         background.setBackground(getDrawable(allDialogues[dialogueNumber]));
         background.setOnTouchListener(touchListener);
-
     }
     /** Moves to the next dialogue if clicked on right of screen and moves to the previous dialogue if clicked on left of screen */
     View.OnTouchListener touchListener = new View.OnTouchListener() {

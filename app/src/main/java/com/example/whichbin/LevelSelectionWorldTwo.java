@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -39,6 +40,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_level_selection_world_two);
 
         launchWorldOne = (Button) findViewById(R.id.button_world_two_left);
@@ -48,6 +50,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         launchWorldOne.setOnClickListener(clickListenerNavigation);
         launchWorldThree.setOnClickListener(clickListenerNavigation);
 
+        /** Sets the clicklistener for the button to open the main menu*/
         mainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +65,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         world2Level2 = (ImageButton) findViewById(R.id.imageButton_w2_l2);
         world2Level3 = (ImageButton) findViewById(R.id.imageButton_w2_l3);
 
+        /** Dynamically sets the click listeners to the buttons and visibility */
         for (int i = 0; i < buttons.length; i++){
             buttons[i] = findViewById(allButtonIds[i]);
             buttons[i].setOnClickListener(clickListener);
@@ -74,6 +78,8 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
             }
         }
 
+
+        /** Unlocks the next level if enough points were scored in previous levels */
         loadData();
         if (levelOneWorldTwoPassed){
             world2Level2.setEnabled(true);
@@ -86,7 +92,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
 
     }
 
-
+    /** Sets the clicklistener for the navigation buttons to open the next level section screen*/
     View.OnClickListener clickListenerNavigation = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -109,6 +115,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         }
     };
 
+    /** Opens the level that is clicked on */
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -134,6 +141,7 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         }
     };
 
+    /** Moves the character to clicked image and adds a delay before level is started */
     private void startCountDown(final float x, final float y, final Intent myIntent){
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -155,12 +163,14 @@ public class LevelSelectionWorldTwo extends AppCompatActivity {
         }.start();
     }
 
+    /** Checks if enough points were scored in previous level to unlock next levels */
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         levelOneWorldTwoPassed = sharedPreferences.getBoolean("levelOneWorldTwoStatus", false);
         levelTwoWorldTwoPassed = sharedPreferences.getBoolean("levelTwoWorldTwoStatus", false);
     }
 
+    /** Feeds information to other games about which level was picked */
     private void changeData(View clicked) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();

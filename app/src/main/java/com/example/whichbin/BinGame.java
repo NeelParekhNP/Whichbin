@@ -13,6 +13,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -44,7 +45,6 @@ public class BinGame extends AppCompatActivity {
     public static final String LEVEL_ONE_WORLD_THREE_STATUS = "levelOneWorldThreeStatus";
 
     /** Arrays of different sets of questions */
-
     private BinGameQuestions[] recycleQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_one, 3, R.drawable.carrot_organic, "Carrots are organic waste"),
             new BinGameQuestions(R.string.question_two, 1, R.drawable.styrofoam_trash, "Styrofoam isn't currently recyclable."),
@@ -88,12 +88,12 @@ public class BinGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_bin_game);
 
         loadData();
 
-        /** Get's the physical size of phone screen */
-
+        /** Get's the physical size of the phone screen */
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenWidth = displayMetrics.widthPixels;
@@ -104,6 +104,8 @@ public class BinGame extends AppCompatActivity {
         final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
         final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
 
+
+        /** Code to make animated background */
         final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
         animator.setRepeatCount(ValueAnimator.INFINITE);
         animator.setInterpolator(new LinearInterpolator());
@@ -137,6 +139,7 @@ public class BinGame extends AppCompatActivity {
         int imageViewWidth = screenWidth/3;
         int imageViewHeight = screenHeight/5;
 
+        /** Sets the size of the images depending on the size of the screen */
         for(int i=0; i<allOptions.getChildCount(); i++) {
             theImageViews = allOptions.getChildAt(i);
             LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(imageViewWidth,imageViewHeight);
@@ -145,7 +148,6 @@ public class BinGame extends AppCompatActivity {
 
 
         /** The questions and containers will be setup according to which button was pressed in the selection screen */
-
         switch (levelTheme){
             case 1 :
                 myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
@@ -181,6 +183,7 @@ public class BinGame extends AppCompatActivity {
 
         question.setImageDrawable(getDrawable(questionSet[currentIndex].getImage()));
 
+        /** Setting up the options to use the draglistener */
         option1.setOnDragListener(dragListener);
         option2.setOnDragListener(dragListener);
         option3.setOnDragListener(dragListener);
@@ -193,6 +196,7 @@ public class BinGame extends AppCompatActivity {
         nextChevron.setOnClickListener(feedbackClickListener);
     }
 
+    /** Simple click listener that returns the user to the level selection screen and saves the shared preferences date */
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -202,7 +206,6 @@ public class BinGame extends AppCompatActivity {
     };
 
     /** Makes the item image view into an draggable shadow */
-
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View v, MotionEvent event) {
@@ -217,7 +220,6 @@ public class BinGame extends AppCompatActivity {
     };
 
     /** Carries out a set of instructions when the image shadow is dropped inside a container */
-
     View.OnDragListener dragListener = new View.OnDragListener() {
         @Override
         public boolean onDrag(View v, DragEvent event) {
@@ -277,13 +279,16 @@ public class BinGame extends AppCompatActivity {
         }
     };
 
+    /** click listener for the chevrons in the feedback screen */
     View.OnClickListener feedbackClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if(view.getId() == R.id.binGame_previous_feedback){
+                //Checks if there's a previous page and does nothing if there is
                 if(currentFeedbackNumber == 0){
                     previousChevron.setVisibility(View.INVISIBLE);
                 }
+                //Goes to the previous feedback
                 else{
                     currentFeedbackNumber--;
                     resultsView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + questionSet[currentFeedbackNumber].getAnswer());
@@ -291,9 +296,11 @@ public class BinGame extends AppCompatActivity {
                 }
             }
             if(view.getId() == R.id.binGame_next_feedback){
+                //Checks if there's a next page and does nothing if there is
                 if (currentFeedbackNumber == (userAnswer.length-1)){
                     nextChevron.setVisibility(View.INVISIBLE);
                 }
+                //Goes to the next feedback
                 else {
                     currentFeedbackNumber++;
                     resultsView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + questionSet[currentFeedbackNumber].getAnswer());
@@ -303,7 +310,6 @@ public class BinGame extends AppCompatActivity {
         }
     };
     /** Checks whether user has scored sufficient enough points to move onto the next level */
-
     private void saveData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -325,7 +331,6 @@ public class BinGame extends AppCompatActivity {
     }
 
     /** Loads up information on which level was selected in the level selection screen */
-
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         levelTheme = sharedPreferences.getInt("dragDropGameTheme", 0);

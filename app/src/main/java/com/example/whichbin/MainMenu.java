@@ -56,25 +56,29 @@ public class MainMenu extends AppCompatActivity {
 
         View currentButton;
 
+        /** Dynamically set the clicklisteners to all buttons */
         for(int i=0; i<parentLayout.getChildCount(); i++) {
             currentButton = parentLayout.getChildAt(i);
             currentButton.setOnClickListener(clickListener);
         }
 
+        /** Enables multiplayer button if level 2 from any world is passed */
         if(levelTwoWorldOnePassed || levelTwoWorldTwoPassed || levelTwoWorldThreePassed){
             multiplayerGame.setEnabled(true);
         }
 
     }
 
+    /** Carries out an action depending on which button is clicked */
     View.OnClickListener clickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             switch (view.getId()){
+                //Depending on which screen has already been seen the next activity is selected
                 case R.id.levelSelectorButtonX:
                     /** Delete first 2 lines if want to keep progress saved even after app reset*/
-                    /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    sharedPreferences.edit().clear().commit();*/
+                    //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    //sharedPreferences.edit().clear().commit();
                     if (!dialogueStatus){
                         openDialogueScreen();
                     }
@@ -100,6 +104,7 @@ public class MainMenu extends AppCompatActivity {
                     saveData(view);
                     break;
 
+                //Resets the players progress after giving them a warning
                 case R.id.resetX:
                     new AlertDialog.Builder(MainMenu.this)
                             .setTitle("Reset Progress?")
@@ -183,7 +188,6 @@ public class MainMenu extends AppCompatActivity {
     }
 
     /** Loads data on whether the instructions and dialogues have already been seen */
-
     private void loadData() {
         dialogueStatus = sharedPreferences.getBoolean("dialogueSeen", false);
         instructionsStatus = sharedPreferences.getBoolean("instructionsSeen", false);
@@ -192,6 +196,7 @@ public class MainMenu extends AppCompatActivity {
         levelTwoWorldThreePassed = sharedPreferences.getBoolean("levelTwoWorldThreeStatus", false);
     }
 
+    /** Saves information on whether the instruction button or cinematic button was clicked */
     private void saveData(View clicked) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = sharedPreferences.edit();
