@@ -29,7 +29,9 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
     boolean canDraw = false;
     SurfaceHolder surfaceHolder;
-    Bitmap backGroundCheck;
+    Bitmap downstairs;
+    Bitmap upstairs;
+    public int currentBackgroundNumber;
     Canvas canvas;
 
 
@@ -83,8 +85,12 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
         assignGridValues();
 
-        backGroundCheck = BitmapFactory.decodeResource(getResources(), R.drawable.downstairs);
-        backGroundCheck = Bitmap.createScaledBitmap(backGroundCheck, width, height, true);
+        downstairs = BitmapFactory.decodeResource(getResources(), R.drawable.downstairs);
+        downstairs = Bitmap.createScaledBitmap(downstairs, width, height, true);
+
+        upstairs = BitmapFactory.decodeResource(getResources(), R.drawable.upstairs);
+        upstairs = Bitmap.createScaledBitmap(upstairs, width, height, true);
+        currentBackgroundNumber = 1;
 
         character = BitmapFactory.decodeResource(getResources(), R.drawable.character);
         character = Bitmap.createScaledBitmap(character, (width/9), (height/16), true);
@@ -107,11 +113,7 @@ public class RendererLayout extends SurfaceView implements Runnable {
         frame_time_ms = frame_time_seconds*1000;
         frame_time_ns = frame_time_ms * 1000000;
 
-        // Below is code for testing which starts the character in the bottom right.
-        /**
-         characterPositionX = Math.round(convertIntToGridX(8));
-         characterPositionY = Math.round(convertIntToGridY(15));;
-         */
+
 
     }
 
@@ -147,27 +149,7 @@ public class RendererLayout extends SurfaceView implements Runnable {
             }
 
 
-            // Old code from a past version
-            // canvas = surfaceHolder.lockCanvas();
-            // motionCharacter(10);
 
-            //moveUp(2);
-
-            // Slightly concerned by the trail the character is leaving behind and whether this will take up memory
-            // This is only visible with the background hidden so comment out the below line to test.
-
-            /**
-            canvas.drawBitmap(backGroundCheck, null, new Rect(0,0, width, height), null);
-
-            canvas.drawBitmap(character, characterPositionX, characterPositionY, null);
-            surfaceHolder.unlockCanvasAndPost(canvas);
-            */
-
-
-
-            // Unsure whether this is necessary
-            //invalidate(0, 0, width, height);
-            //invalidate();
         }
     }
 
@@ -177,7 +159,8 @@ public class RendererLayout extends SurfaceView implements Runnable {
 
     private void draw(){
         canvas = surfaceHolder.lockCanvas();
-        canvas.drawBitmap(backGroundCheck, 0, 0, null);
+        //canvas.drawBitmap(downstairs, 0, 0, null);
+        drawBackground(currentBackgroundNumber);
         // Check this is the correct variable
         canvas.drawBitmap(character, characterPositionX, characterPositionY, null);
 
@@ -185,7 +168,25 @@ public class RendererLayout extends SurfaceView implements Runnable {
     }
 
 
+    public void drawBackground(int backGroundNumber){
+        if(backGroundNumber == 1){
+            canvas.drawBitmap(downstairs, 0, 0, null);
+        }
+        if(backGroundNumber == 2){
+            canvas.drawBitmap(upstairs, 0, 0, null);
+        }
+        else{
+            canvas.drawBitmap(downstairs, 0, 0, null);
+        }
+    }
 
+    public void changeBackgroundNumber(int chosenBackground){
+        currentBackgroundNumber = chosenBackground;
+    }
+
+    public int getCurrentBackgroundNumber(){
+        return currentBackgroundNumber;
+    }
 
     public void moveUp(){
         characterPositionY = characterPositionY - yUnit;

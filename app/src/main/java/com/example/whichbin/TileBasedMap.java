@@ -15,10 +15,8 @@ public class TileBasedMap {
     private ArrayList<Integer> actionSquareYLocation;
     private boolean activeActionSquare[][];
 
-    private int actionSquaresOrder[][];
-    // int representing what task currently needs to be completed
-    private int currentTask;
-    private int numberOfTasks;
+    private boolean stairSquares[][];
+
     private String portalSquares[][];
 
 
@@ -27,8 +25,8 @@ public class TileBasedMap {
         readyToExit = false;
         blockedSquares = new boolean[9][16];
         actionSquaresDescription = new String[9][16];
-        actionSquaresOrder = new int[9][16];
-        currentTask = 1;
+        stairSquares = new boolean[9][16];
+
 
         portalSquares = new String [9][16];
 
@@ -50,14 +48,20 @@ public class TileBasedMap {
     }
 
     // Check if the action square holds the current task
-    public boolean isCurrentTask(int xPosition, int yPosition){
-        if(actionSquaresOrder[xPosition][yPosition] == currentTask){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public boolean isAStairSquare(int xPosition, int yPosition){
+        return stairSquares[xPosition][yPosition];
+    }
 
+    public void deactivateAllStairSquares() {
+        for(int i = 0; i < 9; i++) {
+            for(int j = 0; j < 16; j++) {
+                activeActionSquare[i][j] = false;
+            }
+        }
+    }
+
+    public void setStairSquareLocation(int x, int y){
+        stairSquares[x][y] = true;
     }
 
     public boolean areTasksComplete(){
@@ -125,17 +129,4 @@ public class TileBasedMap {
         return portalSquares[x][y];
     }
 
-
-    // The below methods might become irrelevant in refactoring
-    public String checkIfActionSquare(int x, int y){
-        return actionSquaresDescription[x][y];
-    }
-
-    public void setActionSquareDescription(int x, int y, String taskDescription){
-        actionSquaresDescription[x][y] = taskDescription;
-    }
-
-    public void setActionSquareOrder(int x, int y, int orderNumber){
-        actionSquaresOrder[x][y] = orderNumber;
-    }
 }

@@ -79,7 +79,12 @@ public class TileBasedGameActivity extends Activity {
     private TileMapManager tileMapManager;
     private TileBasedMap currentMap;
     private int currentMapNumber;
-    private int actionInstructionNumber;
+    private int actionInstructionNumberMap1;
+    private int actionInstructionNumberMap2;
+    private int crossMapNumberOfCompletedTasks;
+    private boolean timeForUpstairsTasks;
+    private boolean allTasksComplete;
+    private boolean mapJustChanged;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +110,13 @@ public class TileBasedGameActivity extends Activity {
         tileMapManager = new TileMapManager();
         currentMapNumber = 1;
         currentMap = tileMapManager.getMap(1);
+        mapJustChanged = false;
 
-        actionInstructionNumber = 0;
+        crossMapNumberOfCompletedTasks = 0;
+        actionInstructionNumberMap1 = 0;
+        actionInstructionNumberMap2 = 0;
+        timeForUpstairsTasks = false;
+        allTasksComplete = false;
 
         updateInstruction();
 
@@ -212,8 +222,10 @@ public class TileBasedGameActivity extends Activity {
                             }
                             // YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                         }
+
                         checkIfExitSquare();
                         checkIfActionSquare();
+                        checkIfStairs();
 
 
                         break;
@@ -271,6 +283,36 @@ public class TileBasedGameActivity extends Activity {
         }
     }
 
+    private void checkIfStairs(){
+        if(currentMap.isAStairSquare(playerPositionX, playerPositionY) == true) {
+            mapJustChanged = false;
+            if (renderer.getCurrentBackgroundNumber() == 1 && mapJustChanged == false) {
+                renderer.changeBackgroundNumber(2);
+                currentMapNumber = 2;
+                currentMap = tileMapManager.getMap(currentMapNumber);
+                renderer.drawBackground(currentMapNumber);
+                mapJustChanged = true;
+                // Conditional to intialise upstairs tasks
+                if(timeForUpstairsTasks == true){
+                    updateInstruction();
+                }
+            }
+            if (renderer.getCurrentBackgroundNumber() == 2 && mapJustChanged == false) {
+                renderer.changeBackgroundNumber(1);
+                currentMapNumber = 1;
+                currentMap = tileMapManager.getMap(currentMapNumber);
+                renderer.drawBackground(currentMapNumber);
+                mapJustChanged = true;
+                if(allTasksComplete == true){
+                    //Activate portal square
+                    currentMap.setPortalSquare(4, 14, "exit");
+                    currentMap.allTasksComplete();
+                    Toast.makeText(getApplicationContext(), "You completed the tasks! Go to the front door to leave.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
     private boolean trueIfBlockedSquare(int x, int y){
         return currentMap.checkSquareBlocked(x,y);
     }
@@ -302,19 +344,39 @@ public class TileBasedGameActivity extends Activity {
     }
 
     private void updateInstruction(){
-        if(actionInstructionNumber < (currentMap.getNumberOfActionInstructions()-1)) {
-            currentMap.activateNextActionSquare(actionInstructionNumber);
-            Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumber), Toast.LENGTH_LONG).show();
-            actionInstructionNumber++;
+        if(currentMapNumber == 1) {
+            if (actionInstructionNumberMap1 < (currentMap.getNumberOfActionInstructions() - 1)) {
+                currentMap.activateNextActionSquare(actionInstructionNumberMap1);
+                Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumberMap1), Toast.LENGTH_LONG).show();
+                actionInstructionNumberMap1++;
+                crossMapNumberOfCompletedTasks = actionInstructionNumberMap1 + actionInstructionNumberMap2;
+            }
+            // Set the time for upstairs tasks variable to true and increment actionInstructionNumberMap1 so it doesn't get set to true again.
+            if (actionInstructionNumberMap1 == (currentMap.getNumberOfActionInstructions() - 1)) {
+                timeForUpstairsTasks = true;
+                actionInstructionNumberMap1++;
+            }
         }
-
+        if(currentMapNumber == 2) {
+            if (actionInstructionNumberMap2 < (currentMap.getNumberOfActionInstructions()-1)) {
+                currentMap.activateNextActionSquare(actionInstructionNumberMap2);
+                Toast.makeText(getApplicationContext(), currentMap.getNextActionInstruction(actionInstructionNumberMap2), Toast.LENGTH_LONG).show();
+                actionInstructionNumberMap2++;
+                crossMapNumberOfCompletedTasks = actionInstructionNumberMap1 + actionInstructionNumberMap2;
+            }
+            if (actionInstructionNumberMap2 == (currentMap.getNumberOfActionInstructions() - 1)) {
+                allTasksComplete = true;
+                actionInstructionNumberMap1++;
+            }
+        }
+        /**
         else{
             //Activate portal square
             currentMap.setPortalSquare(4, 14, "exit");
             currentMap.allTasksComplete();
             Toast.makeText(getApplicationContext(), "You completed the tasks! Go to the front door to leave.", Toast.LENGTH_LONG).show();
         }
-
+        */
     }
 
     private void showInstruction(int x, int y){
