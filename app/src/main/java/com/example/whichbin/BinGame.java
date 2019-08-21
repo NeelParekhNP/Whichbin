@@ -1,5 +1,6 @@
 package com.example.whichbin;
 
+import android.animation.ValueAnimator;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +35,8 @@ public class BinGame extends AppCompatActivity {
     public static final String LEVEL_ONE_WORLD_ONE_STATUS = "levelOneWorldOneStatus";
     public static final String LEVEL_ONE_WORLD_TWO_STATUS = "levelOneWorldTwoStatus";
     public static final String LEVEL_ONE_WORLD_THREE_STATUS = "levelOneWorldThreeStatus";
+
+    /** Arrays of different sets of questions */
 
     private BinGameQuestions[] recycleQuestions = new BinGameQuestions[]{
             new BinGameQuestions(R.string.question_one, 3, R.drawable.carrot_organic, "Carrots are organic waste"),
@@ -81,6 +85,29 @@ public class BinGame extends AppCompatActivity {
 
         loadData();
 
+        final ImageView backgroundZero = (ImageView) findViewById(R.id.background_0);
+        final ImageView backgroundOne = (ImageView) findViewById(R.id.background_1);
+        final ImageView backgroundTwo = (ImageView) findViewById(R.id.background_2);
+        final ImageView backgroundThree = (ImageView) findViewById(R.id.background_3);
+
+        final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
+        animator.setRepeatCount(ValueAnimator.INFINITE);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(30000L);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                final float progress = (float) animation.getAnimatedValue();
+                final float width = backgroundZero.getWidth();
+                final float translationX = 3 * width * progress;
+                backgroundZero.setTranslationX(translationX);
+                backgroundOne.setTranslationX(translationX - width);
+                backgroundTwo.setTranslationX(translationX - (width * 2));
+                backgroundThree.setTranslationX(translationX - (width * 3));
+            }
+        });
+        animator.start();
+
         nameTags = (LinearLayout) findViewById(R.id.optionTagsLayout);
         allOptions = (LinearLayout) findViewById((R.id.optionsLayout));
         questionTextView = (TextView) findViewById(R.id.questionTextView);
@@ -92,6 +119,8 @@ public class BinGame extends AppCompatActivity {
         option2Label = (TextView) findViewById(R.id.textView_option2_tag);
         option3Label = (TextView) findViewById(R.id.textView_option3_tag);
         resultsView = (TextView) findViewById(R.id.textView_DND_game_results);
+
+        /** The questions and containers will be setup according to which button was pressed in the selection screen */
 
         switch (levelTheme){
             case 1 :
@@ -147,10 +176,12 @@ public class BinGame extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             saveData();
-            Intent myIntent = new Intent(getBaseContext(), LevelSelection.class);
+            Intent myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
             startActivity(myIntent);
         }
     };
+
+    /** Makes the item image view into an draggable shadow */
 
     View.OnTouchListener touchListener = new View.OnTouchListener() {
         @Override
@@ -164,6 +195,8 @@ public class BinGame extends AppCompatActivity {
             return false;
         }
     };
+
+    /** Carries out a set of instructions when the image shadow is dropped inside a container */
 
     View.OnDragListener dragListener = new View.OnDragListener() {
         @Override
@@ -229,6 +262,7 @@ public class BinGame extends AppCompatActivity {
         }
     };
 
+
     private void displayAnswers(){
         String results = "";
         for(int i = 0; i < userAnswers.length; i++){
@@ -243,6 +277,8 @@ public class BinGame extends AppCompatActivity {
         resultsView.setVisibility(View.VISIBLE);
         resultsView.setText(results);
     }
+
+    /** Checks whether user has scored sufficient enough points to move onto the next level */
 
     private void saveData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -263,6 +299,8 @@ public class BinGame extends AppCompatActivity {
         }
         editor.commit();
     }
+
+    /** Loads up information on which level was selected in the level selection screen */
 
     private void loadData() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

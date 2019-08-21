@@ -1,11 +1,13 @@
 package com.example.whichbin;
 
-public class MultiplayerGameQuestions {
+/** Object class to save information about the questions in the multiple choice games */
+
+public class MultipleChoiceQuestions {
     private int question;
     private int answer;
     private String option1, option2, option3, option4;
 
-    public MultiplayerGameQuestions(int question, int answer, String option1, String option2, String option3, String option4){
+    public MultipleChoiceQuestions(int question, int answer, String option1, String option2, String option3, String option4){
         this.question = question;
         this.answer = answer;
         this.option1=option1;
