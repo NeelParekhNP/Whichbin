@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class DialogueActivity extends AppCompatActivity {
 
     private ConstraintLayout background;
+    private SharedPreferences sharedPreferences;
 
     private int[] allDialogues = new int[] {
             R.drawable.bad_art_puffin,
@@ -33,12 +34,18 @@ public class DialogueActivity extends AppCompatActivity {
     private int dialogueNumber;
     private float screenWidth;
 
+    private boolean dialogueButtonClicked;
+
     public static final String DIALOGUE_SEEN = "dialogueSeen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dialogue);
+
+        loadData();
+
+        //sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         background = (ConstraintLayout) findViewById(R.id.constraint_layout_dialogue);
 
@@ -69,8 +76,15 @@ public class DialogueActivity extends AppCompatActivity {
                     }
                     else if (dialogueNumber == 11){
                         saveData();
-                        Intent myIntent = new Intent(getBaseContext(), OnboardingScreen.class);
-                        startActivity(myIntent);
+                        if(dialogueButtonClicked){
+                            Intent myIntent = new Intent(getBaseContext(), MainMenu.class);
+                            startActivity(myIntent);
+                        }
+                        else {
+                            Intent myIntent = new Intent(getBaseContext(), OnboardingScreen.class);
+                            startActivity(myIntent);
+                        }
+
                     }
                     else if (x > screenWidth/2 && (dialogueNumber-1) < allDialogues.length){
                         dialogueNumber++;
@@ -88,5 +102,10 @@ public class DialogueActivity extends AppCompatActivity {
 
         editor.putBoolean(DIALOGUE_SEEN, true);
         editor.commit();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        dialogueButtonClicked = sharedPreferences.getBoolean("dialogueButtonClicked", false);
     }
 }

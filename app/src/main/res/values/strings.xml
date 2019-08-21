@@ -1,11 +1,10 @@
 <resources>
     <!--Main menu strings-->
-    <string name="mainMenu">Pick a game!</string>
-    <string name="whichBin">Click here to play the which bin game!</string>
-    <string name="trivia_game">Click here to play the climate change trivia game!</string>
-    <string name="multiplayer_game">Click here to play the multiplayer game!</string>
-    <string name="multipleChoice_game">Click here to play the multiple choice game!</string>
-    <string name="main_game">Click here to play the main game!</string>
+    <string name="play_button">Play</string>
+    <string name="multiplayer_game">Multiplayer game!</string>
+    <string name="dialogue_button">Cinematic</string>
+    <string name="onboarding_button">Instructions</string>
+    <string name="reset_button">Reset Progress</string>
 
     <!--Which bin game strings-->
     <string name="app_name">Which bin?</string>

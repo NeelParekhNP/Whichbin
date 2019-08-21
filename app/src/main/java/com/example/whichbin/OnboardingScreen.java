@@ -24,6 +24,7 @@ public class OnboardingScreen extends AppCompatActivity {
     private SliderAdapter sliderAdapter;
 
     private int currentPage;
+    private boolean instructionButtonClicked;
 
     public static final String INSTRUCTIONS_SEEN = "instructionsSeen";
 
@@ -31,6 +32,8 @@ public class OnboardingScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboarding_screen);
+
+        loadData();
 
         slideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
         linearLayout = (LinearLayout) findViewById(R.id.onBoardLinearLayout);
@@ -66,8 +69,14 @@ public class OnboardingScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 saveData();
-                Intent readMore = new Intent(view.getContext(), LevelSelectionWorldOne.class);
-                view.getContext().startActivity(readMore);
+                if(!instructionButtonClicked){
+                    Intent readMore = new Intent(view.getContext(), LevelSelectionWorldOne.class);
+                    view.getContext().startActivity(readMore);
+                }
+                else {
+                    Intent readMore = new Intent(view.getContext(), MainMenu.class);
+                    view.getContext().startActivity(readMore);
+                }
             }
         });
     }
@@ -157,5 +166,9 @@ public class OnboardingScreen extends AppCompatActivity {
         editor.putBoolean(INSTRUCTIONS_SEEN, true);
         editor.commit();
     }
+    private void loadData() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        instructionButtonClicked = sharedPreferences.getBoolean("instructionButtonClicked", false);
 
+    }
 }

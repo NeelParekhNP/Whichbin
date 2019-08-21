@@ -1,30 +1,42 @@
 package com.example.whichbin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 public class MainMenu extends AppCompatActivity {
     String msg = "Android : ";
-    private Button whichBinButton;
-    private Button triviaButton;
-    private Button multiplayerGame;
-    private Button multipleChoiceGame;
     private Button playButton;
-    private Button mainGame;
+    private Button multiplayerGame;
+    private Button cinematicButton;
+    private Button instructionsButton;
+    private Button resetButton;
+    private ConstraintLayout parentLayout;
+    private SharedPreferences sharedPreferences;
 
-    private boolean dialogueStatus, instructionsStatus;
+    private boolean dialogueStatus, instructionsStatus, levelTwoWorldOnePassed, levelTwoWorldTwoPassed, levelTwoWorldThreePassed;
+
+    public static final String DIALOGUE_BUTTON_CLICKED = "dialogueButtonClicked";
+    public static final String INSTRUCTION_BUTTON_CLICKED = "instructionButtonClicked";
 
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         loadData();
 
@@ -35,117 +47,102 @@ public class MainMenu extends AppCompatActivity {
         setContentView(R.layout.main_menu);
         Log.d(msg, "The onCreate() event");
 
-        whichBinButton = (Button) findViewById(R.id.whichBinButtonX);
-        whichBinButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openBinGame();
-            }
-        });
-
-        triviaButton = (Button) findViewById(R.id.triviaGameX);
-        triviaButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                openTriviaGame();
-            }
-        });
-
-        multiplayerGame = (Button) findViewById(R.id.multiplayerGameX);
-        multiplayerGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMultiplayerGame();
-            }
-        });
-
-        /** Checks if the dialogues and instructions have already been seen and opens an activity accordingly */
-
         playButton = (Button) findViewById(R.id.levelSelectorButtonX);
-        playButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /** Delete first 2 lines if want to keep progress saved even after app reset*/
-                //SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                //sharedPreferences.edit().clear().commit();
-                if (dialogueStatus == false){
+        multiplayerGame = (Button) findViewById(R.id.multiplayerGameX);
+        cinematicButton = (Button) findViewById(R.id.cinematicX);
+        instructionsButton = (Button) findViewById(R.id.instructionsX);
+        resetButton = (Button) findViewById(R.id.resetX);
+        parentLayout = (ConstraintLayout) findViewById(R.id.menu_layout);
+
+        View currentButton;
+
+        for(int i=0; i<parentLayout.getChildCount(); i++) {
+            currentButton = parentLayout.getChildAt(i);
+            currentButton.setOnClickListener(clickListener);
+        }
+
+        if(levelTwoWorldOnePassed || levelTwoWorldTwoPassed || levelTwoWorldThreePassed){
+            multiplayerGame.setEnabled(true);
+        }
+
+    }
+
+    View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.levelSelectorButtonX:
+                    /** Delete first 2 lines if want to keep progress saved even after app reset*/
+                    /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    sharedPreferences.edit().clear().commit();*/
+                    if (!dialogueStatus){
+                        openDialogueScreen();
+                    }
+                    else if(!instructionsStatus){
+                        openOnboardingScreen();
+                    }
+                    else {
+                        openLevelSelectionScreen();
+                    }
+                    break;
+
+                case R.id.multiplayerGameX:
+                    openMultiplayerGame();
+                    break;
+
+                case R.id.cinematicX:
                     openDialogueScreen();
-                }
-                else if(instructionsStatus == false){
+                    saveData(view);
+                    break;
+
+                case R.id.instructionsX:
                     openOnboardingScreen();
-                }
-                else {
-                    openLevelSelectionScreen();
-                }
+                    saveData(view);
+                    break;
+
+                case R.id.resetX:
+                    new AlertDialog.Builder(MainMenu.this)
+                            .setTitle("Reset Progress?")
+                            .setMessage("Are you sure you want to reset your progress?")
+
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    sharedPreferences.edit().clear().commit();
+                                    loadData();
+                                }
+                            })
+
+                            .setNegativeButton(android.R.string.no, null)
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+                    break;
             }
-        });
-
-        mainGame = (Button) findViewById(R.id.tiledGameButton);
-        mainGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMainGame();
-            }
-        });
-
-        multipleChoiceGame = (Button) findViewById(R.id.multipleChoiceGameX);
-        multipleChoiceGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openMultipleChoiceGame();
-            }
-        });
-    }
-    /** Called if the Which Bin game button's clicked. */
-    public void openBinGame(){
-        Intent intent = new Intent(this, BinGame.class);
-        startActivity(intent);
-    }
-
-    /** Called if the Trivia game button's clicked. */
-
-    public void openTriviaGame(){
-        Intent intent = new Intent(this, TriviaGame.class);
-        startActivity(intent);
-    }
+        }
+    };
 
     /** Called if the Multiplayer game button's clicked. */
-
     public void openMultiplayerGame(){
         Intent intent = new Intent(this, MultiPlayerGame.class);
         startActivity(intent);
     }
 
-    /** Called if the Multiple choice game button's clicked. */
-
-    public void openMultipleChoiceGame(){
-        Intent intent = new Intent(this, MultipleChoiceGame.class);
-        startActivity(intent);
-    }
-
-    /** Called if the play button's clicked depending on whether the dialogues have already been seen. */
-
+    /** Called if the play button's clicked, depending on whether the dialogues have already been seen. */
     public void openDialogueScreen() {
         Intent intent = new Intent(this, DialogueActivity.class);
         startActivity(intent);
     }
 
-    /** Called if the play button's clicked depending on whether the instructions have already been seen. */
-
+    /** Called if the play button's clicked, depending on whether the instructions have already been seen. */
     public void openOnboardingScreen(){
         Intent intent = new Intent(this, OnboardingScreen.class);
         startActivity(intent);
     }
 
-    /** Called if the play button's clicked depending on whether the dialogues and instructions have already been seen. */
-
+    /** Called if the play button's clicked, depending on whether the dialogues and instructions have already been seen. */
     public void openLevelSelectionScreen(){
         Intent intent = new Intent(this, LevelSelectionWorldOne.class);
-        startActivity(intent);
-    }
-
-    public void openMainGame(){
-        Intent intent = new Intent(this, TileBasedGameActivity.class);
         startActivity(intent);
     }
 
@@ -187,9 +184,26 @@ public class MainMenu extends AppCompatActivity {
     /** Loads data on whether the instructions and dialogues have already been seen */
 
     private void loadData() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         dialogueStatus = sharedPreferences.getBoolean("dialogueSeen", false);
         instructionsStatus = sharedPreferences.getBoolean("instructionsSeen", false);
+        levelTwoWorldOnePassed = sharedPreferences.getBoolean("levelTwoWorldOneStatus", false);
+        levelTwoWorldTwoPassed = sharedPreferences.getBoolean("levelTwoWorldTwoStatus", false);
+        levelTwoWorldThreePassed = sharedPreferences.getBoolean("levelTwoWorldThreeStatus", false);
+    }
+
+    private void saveData(View clicked) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        switch (clicked.getId()) {
+            case R.id.cinematicX :
+                editor.putBoolean(DIALOGUE_BUTTON_CLICKED, true);
+                break;
+            case R.id.instructionsX :
+                editor.putBoolean(INSTRUCTION_BUTTON_CLICKED, true);
+                break;
+        }
+        editor.commit();
     }
 }
 
