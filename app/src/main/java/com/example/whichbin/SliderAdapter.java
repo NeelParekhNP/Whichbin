@@ -36,7 +36,7 @@ public class SliderAdapter extends PagerAdapter {
     };
     public String[] slideInformations = {
             "Press the arrow buttons on the game screen to navigate through the different worlds.",
-            "Get 5 or more points in each level to unlock the next level.",
+            "Get 5 or more points in each level to unlock the next level and pass level 2 in any world to unlock the multiplayer game.",
             "Complete all levels to get rid of Dodogho the annoying Dodo bird and save the planet!"
     };
 

@@ -22,7 +22,7 @@ public class MultiPlayerGame extends AppCompatActivity {
     private RadioButton player2RB1, player2RB2, player2RB3, player2RB4;
     private Button mainMenu;
     private RadioGroup player1Group, player2Group;
-    private int questionCounter = 0;
+    private int questionCounter;
     private int currentQuestion;
     private int p1Score, p2Score;
 
@@ -30,7 +30,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     private long timeLeftInMillis;
 
     /** Array of questions */
-
     private MultipleChoiceQuestions[] questions = new MultipleChoiceQuestions[]{
             new MultipleChoiceQuestions(R.string.m_question_one, 2, "Excess of nitrogen in the atmosphere", "Excess of carbon dioxide in the atmosphere", "Heat from cooking fires of ever-increasing population",
                     "None of the above" ),
@@ -86,7 +85,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     };
 
     /** Sets up the next question */
-
     private void showNextQuestion(){
         player1Score.setVisibility(View.GONE);
         player2Score.setVisibility(View.GONE);
@@ -118,7 +116,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     }
 
     /** Starts a countdown in the background */
-
     private void startCountDown(){
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
@@ -141,7 +138,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     }
 
     /** Displays the countdown */
-
     private void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
@@ -155,7 +151,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     }
 
     /** Checks both players answers and checks if there's anymore questions left. If no questions are left it moves on to the winner declaration screen */
-
     private void checkAnswer(){
         countDownTimer.cancel();
         new CountDownTimer(5000,1000){
@@ -199,7 +194,6 @@ public class MultiPlayerGame extends AppCompatActivity {
             }
 
             /** Changes the layout of the activity to show the winner screen */
-
             public  void onFinish() {
                 player1Group.clearCheck();
                 player2Group.clearCheck();
@@ -218,8 +212,8 @@ public class MultiPlayerGame extends AppCompatActivity {
                     player2Group.setVisibility(View.GONE);
                     player1QuestionNumber.setVisibility(View.GONE);
                     player2QuestionNumber.setVisibility(View.GONE);
-                    player1Score.setText("Player 1 score: " + p1Score);
-                    player2Score.setText("Player 2 score: " + p2Score);
+                    player1Score.setText("Player 1 score: " + p1Score/5);
+                    player2Score.setText("Player 2 score: " + p2Score/5);
                     winnerTextView.setText(winnerChecker());
                     player1Score.setVisibility(View.VISIBLE);
                     player2Score.setVisibility(View.VISIBLE);
@@ -231,7 +225,6 @@ public class MultiPlayerGame extends AppCompatActivity {
     }
 
     /** Compares the players scores and declares a winner */
-
     private String winnerChecker(){
         if(p1Score>p2Score){
             return "Player 1 is the winner!";
