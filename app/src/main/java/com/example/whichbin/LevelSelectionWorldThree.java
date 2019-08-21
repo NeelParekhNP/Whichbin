@@ -25,6 +25,7 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
 
     private boolean levelOneWorldThreePassed;
     private boolean levelTwoWorldThreePassed;
+    private boolean levelThreeWorldThreePassed;
 
     public static final String DRAG_DROP_GAME_THEME = "dragDropGameTheme";
     public static final String MULTIPLE_CHOICE_GAME_THEME = "multipleChoiceGameTheme";
@@ -95,6 +96,10 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
             world3Level3.setEnabled(true);
             world3Level3.setImageAlpha(0xFF);
         }
+        if (levelThreeWorldThreePassed){
+            world3Level4.setEnabled(true);
+            world3Level4.setImageAlpha(0xFF);
+        }
     }
 
     /** Opens the level that is clicked on */
@@ -153,6 +158,7 @@ public class LevelSelectionWorldThree extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         levelOneWorldThreePassed = sharedPreferences.getBoolean("levelOneWorldThreeStatus", false);
         levelTwoWorldThreePassed = sharedPreferences.getBoolean("levelTwoWorldThreeStatus", false);
+        levelThreeWorldThreePassed = sharedPreferences.getBoolean("levelThreeWorldThreeStatus", false);
     }
 
     /** Feeds information to other games about which level was picked */

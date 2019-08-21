@@ -124,6 +124,7 @@ public class TriviaAnswerActivity extends AppCompatActivity {
         mainMenuButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                saveData();
                 openMainMenu();
             }
         });
@@ -212,8 +213,6 @@ public class TriviaAnswerActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if(answerInfo.getScore() >= 5) {
-
-                case 3:
                     editor.putBoolean(LEVEL_THREE_WORLD_THREE_STATUS,true);
         }
         editor.commit();
