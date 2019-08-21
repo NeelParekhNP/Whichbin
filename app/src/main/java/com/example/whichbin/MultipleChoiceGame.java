@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 public class MultipleChoiceGame extends AppCompatActivity {
 
-    private TextView questionView;
-    private Button optionOne, optionTwo, optionThree, optionFour, mainMenu;
+    private TextView questionView, feedbackView;
+    private Button optionOne, optionTwo, optionThree, optionFour, mainMenu, nextChevron, previousChevron;
     private LinearLayout layerOne, layerTwo;
 
     private int scoreCounter;
@@ -25,7 +25,10 @@ public class MultipleChoiceGame extends AppCompatActivity {
     private int levelTheme;
     private int screenWidth;
     private int screenHeight;
+    private int currentFeedbackNumber;
     private MultipleChoiceQuestions[] questionSet;
+    private String[] feedbackSet;
+    private String[] userAnswer = new String[10];
     private Intent myIntent;
 
     public static final String LEVEL_TWO_WORLD_ONE_STATUS = "levelTwoWorldOneStatus";
@@ -58,6 +61,7 @@ public class MultipleChoiceGame extends AppCompatActivity {
             new MultipleChoiceQuestions(R.string.n_mcq_question_ten, 1,"Coral", "Plankton", "Fish", "Whales")
     };
 
+
     private MultipleChoiceQuestions[] reduceImpactQuestions = new MultipleChoiceQuestions[]{
             new MultipleChoiceQuestions(R.string.a_mcq_question_one, 1, "Solar power", "Coal", "Fossil fuels", "None of the above" ),
             new MultipleChoiceQuestions(R.string.a_mcq_question_two, 2, "100%", "15-20%", "0%", "10-15%"),
@@ -69,6 +73,47 @@ public class MultipleChoiceGame extends AppCompatActivity {
             new MultipleChoiceQuestions(R.string.a_mcq_question_eight, 4, "Insulate your walls", "Get double glazed windows", "Use less hot water", "All of the above"),
             new MultipleChoiceQuestions(R.string.a_mcq_question_nine, 3, "Turn off your lights more often", "Drive a hybrid car", "Eat a plant-based diet", "Hang your clothes to dry"),
             new MultipleChoiceQuestions(R.string.a_mcq_question_ten, 1, "LED bulbs", "Halogen bulbs","Incandescent bulbs", "Fluorescent bulbs")
+    };
+
+
+    private String[] scienceFeedback = new String[]{
+            "Nitrogen gas isn't a greenhouse gas, because it's transparent to infrared light.",
+            "The greenhouse effect traps heat inside the atmosphere. Therefore, getting rid of the greenhouse effect would lead to a cooler earth.",
+            "Scientists use several techniques to collect evidence about climate including - using remote sensing from space with satellites, by ground-based measurements of surface temperature, carbon dioxide concentration and sea level, by collecting \"proxy data\" from tree rings, ice cores and historical records and many more.",
+            "Carbon dioxide, water vapour and methane are all greenhouse gases as they trap heat in the atmosphere.",
+            "There are four main steps in the carbon cycle - 1) Carbon enters the atmosphere in the form of carbon dioxide 2) Carbon is absorbed by producers for photosynthesis 3) Animals eat these producers and release most of the carbon dioxide via respiration and eventually die 4) Decomposers break down the dead animals and release the leftover carbon into the atmosphere leading back to the first step of the carbon cycle",
+            "As forests have many plants and trees they are able to remove a large potion of carbon dioxide from the atmosphere.",
+            "Humans are responsible for a 10% increase in global average surface temperature.",
+            "High C02 levels will decrease the concentration of protein, zinc and iron because higher levels of CO2 will increase the synthesis of carbohydrates and in turn reduce the synthesis of other nutrients.",
+            "Heatwaves cause more deaths annually than hurricanes, floods and blizzards",
+            "China produces the has the highest per capita CO2 emissions in the world."
+    };
+
+    private String[] natureFeedback = new String[]{
+            "Fishes, whales and other marine mammals are changing their migratory patterns and moving to colder areas of the ocean.",
+            "Extreme events like hurricanes, droughts, and wildfires can cause water shortages, power outages, higher electricity prices and higher gas prices.",
+            "Cities and rural communities need to upgrade aging infrastructure to adapt to the current climate change status",
+            "Climate change is altering precipitation in the US by increasing in both wet and dry extremes ",
+            "Climate factors such as milder winters increase the tick density & risk of lyme",
+            "4 billion people are vulnerable to the effects of climate change. That is more than 50% of the world population.",
+            "Deforestation is responsible for 11% of all global greenhouse gas emissions caused by humans",
+            "The ozone layer protects us from ultraviolet radiation. The increase in air pollution is damaging the ozone layer, resulting in an increase of ultraviolet radiation on earth.",
+            "The wildlife population has dropped by 60% in the last 40 years due to human activity such as deforestation and hunting.",
+            "Corals are Often called \"rainforests of the sea\", shallow coral reefs form some of Earth's most diverse ecosystems. The rising acidity of the oceans threatens coral reefs by making it harder for corals to build their skeletons"
+    };
+
+    private String[] reduceImpactFeedback = new String[]{
+            "Solar power is environmentally friendly. Solar power uses energy from the sunlight therefore, it doesn't release and carbon dioxide into the atmosphere, unlike coal and fossil fuels.",
+            "A little as 1.5°C increase in temperature can put 15-20% species at risk of extinction.",
+            "There are many things a person can do to help flight climate change, some of them are - divesting from using fossil fuel companies, engage themselves in the science behind climate change (a bit like you're doing right now) and vote for political candidates who will advocate for climate-related legislation and policy improvements.",
+            "Using vehicles that do not require fossil fuels to run are the best vehicles to reduce the impact on climate change, such as bicycles.",
+            "According to scientists the best solution to tackle climate change is by planting 1 trillion trees.",
+            "Adopting a vegan diet means animal products are not consumed. This means it will have a low impact on climate change.",
+            "Household waste that is recyclable should be recycled so that there's less waste in dumping sites and rivers.",
+            "Insulating walls, getting double glazed windows and using less hot water are all different ways to reduce impact on climate change. Insulating walls and getting double windows will keep your house warmer and therefore reducing the need for heating.",
+            "Eating a plant-based diet has higher impact on reducing climate change than turning off lights more often, driving a hybrid car and hanging your clothes to dry rather than using a tumble dryer. However, all those things help to reduce climate change some just more than the other.",
+            "LED bulbs use the lease electricity to light up and therefore they have the least impact on climate change."
+
     };
 
     @Override
@@ -109,11 +154,14 @@ public class MultipleChoiceGame extends AppCompatActivity {
         animator.start();
 
         questionView = (TextView) findViewById(R.id.textView_MCQ);
+        feedbackView = (TextView) findViewById(R.id.MCQ_feedback_textView);
         optionOne = (Button) findViewById(R.id.button_MCQ_1);
         optionTwo = (Button) findViewById(R.id.button_MCQ_2);
         optionThree = (Button) findViewById(R.id.button_MCQ_3);
         optionFour = (Button) findViewById(R.id.button_MCQ_4);
         mainMenu = (Button) findViewById(R.id.button_MCQ_menu);
+        nextChevron = (Button) findViewById(R.id.MCQ_next_feedback);
+        previousChevron = (Button) findViewById(R.id.MCQ_previous_feedback);
         layerOne = (LinearLayout) findViewById(R.id.linearLayout_MCQ_1);
         layerTwo = (LinearLayout) findViewById(R.id.linearLayout_MCQ_2);
 
@@ -121,6 +169,8 @@ public class MultipleChoiceGame extends AppCompatActivity {
         optionTwo.setOnClickListener(clickListener);
         optionThree.setOnClickListener(clickListener);
         optionFour.setOnClickListener(clickListener);
+        previousChevron.setOnClickListener(feedbackClickListener);
+        nextChevron.setOnClickListener(feedbackClickListener);
 
         mainMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,20 +184,23 @@ public class MultipleChoiceGame extends AppCompatActivity {
             case 1 :
                 myIntent = new Intent(getBaseContext(), LevelSelectionWorldOne.class);
                 questionSet = scienceQuestions;
+                feedbackSet = scienceFeedback;
                 break;
             case 2 :
                 myIntent = new Intent(getBaseContext(), LevelSelectionWorldTwo.class);
                 questionSet = natureQuestions;
+                feedbackSet = natureFeedback;
                 break;
             case 3 :
                 myIntent = new Intent(getBaseContext(), LevelSelectionWorldThree.class);
                 questionSet = reduceImpactQuestions;
+                feedbackSet = reduceImpactFeedback;
                 break;
             default:
                 questionSet = scienceQuestions;
         }
 
-        View currentButton = null;
+        View currentButton;
         int imageViewWidth = screenWidth/2;
         int imageViewHeight = screenHeight/5;
 
@@ -185,15 +238,41 @@ public class MultipleChoiceGame extends AppCompatActivity {
                     View v = layerTwo.getChildAt(i);
                     v.setEnabled(false);
                 }
-                questionView.setText("Your final score is " + scoreCounter + "!");
+                feedbackView.setVisibility(View.VISIBLE);
                 mainMenu.setVisibility(View.VISIBLE);
+                nextChevron.setVisibility(View.VISIBLE);
                 layerOne.setVisibility(View.GONE);
                 layerTwo.setVisibility(View.GONE);
+                questionView.setText("Your final score is " + scoreCounter + "!");
+                feedbackView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + feedbackSet[currentFeedbackNumber]);
             }
 
-            View theImageViews = null;
-            int imageViewWidth = screenWidth/3;
-            int imageViewHeight = screenHeight/5;
+        }
+    };
+
+    View.OnClickListener feedbackClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId() == R.id.MCQ_previous_feedback){
+                if(currentFeedbackNumber == 0){
+                    previousChevron.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    currentFeedbackNumber--;
+                    feedbackView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + feedbackSet[currentFeedbackNumber]);
+                    nextChevron.setVisibility(View.VISIBLE);
+                }
+            }
+            if(view.getId() == R.id.MCQ_next_feedback){
+                if (currentFeedbackNumber == (userAnswer.length-1)){
+                    nextChevron.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    currentFeedbackNumber++;
+                    feedbackView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + feedbackSet[currentFeedbackNumber]);
+                    previousChevron.setVisibility(View.VISIBLE);
+                }
+            }
         }
     };
 
@@ -208,7 +287,11 @@ public class MultipleChoiceGame extends AppCompatActivity {
     private void checkAnswer(View clicked){
         int selectedAnswer = Integer.parseInt((String)clicked.getTag());
         if(selectedAnswer == questionSet[questionNumber].getAnswer()){
+            userAnswer[questionNumber] = "Correct!";
             scoreCounter++;
+        }
+        else {
+            userAnswer[questionNumber] = "Incorrect!";
         }
     }
 

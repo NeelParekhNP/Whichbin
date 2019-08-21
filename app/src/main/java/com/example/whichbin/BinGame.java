@@ -24,16 +24,18 @@ public class BinGame extends AppCompatActivity {
 
     private ImageView question, option1, option2, option3;
     private TextView questionTextView, resultsView;
+    private Button nextChevron, previousChevron, mainMenu;
     private LinearLayout allOptions;
-    private int currentIndex = 0;
-    private int totalCorrect = 0;
+    private int currentIndex;
+    private int totalCorrect;
+    private  int currentFeedbackNumber;
     private String header;
 
     private int levelTheme;
     private int screenWidth;
     private int screenHeight;
     private BinGameQuestions[] questionSet;
-    private int [] userAnswers = new int[10];
+    private String[] userAnswer = new String[10];
 
     private Intent myIntent;
 
@@ -127,6 +129,9 @@ public class BinGame extends AppCompatActivity {
         option2 = (ImageView) findViewById(R.id.rBImageView);
         option3 = (ImageView) findViewById(R.id.oWImageView);
         resultsView = (TextView) findViewById(R.id.textView_DND_game_results);
+        nextChevron = (Button) findViewById(R.id.binGame_next_feedback);
+        previousChevron = (Button) findViewById(R.id.binGame_previous_feedback);
+        mainMenu = (Button) findViewById(R.id.binGame_menu);
 
         View theImageViews = null;
         int imageViewWidth = screenWidth/3;
@@ -176,14 +181,16 @@ public class BinGame extends AppCompatActivity {
 
         question.setImageDrawable(getDrawable(questionSet[currentIndex].getImage()));
 
-        resultsView.setVisibility(View.INVISIBLE);
-
         option1.setOnDragListener(dragListener);
         option2.setOnDragListener(dragListener);
         option3.setOnDragListener(dragListener);
 
         question.setOnTouchListener(touchListener);
 
+        mainMenu.setOnClickListener(clickListener);
+
+        previousChevron.setOnClickListener(feedbackClickListener);
+        nextChevron.setOnClickListener(feedbackClickListener);
     }
 
     View.OnClickListener clickListener = new View.OnClickListener() {
@@ -226,29 +233,25 @@ public class BinGame extends AppCompatActivity {
 
                     int answer = questionSet[currentIndex].isAnswer();
                     int tagDropTarget = Integer.parseInt((String)dropTarget.getTag());
-                    userAnswers[currentIndex] = tagDropTarget;
 
                     if (answer == tagDropTarget ){
                         Toast.makeText(BinGame.this,R.string.correctMessage, Toast.LENGTH_SHORT).show();
                         totalCorrect = (totalCorrect +1);
+                        userAnswer[currentIndex] = "Correct!";
                     }
                     else {
                         Toast.makeText(BinGame.this,R.string.incorrectMessage, Toast.LENGTH_SHORT).show();
+                        userAnswer[currentIndex] = "Incorrect!";
                     }
                     if(currentIndex==(questionSet.length-1)){
                         ((ViewGroup) question.getParent()).removeView(question);
                         allOptions.removeAllViews();
                         questionTextView.setText("Your total score was: " + totalCorrect);
 
-                        Button menuButton = new Button(BinGame.this);
-                        menuButton.setText("Return to Main Menu");
-                        LinearLayout ll = (LinearLayout)findViewById(R.id.optionsLayout);
-                        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        ll.addView(menuButton, lp);
-
-                        displayAnswers();
-
-                        menuButton.setOnClickListener(clickListener);
+                        resultsView.setVisibility(View.VISIBLE);
+                        mainMenu.setVisibility(View.VISIBLE);
+                        nextChevron.setVisibility(View.VISIBLE);
+                        resultsView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + questionSet[currentFeedbackNumber].getAnswer());
                     }
                     else {
                         currentIndex = (currentIndex + 1);
@@ -274,22 +277,31 @@ public class BinGame extends AppCompatActivity {
         }
     };
 
-
-    private void displayAnswers(){
-        String results = "";
-        for(int i = 0; i < userAnswers.length; i++){
-            if(userAnswers[i] == questionSet[i].isAnswer()){
-                results += "" + (i+1) + ")" + " Correct! - " + questionSet[i].getAnswer()+"\n";
+    View.OnClickListener feedbackClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            if(view.getId() == R.id.binGame_previous_feedback){
+                if(currentFeedbackNumber == 0){
+                    previousChevron.setVisibility(View.INVISIBLE);
+                }
+                else{
+                    currentFeedbackNumber--;
+                    resultsView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + questionSet[currentFeedbackNumber].getAnswer());
+                    nextChevron.setVisibility(View.VISIBLE);
+                }
             }
-            else {
-                results += "" + (i+1) + ")" + " Incorrect! - " + questionSet[i].getAnswer()+"\n";
+            if(view.getId() == R.id.binGame_next_feedback){
+                if (currentFeedbackNumber == (userAnswer.length-1)){
+                    nextChevron.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    currentFeedbackNumber++;
+                    resultsView.setText("" + (currentFeedbackNumber+1)+". " + userAnswer[currentFeedbackNumber] + " - " + questionSet[currentFeedbackNumber].getAnswer());
+                    previousChevron.setVisibility(View.VISIBLE);
+                }
             }
         }
-
-        resultsView.setVisibility(View.VISIBLE);
-        resultsView.setText(results);
-    }
-
+    };
     /** Checks whether user has scored sufficient enough points to move onto the next level */
 
     private void saveData() {
